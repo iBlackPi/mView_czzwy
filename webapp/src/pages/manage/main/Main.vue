@@ -2,7 +2,10 @@
 <template>
     <div class="main">
         <div class="header">
-            <div class="logo"></div>
+            <div class="logo">
+                <Icon type="ios-pie-outline" style="font-size: 1.6rem; font-weight: bold; color: #2D8CF0;"></Icon>
+                沧州市政务信息化资源统计
+            </div>
             <div class="header-content">
                 <header-content></header-content>
             </div>
@@ -76,7 +79,7 @@
     };
 </script>
 
-<style lang="less">
+<style lang="less" type="text/less">
 
     @import '../../../assets/css/theme.less';
 
@@ -90,10 +93,15 @@
             background-color: @headerBgcolorDark;
 
             .logo {
-                width: 240px;/*TODO 测试用*/
+                width: 360px;/*TODO 测试用*/
                 height: @headerHeight;
                 line-height: @headerHeight;
                 float: left;
+                color: #fff;
+                font-size: 1.3rem;
+                letter-spacing: .1rem;
+                padding-left: 1rem;
+                font-family: 时尚中黑简体;
             }
 
             .header-content {

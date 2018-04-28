@@ -26,7 +26,9 @@ module.exports = merge(baseConfig, {
     },
     plugins: [
         new htmlWebpackPlugin({
-            template: './src/entry/index.html'
-        }),
+            // todo 这里路径是相对webpack执行时的路径，而不是配置文件所在的路径
+            template: './src/entry/index.html',
+            favicon: './src/assets/imgs/favicon.ico'
+        })
     ]
 });

@@ -1,15 +1,5 @@
 <template>
-    <!--<ve-map id="eee"
-            style="height: 100%; width: 100%"
-            placeName="china"
-            :scatterData="mapData2"
-            :lineData="mapData1"
-            scatterColor="green"
-            brushType="stroke"
-            backgroundColor=""
-    >
-    </ve-map>-->
-    <ve-svgMap id="test" name="cz5" style="height:100%"></ve-svgMap>
+    <ve-svgMap id="testtest" name="cz5" style="height:100%"></ve-svgMap>
 </template>
 
 <script>

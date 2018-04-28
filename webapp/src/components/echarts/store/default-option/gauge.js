@@ -25,7 +25,8 @@ let option = {
             name: '',
             type: 'gauge',
             center: ['50%', '50%'],
-            radius: '70%',
+            //todo 页面里设置不生效
+            radius: '80%',
             startAnger: 225,
             endAngle: -45,
             clockwise: true,
@@ -35,15 +36,14 @@ let option = {
             title : {
                 // 其余属性默认使用全局文本样式，详见TEXTSTYLE
                 fontWeight: 'bolder',
-                fontSize: 20,
-                fontStyle: 'italic',
+                fontSize: 15,
                 color: '#fff'
             },
 
             axisLine: {            // 坐标轴线
                 lineStyle: {       // 属性lineStyle控制线条样式
                     color: [[0.2, '#e14048'],[0.8,'#01A2FC'],[1, '#1ca658']],
-                    width: 10
+                    width: 8
                 }
             },
             axisTick: {            // 坐标轴小标记
@@ -60,17 +60,13 @@ let option = {
                 }
             },
             axisLabel: {
-                backgroundColor: 'auto',
-                borderRadius: 2,
-                padding: 3,
-                textShadowBlur: 2,
-                textShadowOffsetX: 1,
-                textShadowOffsetY: 1,
-                textShadowColor: '#222'
+
             },
             detail: {
                 offsetCenter: [0, '65%'],
-                formatter: '{value}分'
+                formatter: '{value}分',
+                // todo 默认字体大小适中
+                fontSize: 15
             },
             /*detail : {
                 // 其余属性默认使用全局文本样式，详见TEXTSTYLE

@@ -4,14 +4,24 @@
             <FormItem prop="user">
                 <Input v-model="searchName" placeholder="请输入单位名进行查询"  style="width: 400px;">
                 <span slot="prepend">单位名</span>
-                <Button type="primary" slot="append" icon="ios-search" @click="searchUser"></Button>
+                <Button type="primary" slot="append" icon="ios-search" @click="searchDepartment"></Button>
                 </Input>
             </FormItem>
-            <FormItem prop="password" style="margin-left: 59.2%;">
-                <Button type="primary" shape="circle" icon="trash-a" @click="bulkDelete"></Button>
-            </FormItem>
             <FormItem>
-                <Button type="primary" shape="circle" icon="plus-round" @click="showCreateUser"></Button>
+                <!--action="http://192.168.100.228:8080/czportal/upLoadExcelController.do?upLoadExcel"-->
+                <Upload multiple
+                        action="http://localhost:8088/czportal/upLoadExcelController.do?upLoadExcel"
+                        name="excelFileUpload"
+                        :on-success="uploadSuccess"
+                        :before-upload="beforeUpload"
+                        :format="['xls','XLS','xls','XLSX']"
+                        :on-format-error="handleFormatError">
+                    <Tooltip placement="right" content="支持批量导入excel" transfer :delay="1000">
+                        <Button style="background-color: #2D8CF0; color: #fff;" type="ghost" icon="ios-cloud-upload-outline">
+                            导入EXCEL
+                        </Button>
+                    </Tooltip>
+                </Upload>
             </FormItem>
         </Form>
         <Table border :columns="columns" :data="totalInfo"></Table>
@@ -27,11 +37,8 @@
             return {
                 searchName: '',
                 totalInfo: [],
-                page: {
-                    countPerPage: 10,
-                    currentPage: 1,
-                    where: {}
-                },
+                countPerPage: 10,
+                currentPage: 1,
                 totalCount: 0,
                 columns: [
                     {
@@ -88,31 +95,55 @@
             }
         },
         methods: {
-            searchUser(){
+            // 上传成功回调
+            uploadSuccess(res, file, fileList){
+                this.$Notice.success({
+                    title: `${file.name}上传成功！`
+                });
+            },
+            // 验证excel文件命名
+            beforeUpload(file){
+                const fileName = file.name;
+                if(fileName.indexOf('-') === -1 || fileName.indexOf('-') > fileName.indexOf('《')){
+                    this.$Notice.error({
+                        title: 'excel命名错误！',
+                        desc: '请按照“单位名-《表名》”格式命名excel，注意中间以中划线隔开'
+                    });
+                    return false;
+                }
+                return true;
+            },
+            // 验证文件格式
+            handleFormatError(){
+                this.$Notice.error({
+                    title: '请上传excel表格！'
+                });
+            },
+            searchDepartment(){
                 //模糊查询用户
-                this.page.where = this.searchName === '' ? {} : {username: {
-                        '$like': `%${this.searchName}%`
-                    }};
-                this.findByPage(this.page);
+                this.findByPage(this.currentPage, this.countPerPage, this.searchName);
             },
             changePage(destination){
-                this.page.currentPage = destination;
+                this.currentPage = destination;
                 //翻页的时候是带着查询参数去翻页的
-                this.findByPage(this.page);
+                this.findByPage(this.currentPage, this.countPerPage, this.searchName);
             },
             changePageSize(pageSize){
-                this.page.countPerPage = pageSize;
+                this.countPerPage = pageSize;
                 //翻页的时候是带着查询参数去翻页的
-                this.findByPage(this.page);
+                this.findByPage(this.currentPage, this.countPerPage, this.searchName);
             },
-            findByPage(page){
-                this.$http.post('/userController.do?m=findUserByPage', page).then(({data}) => {
+            findByPage(currentPage, countPerPage, searchName){
+                this.$http.post(`upLoadExcelController.do?query&
+                start=${this.currentPage}&
+                pageSize=${this.countPerPage}&
+                department=${this.searchName}`, page).then(({data}) => {
                     if(data.success){
                         this.totalInfo = data.data.list;
                         this.totalCount = data.data.totalCount;
                     }else{
                         this.$Notice.error({
-                            title: '获取用户失败！'
+                            title: '获取单位信息失败！'
                         })
                     }
                 })

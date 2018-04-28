@@ -50,7 +50,14 @@ const instance = axios.create({
     baseURL: 'http://localhost:3000',
     withCredentials: true
 });
+const instanceTomcat = axios.create({
+    baseURL: 'http://localhost:8088/czportal',
+    withCredentials: true
+});
+// 访问node服务
 Vue.prototype.$http = instance;
+// 访问tomcat服务
+Vue.prototype.$httpt = instanceTomcat;
 Vue.prototype.$base64 = Base64;
 Vue.prototype.$bus = vue;
 window.$global = global;
@@ -174,6 +181,10 @@ const authCheck = (routerToName, next) => {
 // 每次刷新或者路由的改变，都涉及到用户可能要去请求数据，所以都要去验证用户的合法性
 router.beforeEach((to, from, next) => {
     console.log(to.name, from.name);
+    // 给页面tab加title
+    if (to.meta.title) {
+        document.title = to.meta.title
+    }
     //如果路由是到401或者404页面的，不涉及到用户获取数据，那么无需去后台验证，直接跳转即可，走else逻辑
     //如果不是401或404，那么就要去验证用户请求的合法性
     if(to.name !== 'error-401' && to.name !== 'error-404' && to.name !=='bigBenefit' && to.name !=='bigMain'){

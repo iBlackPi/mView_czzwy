@@ -1,16 +1,16 @@
 <template>
     <module-layout title="信息共享需求量TOP5">
         <ve-rect-coordinate
-                id="rectTest3"
+                id="info-share"
                 style="height:100%"
                 backgroundColor=""
-                :yAxisData="yArray0"
+                :yAxisData="yAxisData"
                 :showLegend=true
-                rendererType="svg">
+                :coverOption="coverOption">
             <ve-bar
                     :data="data"
                     id="basic-equipment"
-                    name="选项1"
+                    name="数量(台)"
                     barWidth="10"
             ></ve-bar>
         </ve-rect-coordinate>
@@ -23,8 +23,25 @@
         name: "computor-room",
         data(){
             return {
-                yArray0: ['01', '02', '03'],
-                data: [30, 42, 47]
+                yAxisData: ['教育局', '质监局', '住建局', '法院', '财政局'],
+                data: [150, 200, 250, 334, 390],
+                coverOption: {
+                    grid: {
+                        top: '12%',
+                        bottom: '15%'
+                    },
+                    legend: {
+                        top: -10,
+                        right: -30
+                    },
+                    series: [
+                        {
+                            label: {
+                                show: true
+                            }
+                        }
+                    ]
+                }
             }
         },
         components: {

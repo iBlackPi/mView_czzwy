@@ -4,7 +4,11 @@
                 id="cloud-service-demand"
                 :data="data"
                 :indicator="indicator"
-                backgroundColor="">
+                backgroundColor=""
+                :showLegend=false
+                radius="75%"
+                :center="['50%', '55%']"
+                :coverOption="coverOption">
         </ve-radar>
     </module-layout>
 </template>
@@ -21,7 +25,23 @@
                 }],
                 indicator: [
                     {name: '云安全'}, {name: 'IaaS'}, {name: 'PaaS'}, {name: '灾备'}, {name: '云运维'}
-                ]
+                ],
+                coverOption: {
+                    series: [
+                        {
+                            label: {
+                                normal: {
+                                    show: true,
+                                    formatter: `{c}`
+                                },
+                                emphasis: {
+                                    show: false,
+
+                                }
+                            }
+                        }
+                    ]
+                }
             }
         },
         components: {

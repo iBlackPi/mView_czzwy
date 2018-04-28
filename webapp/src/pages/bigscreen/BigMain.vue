@@ -16,7 +16,7 @@
                     </section>
                 </section>
                 <section class="bigmain-content-top-center">
-                    <cz-map></cz-map>
+                    <cz-downtown></cz-downtown>
                 </section>
                 <section class="bigmain-content-top-right">
                     <section class="bigmain-content-top-righttop">
@@ -46,7 +46,7 @@
     import ConnectNet from './charts/big-main/ConnectNet';
     import ConnectOperator from './charts/big-main/ConnectOperator';
     import InfoShare from './charts/big-main/InfoShare';
-    import CzMap from './common/CzMap';
+    import CzDowntown from './common/CzDowntown';
     import CustomHeader from './common/CustomHeader';
     export default {
         name: "big-main",
@@ -56,7 +56,7 @@
             }
         },
         components: {
-            CzMap,
+            CzDowntown,
             ComputorRoom,
             PolicySys,
             BasicEquipment,
@@ -74,7 +74,7 @@
         height: 100%;
         overflow: hidden;
         background: url(../../assets/imgs/home_bg.jpg) repeat-x;
-        animation: move_bg 25s linear alternate infinite;
+        /*animation: move_bg 25s linear alternate infinite;*/
         background-size: cover;
     }
     .bigmain-top {

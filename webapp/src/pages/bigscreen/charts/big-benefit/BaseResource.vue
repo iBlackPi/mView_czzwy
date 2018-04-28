@@ -4,13 +4,22 @@
                 id="base-reource"
                 style="height:100%"
                 backgroundColor=""
-                :xAxisData="yArray0"
+                :xAxisData="xAxisData"
                 :showLegend=true
-                rendererType="svg">
+                :coverOption="coverOption">
             <ve-bar
-                    :data="yArray1"
-                    id="basic-resource"
-                    name="选项1"
+                    :data="data1"
+                    name="CPU"
+                    barWidth="20"
+            ></ve-bar>
+            <ve-bar
+                    :data="data2"
+                    name="内存"
+                    barWidth="20"
+            ></ve-bar>
+            <ve-bar
+                    :data="data3"
+                    name="存储"
                     barWidth="20"
             ></ve-bar>
         </ve-rect-coordinate>
@@ -23,8 +32,37 @@
         name: "computor-room",
         data(){
             return {
-                yArray0: ['01', '02', '03', '04', '05'],
-                yArray1: [30, 42, 47, 30, 1]
+                xAxisData: ['2018', '2019', '2020'],
+                data1: [90, 250, 150],
+                data2: [100, 170, 190],
+                data3: [70, 140, 160],
+                coverOption: {
+                    grid: {
+                        top: '18%',
+                        bottom: '15%'
+                    },
+                    legend: {
+                        top: -10,
+                        right: -30
+                    },
+                    series: [
+                        {
+                            label: {
+                                show: true
+                            }
+                        },
+                        {
+                            label: {
+                                show: true
+                            }
+                        },
+                        {
+                            label: {
+                                show: true
+                            }
+                        }
+                    ]
+                }
             }
         },
         components: {

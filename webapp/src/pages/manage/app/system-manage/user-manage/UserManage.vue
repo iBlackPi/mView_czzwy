@@ -247,6 +247,7 @@
             },
             searchUser(){
                 //模糊查询用户
+                //todo sql语句放在前面太蠢，放到后台拼接
                 this.page.where = this.searchName === '' ? {} : {username: {
                         '$like': `%${this.searchName}%`
                     }};

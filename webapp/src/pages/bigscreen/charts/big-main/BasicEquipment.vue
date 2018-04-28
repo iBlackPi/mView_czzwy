@@ -4,13 +4,13 @@
                 id="rectTest2"
                 style="height:100%"
                 backgroundColor=""
-                :xAxisData="yArray0"
+                :xAxisData="xAxisData"
                 :showLegend=true
-                rendererType="svg">
+                :coverOption="coverOption">
             <ve-bar
-                    :data="yArray1"
+                    :data="data"
                     id="basic-equipment"
-                    name="选项1"
+                    name="数量(台)"
                     barWidth="20"
             ></ve-bar>
         </ve-rect-coordinate>
@@ -24,8 +24,25 @@
         name: "computor-room",
         data(){
             return {
-                yArray0: ['01', '02', '03', '04', '05'],
-                yArray1: [30, 42, 47, 30, 1]
+                xAxisData: ['小机', 'X86服务器', '虚机', '网络设备', 'PC终端'],
+                data: [10, 250, 200, 334, 390],
+                coverOption: {
+                    grid: {
+                        top: '12%',
+                        bottom: '15%'
+                    },
+                    legend: {
+                        top: -10,
+                        right: -30
+                    },
+                    series: [
+                        {
+                            label: {
+                                show: true
+                            }
+                        }
+                    ]
+                }
             }
         },
         components: {

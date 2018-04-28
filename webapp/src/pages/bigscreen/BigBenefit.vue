@@ -14,7 +14,7 @@
                     </section>
                 </section>
                 <section class="bigmain-content-top-center">
-                    <cz-map></cz-map>
+                    <cz-downtown></cz-downtown>
                 </section>
                 <section class="bigmain-content-top-right">
                     <section class="bigmain-content-top-righttop">
@@ -44,12 +44,12 @@
     import CloudServiceDemand from './charts/big-benefit/CloudServiceDemand';
     import BenefitOne from './charts/big-benefit/BenefitOne';
     import BenefitTwo from './charts/big-benefit/BenefitTwo';
-    import CzMap from './common/CzMap';
+    import CzDowntown from './common/CzDowntown';
     import CustomHeader from './common/CustomHeader';
     export default {
         name: "big-main",
         components: {
-            CzMap,
+            CzDowntown,
             MoveToCloud,
             MoveCount,
             BaseResource,
@@ -67,7 +67,7 @@
         height: 100%;
         overflow: hidden;
         background: url(../../assets/imgs/home_bg.jpg) repeat-x;
-        animation: move_bg 25s linear alternate infinite;
+        /*animation: move_bg 25s linear alternate infinite;*/
         background-size: cover;
     }
     .bigmain-top {

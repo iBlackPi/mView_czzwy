@@ -1,6 +1,6 @@
 <template>
     <section class="header-content">
-        <span @click="goToManage">沧州市政务信息化资源摸底统计</span>
+        <span @click="goToManage">沧州市政务信息化资源统计</span>
         <span @click="changeUrl" class="change-url">
             <Icon type="arrow-swap"></Icon>
         </span>
@@ -13,7 +13,10 @@
         methods: {
             changeUrl(){
                 // 切换大屏
-                this.$router.push({name: this.$route.path === '/bigMain' ? 'bigBenefit' : 'bigMain'});
+                this.$router.push({
+                    name: this.$route.path === '/bigMain' ? 'bigBenefit' : 'bigMain',
+                    target: '_blank'
+                });
             },
             goToManage(){
                 this.$router.push({name: 'login'});
@@ -27,7 +30,7 @@
         height: 100%;
         color: #fff;
         font-size: 1.9rem;
-        font-weight: bold;
+        /*font-weight: bold;*/
         letter-spacing: .1rem;
         text-align: center;
         &>span {

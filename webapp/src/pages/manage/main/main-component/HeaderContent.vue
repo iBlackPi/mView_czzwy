@@ -1,12 +1,19 @@
 <!--todo 放到components header文件夹中-->
 <template>
     <div class="header-avator-con">
-        <div class="notice">
+        <div class="star">
+            <Tooltip content="回到大屏" placement="bottom" class="icon-middle">
+                <span @click="GoToBigscreen" class="go-to-bigscreen">
+                    <Icon type="arrow-swap" style="font-size: 1.5rem;color: #5AAAFF;"></Icon>
+                </span>
+            </Tooltip>
+        </div>
+        <div class="notice" @click="notice">
             <Tooltip content="通知" placement="bottom" class="icon-middle">
                 <f-icon name="envelope-o" class="header-icon header-icon-color"></f-icon>
             </Tooltip>
         </div>
-        <div class="star">
+        <div class="star" @click="addFavorite">
             <Tooltip content="收藏" placement="bottom" class="icon-middle">
                 <f-icon name="star-o" class="header-icon header-icon-color"></f-icon>
             </Tooltip>
@@ -57,6 +64,27 @@
             this.userName = localStorage.getItem('username');
         },
         methods: {
+            addFavorite(){
+                let url = window.location;
+                let title = document.title;
+                let ua = navigator.userAgent.toLowerCase();
+                if (ua.indexOf("msie 8") > -1) {
+                    external.AddToFavoritesBar(url, title, '');//IE8
+                } else {
+                    try {
+                        window.external.addFavorite(url, title);
+                    } catch (e) {
+                        try {
+                            window.sidebar.addPanel(title, url, "");//firefox
+                        } catch (e) {
+                            this.$Message.warning('加入收藏失败，请使用Ctrl+D进行添加');
+                        }
+                    }
+                }
+            },
+            notice(){
+                this.$Message.warning('暂时没有通知！');
+            },
             lagout() {
                 this.lagoutModal = true;
             },
@@ -80,17 +108,24 @@
                     }
                 });
             },
-            lagoutCancel(){}
+            lagoutCancel(){
+
+            },
+            GoToBigscreen(){
+                this.$router.push({name: 'bigMain'});
+            }
         }
     };
 </script>
 
-<style lang="less">
-
+<style lang="less" type="text/less">
     @import '../../../../assets/css/theme.less';
-
-    
-
+    .go-to-bigscreen:hover {
+        &>i{
+            color: #04CAFC !important;
+        }
+        cursor: pointer;
+    }
     .header-avator-con {
         position: relative;
         z-index: 20;
@@ -141,8 +176,12 @@
         .notice, .star {
             height: @headerIconSize;
             line-height: @headerIconSize;
+            cursor: pointer;
             .ivu-tooltip-rel {
                 height: @headerIconSize;
+            }
+            &:hover .header-icon-color {
+                color: #04CAFC;
             }
         }
 

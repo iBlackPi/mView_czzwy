@@ -9,9 +9,10 @@ export default {
     children: [{
         name: 'info-maintain',
         path: 'info-maintain',
-        component: () => import('../../../pages/manage/app/cloud-info/info-maintain.vue'),
+        component: () => import('../../../pages/manage/app/cloud-info/InfoMaintain.vue'),
         meta: {
-            breadcrumb: '云信息维护'
+            breadcrumb: '云信息维护',
+            title: '信息化资源维护'
         }
     }]
 };

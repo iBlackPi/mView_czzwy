@@ -3,7 +3,7 @@
         <template v-for="(item, index) in menuData">
             <Submenu v-if="item.children && item.children.length !== 0" :name="item.name">
                 <template slot="title">
-                    <f-icon :name="item.icon" v-if="item.icon"></f-icon>
+                    <Icon :type="item.icon" v-if="item.icon"></Icon>
                     <span class="menu-title">{{item.title}}</span>
                     <template v-if="customStyle">
                         <span style="">

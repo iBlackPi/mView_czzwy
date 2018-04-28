@@ -80,7 +80,7 @@
                 let chart = this.$echarts.init(document.getElementById(this.id));
                 let _this = this;
                 let option = {
-                    backgroundColor: '#06081B',
+                    backgroundColor: '',
                     geo: {
                         map: name,
                         roam: false,
@@ -136,7 +136,7 @@
                         },
                         {
                             type: 'liquidFill',
-                            radius: '100%',
+                            radius: '200%',
                             outline: {
                                 show: false
                             },
@@ -146,7 +146,6 @@
                                 color: 'rgba(53, 90, 220, .3)'
                             },
                             data: [0],
-                            /*radius: '160%',*/
                             label: {
                                 show: false
                             },
