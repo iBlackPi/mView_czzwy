@@ -26,12 +26,12 @@
      * 详情见：http://echarts.baidu.com/tutorial.html#ECharts%20%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%92%8C%E8%A1%8C%E4%B8%BA
      *
     * */
-    import option from '../default-option/rect-coordinate.js';
-    import lineObj from '../default-option/line.js';
-    import barObj from '../default-option/bar.js';
-    import scatterObj from '../default-option/scatter.js';
-    import emitter from '../emitter/emitter.js';
-    import initialize from '../emitter/initialize.js';
+    import option from '../../default/rect-coordinate.js';
+    import lineObj from '../../default/line.js';
+    import barObj from '../../default/bar.js';
+    import scatterObj from '../../default/scatter.js';
+    import emitter from '../../mixins/emitter.js';
+    import initialize from '../../mixins/initialize.js';
 
     export default {
         name: 've-rect-coordinate',

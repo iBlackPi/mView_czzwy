@@ -14,8 +14,8 @@
      * linearGradient: 柱状图渐变配置
      *
      * */
-    import option from '../default-option/bar.js';
-    import emitter from '../emitter/emitter.js';
+    import option from '../../default/bar.js';
+    import emitter from '../../mixins/emitter.js';
     export default {
         name: 've-bar',
         mixins: [emitter],

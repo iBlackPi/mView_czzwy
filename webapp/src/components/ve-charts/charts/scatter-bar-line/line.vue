@@ -15,8 +15,8 @@
      * linearGradient: 折现图渐变配置
      *
      * */
-    import option from '../default-option/line.js';
-    import emitter from '../emitter/emitter.js';
+    import option from '../../default/line.js';
+    import emitter from '../../mixins/emitter.js';
     export default {
         name: 've-line',
         mixins: [emitter],

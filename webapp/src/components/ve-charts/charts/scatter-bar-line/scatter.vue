@@ -9,8 +9,8 @@
      * symbolSize：标记的大小，可以设置成诸如 10 这样单一的数字，也可以用数组分开表示宽和高，例如 [20, 10] 表示标记宽为20，高为10。
      *
      * */
-    import option from '../default-option/scatter.js';
-    import emitter from '../emitter/emitter.js';
+    import option from '../../default/scatter.js';
+    import emitter from '../../mixins/emitter.js';
     export default {
         name: 've-scatter',
         mixins: [emitter],

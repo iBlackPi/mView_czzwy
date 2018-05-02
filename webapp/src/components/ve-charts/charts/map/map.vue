@@ -32,9 +32,9 @@
      * coverOption：自定义覆盖配置
      *
     * */
-    import option from '../default-option/map.js';
-    import emitter from '../emitter/emitter.js';
-    import initialize from '../emitter/initialize.js';
+    import option from '../../default/map.js';
+    import emitter from '../../mixins/emitter.js';
+    import initialize from '../../mixins/initialize.js';
     import cityData from './city.js';
 
     export default {

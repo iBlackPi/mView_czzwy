@@ -15,8 +15,8 @@
      * splitNumber: 指示器轴的分割段数。
      * shape：雷达图绘制类型，支持 'polygon' 和 'circle'，默认'polygon'
      * */
-    import option from '../default-option/radar.js';
-    import emitter from '../emitter/emitter.js';
+    import option from '../../default/radar.js';
+    import emitter from '../../mixins/emitter.js';
     export default {
         name: 've-sub-radar',
         mixins: [emitter],

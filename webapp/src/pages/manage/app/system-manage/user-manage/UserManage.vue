@@ -267,19 +267,7 @@
             }
         },
         mounted(){
-            const _this = this;
             this.findByPage(this.page);
-            /*this.$http.get('userController.do?m=findUser').then(({data}) => {
-                if(data.success){
-                    _this.users = data.data;
-                }else{
-                    this.$Notice.error({
-                        title: '请求信息失败'
-                    })
-                }
-            }).catch(err => {
-                throw new Error(err);
-            })*/
         }
     }
 </script>

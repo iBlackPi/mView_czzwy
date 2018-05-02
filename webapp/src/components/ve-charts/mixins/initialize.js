@@ -3,7 +3,7 @@
  * since 2018/1/25
  * author cfw2157
  */
-import {Tool} from './util.js';
+import {Tool} from '../utils/util.js';
 export default {
     mounted: function(){
         let _this = this;

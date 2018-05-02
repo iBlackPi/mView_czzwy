@@ -18,8 +18,8 @@
      *
      *
     * */
-    import option from '../default-option/gauge.js';
-    import emitter from '../emitter/emitter.js';
+    import option from '../../default/gauge.js';
+    import emitter from '../../mixins/emitter.js';
     export default {
         name: 've-sub-gauge',
         mixins: [emitter],

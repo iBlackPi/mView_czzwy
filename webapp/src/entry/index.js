@@ -5,7 +5,7 @@ import axios from 'axios';
 import Iview from 'iview';
 import qs from 'qs';
 import global from '../assets/util/global';
-import Vechart from '../components/echarts/index';
+import Vechart from '../components/ve-charts/index';
 
 //todo 引入新文件时，webpack动态编译会报错
 //todo 全部不需要加后缀

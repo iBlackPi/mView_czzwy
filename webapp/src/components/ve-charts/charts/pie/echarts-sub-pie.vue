@@ -18,8 +18,8 @@
      * 'area' 所有扇区圆心角相同，仅通过半径展现数据大小。
      *
     * */
-    import option from '../default-option/pie.js';
-    import emitter from '../emitter/emitter.js';
+    import option from '../../default/pie.js';
+    import emitter from '../../mixins/emitter.js';
     export default {
         name: 've-sub-pie',
         mixins: [emitter],

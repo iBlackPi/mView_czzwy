@@ -29,9 +29,9 @@
      * 详情见：http://echarts.npmbaidu.com/tutorial.html#ECharts%20%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%92%8C%E8%A1%8C%E4%B8%BA
      *
      * */
-    import option from '../default-option/pie.js';
-    import emitter from '../emitter/emitter.js';
-    import initialize from '../emitter/initialize.js';
+    import option from '../../default/pie.js';
+    import emitter from '../../mixins/emitter.js';
+    import initialize from '../../mixins/initialize.js';
     export default {
         name: 've-pie',
         mixins: [emitter,initialize],

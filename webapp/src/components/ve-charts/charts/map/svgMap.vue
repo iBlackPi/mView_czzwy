@@ -6,7 +6,7 @@
 </template>
 
 <script>
-    import emitter from '../emitter/emitter.js';
+    import emitter from '../../mixins/emitter.js';
     import liquidfill from 'echarts-liquidfill';
 
     export default {

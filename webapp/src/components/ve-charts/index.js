@@ -1,8 +1,8 @@
-import PieChart from './store/pie';
-import RectCoordinate from './store/scatter-bar-line';
-import Map from './store/map';
-import GaugeChart from './store/gauge';
-import RadarChart from './store/radar';
+import PieChart from './charts/pie';
+import RectCoordinate from './charts/scatter-bar-line';
+import Map from './charts/map';
+import GaugeChart from './charts/gauge';
+import RadarChart from './charts/radar';
 import Echarts from 'echarts';
 
 const echart = {

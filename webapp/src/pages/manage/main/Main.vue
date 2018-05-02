@@ -52,7 +52,7 @@
 </style>
 
 <script type="text/javascript">
-    import AsideMenu from '../../../components/AsideMenu.vue';
+    import AsideMenu from '../../../components/aside-menu/AsideMenu.vue';
     import Breadcrumb from '../../../components/bread-crumb/BreadCrumb.vue';
     import HeaderContent from './main-component/HeaderContent.vue';
     export default {

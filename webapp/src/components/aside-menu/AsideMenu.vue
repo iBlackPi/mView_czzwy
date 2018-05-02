@@ -12,9 +12,9 @@
 </template>
 
 <script>
-    import SideBarMenu from './aside-menu/SideBarMenu.vue';
-    import ShrinkMenu from './aside-menu/ShrinkMenu.vue';
-    import {buildTree} from './../../src/assets/util/utils.js';
+    import SideBarMenu from './SideBarMenu.vue';
+    import ShrinkMenu from './ShrinkMenu.vue';
+    import {buildTree} from '../../assets/util/utils.js';
     export default {
         components: {
             'side-bar-menu': SideBarMenu,
@@ -118,7 +118,7 @@
 
 <style lang="less">
 
-    @import '../assets/css/theme.less';
+    @import '../../assets/css/theme.less';
 
     .menu-container {
         width: 100%;
