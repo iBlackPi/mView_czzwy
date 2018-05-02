@@ -15,6 +15,8 @@
                 <loop-sub-menu :menu-data="item.children" :custom-style="true" :open-names="openNames"></loop-sub-menu>
             </Submenu>
             <MenuItem v-else :name="item.name">
+                <!--最底层菜单-->
+                <Icon :type="item.icon" v-if="item.icon"></Icon>
                 <span class="menu-point">{{item.title}}</span>
             </MenuItem>
         </template>

@@ -67,15 +67,15 @@
         height: 100%;
         overflow: hidden;
         background: url(../../assets/imgs/home_bg.jpg) repeat-x;
-        /*animation: move_bg 25s linear alternate infinite;*/
         background-size: cover;
+        /*animation: move_bg 25s linear alternate infinite;*/
     }
     .bigmain-top {
-        .position_absolute(0, 0, 100%, 10%);
+        .position_absolute(0, 0, 100%, 9%);
         .module-common;
     }
     .bigmain-content {
-        .position_absolute(11%, 0, 100%, 89%);
+        .position_absolute(10%, 0, 100%, 90%);
         .bigmain-content-top {
             .position_absolute(0, 0, 100%, 66%);
             .bigmain-content-top-left {

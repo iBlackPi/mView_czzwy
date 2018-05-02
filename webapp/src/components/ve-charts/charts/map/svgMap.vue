@@ -7,7 +7,7 @@
 
 <script>
     import emitter from '../../mixins/emitter.js';
-    import liquidfill from 'echarts-liquidfill';
+    import 'echarts-liquidfill';
 
     export default {
         name: 've-svgMap',
@@ -84,6 +84,8 @@
                     geo: {
                         map: name,
                         roam: false,
+                        left: '17%',
+                        top: '0%',
                         label: {
                             normal: {
                                 show: true,
@@ -102,6 +104,22 @@
                                 show: false,
                                 areaColor: 'rgba(255,0,0,0)'
                             }
+                        }
+                    },
+                    tooltip : {
+                        formatter(params){
+                            return `<span style="color: #01A2FC">${params.name}</span><br>
+                                    <span style="color: rgba(255, 255, 255, .8);">
+                                        信息化投资：<br>
+                                        业务系统数量：<br>
+                                        可云化系统数：<br>
+                                        机房个数：<br>
+                                        服务器台数：<br>
+                                        是否有互联网：<br>
+                                        是否接入政务外网：<br>
+                                        是否有专网：<br>
+                                        资源目录数量：<br>
+                                    </span>`;
                         }
                     },
                     series : [
@@ -153,9 +171,16 @@
                         }]
                 };
                 chart.setOption(option);
-                window.onresize = function(){
+
+                // 点击地图，去往后台信息维护系统
+                chart.on('click', () => {
+                   _this.$router.push({name: 'home'});
+                });
+
+                //防止别的图表的resize被覆盖
+                window.addEventListener('resize', () => {
                     chart.resize();
-                }
+                })
             },
             getGeoJson: function(name){
                 let data = require('./geoJson/'+name+'.geojson'),

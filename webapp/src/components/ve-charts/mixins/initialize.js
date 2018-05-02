@@ -15,7 +15,8 @@ export default {
                 myChart = _this.$echarts.init(document.getElementById(_this.id),null,{renderer: rendererType});
             _this.chart = myChart;
             _this.y = _this.lastOption;
-            console.log('最终option');
+            //todo 测试用，随时删除
+            // console.log('最终option');
             console.log(_this.lastOption);
             myChart.setOption(_this.lastOption);
             myChart.on('click',function(params){
@@ -28,9 +29,9 @@ export default {
                     _this.$emit('mouseover-series',params);
                 }
             });
-            window.onresize = function(){
+            window.addEventListener('resize', () => {
                 myChart.resize();
-            };
+            });
         });
     },
     data: function(){

@@ -1,13 +1,13 @@
 <template>
     <div class="info-maintain">
         <Form ref="formInline" inline style="white-space: nowrap;">
-            <FormItem prop="user">
+            <FormItem prop="user" style="margin-bottom: 15px;">
                 <Input v-model="searchName" placeholder="请输入单位名进行查询"  style="width: 400px;">
                 <span slot="prepend">单位名</span>
                 <Button type="primary" slot="append" icon="ios-search" @click="searchDepartment"></Button>
                 </Input>
             </FormItem>
-            <FormItem>
+            <FormItem style="margin-bottom: 15px;">
                 <!--action="http://192.168.100.228:8080/czportal/upLoadExcelController.do?upLoadExcel"-->
                 <Upload multiple
                         action="http://localhost:8088/czportal/upLoadExcelController.do?upLoadExcel"
@@ -27,53 +27,72 @@
         <Table border :columns="columns" :data="totalInfo"></Table>
         <!--分页-->
         <Page :total="totalCount" show-total show-sizer @on-change="changePage" @on-page-size-change="changePageSize" style="margin: .5rem 0 .5rem 0;"></Page>
+        <department-info-modal></department-info-modal>
     </div>
 </template>
 
 <script>
+    import DepartmentInfoModal from './DepartmentInfoModal';
     export default {
         name: "info-maintain",
         data(){
             return {
                 searchName: '',
-                totalInfo: [],
                 countPerPage: 10,
                 currentPage: 1,
                 totalCount: 0,
                 columns: [
                     {
                         title: '单位名称',
-                        key: 'username',
+                        key: 'departmentName',
                         render: (h, params) => {
                             return h('div', [
-                                h('Icon', {
+                                h('Button', {
                                     props: {
-                                        type: 'person'
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.$bus.$emit('showDepartmentInfoModal', params.row.departmentName);
+                                        }
                                     }
-                                }),
-                                h('span',' ' + params.row.username)
+                                }, params.row.departmentName)
                             ]);
                         }
                     },
                     {
                         title: '信息化投资',
                         key: 'password',
+                        sortable: true
                     },
                     {
                         title: '业务系统数量',
                         key: 'password',
+                        sortable: true
                     },
                     {
                         title: '可云化系统数',
                         key: 'password',
+                        sortable: true
                     },
                     {
                         title: '机房数量',
                         key: 'password',
+                        sortable: true
                     },
                     {
                         title: '服务器台数',
                         key: 'password',
+                        sortable: true
+                    },
+                    {
+                        title: '资源目录数量',
+                        key: 'password',
+                        sortable: true
                     },
                     {
                         title: '是否有互联网',
@@ -86,13 +105,28 @@
                     {
                         title: '是否有专网',
                         key: 'password',
-                    },
-                    {
-                        title: '资源目录数量',
-                        key: 'password',
                     }
-                ]
+                ],
+                totalInfo: [{
+                    departmentName: '工商局',
+                    password:'xxx'
+                },{
+                    departmentName: '住建局',
+                    password:'xxx'
+                },{
+                    departmentName: '教育局',
+                    password:'xxx'
+                },{
+                    departmentName: '财政局',
+                    password:'xxx'
+                },{
+                    departmentName: '宣传部',
+                    password:'xxx'
+                }]
             }
+        },
+        components: {
+            DepartmentInfoModal
         },
         methods: {
             // 上传成功回调

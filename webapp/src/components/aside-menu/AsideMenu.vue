@@ -116,7 +116,7 @@
     };
 </script>
 
-<style lang="less">
+<style lang="less" type="text/less">
 
     @import '../../assets/css/theme.less';
 
