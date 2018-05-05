@@ -22,5 +22,13 @@ export default {
             breadcrumb: '信息详情',
             title: '单位信息化资源详情'
         }
+    },{
+        name: 'computer-room',
+        path: 'computer-room',
+        component: () => import('../../../pages/manage/app/cloud-info/ComputerRoom'),
+        meta: {
+            breadcrumb: '机房维护',
+            title: '机房维护'
+        }
     }]
 };

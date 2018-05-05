@@ -35,9 +35,10 @@ let option = {
             max: 100,
             title : {
                 // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-                fontWeight: 'bolder',
+                fontWeight: 'normal',
                 fontSize: 15,
-                color: '#fff'
+                color: '#fff',
+                offsetCenter: ['0', '40%']
             },
 
             axisLine: {            // 坐标轴线

@@ -2,16 +2,24 @@
     <div class="info-maintain">
         <Form ref="formInline" inline style="white-space: nowrap;">
             <FormItem prop="user" style="margin-bottom: 15px;">
-                <Input v-model="searchName" placeholder="请输入单位名进行查询"  style="width: 400px;">
-                <span slot="prepend">单位名</span>
-                <Button type="primary" slot="append" icon="ios-search" @click="searchDepartment"></Button>
-                </Input>
+                <AutoComplete
+                        v-model="searchName"
+                        :data="autoCompleteData"
+                        :filter-method="filterMethod"
+                        :transfer="true"
+                        @on-select="onSelect"
+                        placeholder="搜索部门关键字,会智能为您补全部门名称"
+                        icon="ios-search"
+                        clearable
+                        style="width: 300px;">
+                </AutoComplete>
+                <!--<Button style="background-color: #2D8CF0; color: #fff;" type="primary" slot="append" icon="ios-search" @click="searchDepartment"></Button>-->
             </FormItem>
             <FormItem style="margin-bottom: 15px;">
-                <!--action="http://192.168.100.228:8080/czportal/upLoadExcelController.do?upLoadExcel"-->
                 <Upload multiple
-                        action="http://localhost:8088/czportal/upLoadExcelController.do?upLoadExcel"
+                        action="http://10.88.8.184:8088/czportal/upLoadExcelController.do?upLoadExcel"
                         name="excelFileUpload"
+                        :show-upload-list="false"
                         :on-success="uploadSuccess"
                         :before-upload="beforeUpload"
                         :format="['xls','XLS','xls','XLSX']"
@@ -24,9 +32,11 @@
                 </Upload>
             </FormItem>
         </Form>
+        <!--展示信息化资源统计总览-->
         <Table border :columns="columns" :data="totalInfo"></Table>
         <!--分页-->
         <Page :total="totalCount" show-total show-sizer @on-change="changePage" @on-page-size-change="changePageSize" style="margin: .5rem 0 .5rem 0;"></Page>
+        <!--对话框：显示部门具体信息-->
         <department-info-modal></department-info-modal>
     </div>
 </template>
@@ -41,10 +51,11 @@
                 countPerPage: 10,
                 currentPage: 1,
                 totalCount: 0,
+                totalInfo: [],
                 columns: [
                     {
                         title: '单位名称',
-                        key: 'departmentName',
+                        key: 'department',
                         render: (h, params) => {
                             return h('div', [
                                 h('Button', {
@@ -57,80 +68,98 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.$bus.$emit('showDepartmentInfoModal', params.row.departmentName);
+                                            // 点击单位的同时，弹出对话框并通知对话框中的组件都去更新自己的数据
+                                            this.$bus.$emit('showDepartmentInfoModal', params.row.department);
                                         }
                                     }
-                                }, params.row.departmentName)
+                                }, params.row.department)
                             ]);
                         }
                     },
                     {
                         title: '信息化投资',
-                        key: 'password',
+                        key: 'money',
                         sortable: true
                     },
                     {
                         title: '业务系统数量',
-                        key: 'password',
+                        key: 'bussinessNum',
                         sortable: true
                     },
                     {
                         title: '可云化系统数',
-                        key: 'password',
+                        key: 'removeNum',
                         sortable: true
                     },
                     {
                         title: '机房数量',
-                        key: 'password',
+                        key: 'machineroomNum',
                         sortable: true
                     },
                     {
                         title: '服务器台数',
-                        key: 'password',
+                        key: 'serverNum',
                         sortable: true
                     },
                     {
                         title: '资源目录数量',
-                        key: 'password',
+                        key: 'cataLogNum',
                         sortable: true
                     },
                     {
                         title: '是否有互联网',
-                        key: 'password',
+                        key: 'hasInternet',
                     },
                     {
                         title: '是否接入政务外网',
-                        key: 'password',
+                        key: 'hasgovExtrant',
                     },
                     {
                         title: '是否有专网',
-                        key: 'password',
+                        key: 'hasspecialNet',
                     }
-                ],
-                totalInfo: [{
-                    departmentName: '工商局',
-                    password:'xxx'
-                },{
-                    departmentName: '住建局',
-                    password:'xxx'
-                },{
-                    departmentName: '教育局',
-                    password:'xxx'
-                },{
-                    departmentName: '财政局',
-                    password:'xxx'
-                },{
-                    departmentName: '宣传部',
-                    password:'xxx'
-                }]
+                ]
+            }
+        },
+        computed: {
+            // 搜索框根据用户输入智能补全功能
+            autoCompleteData(){
+                let czCloudInfo = this.$store.state.czCloudInfo.czCloudInfo;
+                // vue实例化的时候该值为默认的空数组，所以排除初始化的情况
+                if(czCloudInfo instanceof Array){
+                    return;
+                }else{
+                    return Object.keys(czCloudInfo);
+                }
+            }
+        },
+        watch: {
+            // 当搜索框为空时，搜索全部部门
+            searchName(newValue, oldValue){
+                if(newValue === ''){
+                    this.findByPage();
+                }
             }
         },
         components: {
             DepartmentInfoModal
         },
         methods: {
+            // 搜索框根据用户输入智能补全功能：匹配用户输入
+            // option为autoCompleteData数组中的项，该方法会遍历所有项
+            filterMethod(value, option){
+                if(value !== ''){
+                    return option.indexOf(value) !== -1;
+                }
+            },
+            onSelect(department){
+                this.searchName = department;
+                this.findByPage();
+            },
             // 上传成功回调
             uploadSuccess(res, file, fileList){
+                // 上传成功，及时更新数据
+                this.$store.dispatch('czCloudInfo/getCloudInfo', {vm: this});
                 this.$Notice.success({
                     title: `${file.name}上传成功！`
                 });
@@ -153,26 +182,24 @@
                     title: '请上传excel表格！'
                 });
             },
-            searchDepartment(){
-                //模糊查询用户
-                this.findByPage(this.currentPage, this.countPerPage, this.searchName);
-            },
             changePage(destination){
                 this.currentPage = destination;
                 //翻页的时候是带着查询参数去翻页的
-                this.findByPage(this.currentPage, this.countPerPage, this.searchName);
+                this.findByPage();
             },
             changePageSize(pageSize){
                 this.countPerPage = pageSize;
                 //翻页的时候是带着查询参数去翻页的
-                this.findByPage(this.currentPage, this.countPerPage, this.searchName);
+                this.findByPage();
             },
-            findByPage(currentPage, countPerPage, searchName){
-                this.$http.post(`upLoadExcelController.do?query&
-                start=${this.currentPage}&
-                pageSize=${this.countPerPage}&
-                department=${this.searchName}`, page).then(({data}) => {
+            findByPage(){
+                this.$httpt.post(`upLoadExcelController.do?query&start=${this.currentPage}&pageSize=${this.countPerPage}&department=${this.searchName}`).then(({data}) => {
                     if(data.success){
+                        data.data.list.forEach(temp => {
+                            temp.hasInternet ? temp.hasInternet = '是' : temp.hasInternet = '否';
+                            temp.hasgovExtrant ? temp.hasgovExtrant = '是' : temp.hasgovExtrant = '否';
+                            temp.hasspecialNet ? temp.hasspecialNet = '是' : temp.hasspecialNet = '否';
+                        });
                         this.totalInfo = data.data.list;
                         this.totalCount = data.data.totalCount;
                     }else{
@@ -182,7 +209,33 @@
                     }
                 })
             }
+        },
+        mounted(){
+            this.$nextTick(() => {
+               this.findByPage();
+            });
+        },
+        //todo 尽快的获取数据
+        //todo 如果用户直接进入后台页面，那总信息就无法获取到
+        //todo 所以这里尽快的去获取下总览信息，供对话框中的搜索框自动提示功能使用
+        created(){
+            this.$store.dispatch('czCloudInfo/getCloudInfo', {vm: this});
         }
+        // todo 从store中取出总览信息，但这里涉及到分页，所以此处另有分页接口，暂时保留，上线前可删
+        // computed: {
+        //    totalInfo(){
+        //        let temp = this.$store.state.czCloudInfo.czCloudInfo;
+        //        let totalInfo = [];
+        //        Object.keys(temp).forEach(key => {
+        //            temp[key].hasInternet ? temp[key].hasInternet = '是' : temp[key].hasInternet = '否';
+        //            temp[key].hasgovExtrant ? temp[key].hasgovExtrant = '是' : temp[key].hasgovExtrant = '否';
+        //            temp[key].hasspecialNet ? temp[key].hasspecialNet = '是' : temp[key].hasspecialNet = '否';
+        //            totalInfo.push(temp[key]);
+        //        });
+        //        return totalInfo;
+        //    }
+        // },
+
     }
 </script>
 

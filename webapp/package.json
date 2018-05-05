@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --inline --hot --config build/webpack.dev.config.js --port 8080",
-    "build": "cross-env NODE_ENV=production webpack --colors --hide-modules --progress --config build/webpack.prod.config.js",
+    "build": "rmdir dist /S /Q && cross-env NODE_ENV=production webpack --colors --hide-modules --progress --config build/webpack.prod.config.js",
     "test": "cross-env NODE_ENV=development webpack --colors --hide-modules --progress --config build/webpack.dev.build.config.js",
     "mock": "json-server --watch mock_server/server.js --port 9000"
   },

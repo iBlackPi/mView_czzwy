@@ -47,12 +47,12 @@ const vue = new Vue();
 // 创建实例时设置配置的默认值
 // 可以根据实际需求创建多个实例
 const instance = axios.create({
-    baseURL: 'http://localhost:3000',
+    baseURL: 'http://10.88.8.184:3000',
     withCredentials: true
 });
 const instanceTomcat = axios.create({
     baseURL: 'http://localhost:8088/czportal',
-    withCredentials: true
+    withCredentials: true,
 });
 // 访问node服务
 Vue.prototype.$http = instance;
@@ -80,6 +80,18 @@ instance.interceptors.request.use((config) => {
 }, (err) => {
     return Promise.reject(err);
 });
+
+//todo 一定要序列化post请求的数据，否则后台无法获取
+//todo 因为后台是通过@RequestParam而不是@RequestBody，所以只能识别xx=xx&bb=bb格式，而不能解析json格式
+// instanceTomcat.interceptors.request.use((config) => {
+//     //post请求时,将请求体序列化
+//     if(config.method === 'post') {
+//         config.data = qs.stringify(config.data);
+//     }
+//     return config;
+// }, (err) => {
+//     return Promise.reject(err);
+// });
 
 //注册axios 后置拦截器，用于处理应用中所有ajax响应的公共逻辑部分，减少ajax响应中的代码
 //函数中的返回值会作为ajax回调中的参数传入

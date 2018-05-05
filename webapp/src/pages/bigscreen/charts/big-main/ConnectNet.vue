@@ -36,7 +36,9 @@
                     series: [
                         {
                             label: {
-                                show: true
+                                show: true,
+                                position: 'top',
+                                color: '#fff'
                             }
                         }
                     ]
@@ -45,6 +47,27 @@
         },
         components: {
             ModuleLayout
+        },
+        methods: {
+            getInfo(){
+                this.$httpt.get('bigScreenController.do?getOrgInfo').then(({data}) => {
+                    if(data.success){
+                        let temp = data.data;
+                        this.data = [];
+                        this.data.push(temp['internetOrgNum']);
+                        this.data.push(temp['govExtrantOrgNum']);
+                        this.data.push(temp['specilOrgNum']);
+                    }else{
+                        throw new Error('获取单位接入网络信息失败！');
+                    }
+                })
+            }
+        },
+        mounted(){
+            let _this = this;
+            this.$nextTick(() => {
+                _this.getInfo();
+            })
         }
     }
 </script>

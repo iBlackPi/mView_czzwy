@@ -108,17 +108,39 @@
                     },
                     tooltip : {
                         formatter(params){
+                            let money = '暂无数据',
+                                bussinessNum = '暂无数据',
+                                removeNum = '暂无数据',
+                                machineroomNum = '暂无数据',
+                                serverNum = '暂无数据',
+                                hasInternet = '暂无数据',
+                                hasgovExtrant = '暂无数据',
+                                hasspecialNet = '暂无数据',
+                                cataLogNum = '暂无数据';
+                            //todo 命名空间就代表store中的state，所以可以直接点属性获取数据
+                            let temp = _this.$store.state.czCloudInfo.czCloudInfo[params.name];
+                            if(temp){
+                                money = temp.money;
+                                bussinessNum = temp.bussinessNum;
+                                removeNum = temp.removeNum;
+                                machineroomNum = temp.machineroomNum;
+                                serverNum = temp.serverNum;
+                                temp.hasInternet ? hasInternet = '是' : hasInternet = '否';
+                                temp.hasgovExtrant ? hasgovExtrant = '是' : hasgovExtrant = '否';
+                                temp.hasspecialNet ? hasspecialNet = '是' : hasspecialNet = '否';
+                                cataLogNum = temp.cataLogNum;
+                            }
                             return `<span style="color: #01A2FC">${params.name}</span><br>
                                     <span style="color: rgba(255, 255, 255, .8);">
-                                        信息化投资：<br>
-                                        业务系统数量：<br>
-                                        可云化系统数：<br>
-                                        机房个数：<br>
-                                        服务器台数：<br>
-                                        是否有互联网：<br>
-                                        是否接入政务外网：<br>
-                                        是否有专网：<br>
-                                        资源目录数量：<br>
+                                        信息化投资：<span style="color: #217bcc;"> ${money}</span><br>
+                                        业务系统数量：<span style="color: #217bcc;"> ${bussinessNum}</span><br>
+                                        可云化系统数：<span style="color: #217bcc;"> ${removeNum}</span><br>
+                                        机房个数：<span style="color: #217bcc;"> ${machineroomNum}</span><br>
+                                        服务器台数：<span style="color: #217bcc;"> ${serverNum}</span><br>
+                                        是否有互联网：<span style="color: #217bcc;"> ${hasInternet}</span><br>
+                                        是否接入政务外网：<span style="color: #217bcc;"> ${hasgovExtrant}</span><br>
+                                        是否有专网：<span style="color: #217bcc;"> ${hasspecialNet}</span><br>
+                                        资源目录数量：<span style="color: #217bcc;"> ${cataLogNum}</span><br>
                                     </span>`;
                         }
                     },

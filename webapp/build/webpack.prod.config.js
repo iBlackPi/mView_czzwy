@@ -14,6 +14,8 @@ module.exports = merge(baseConfig, {
     plugins: [
         new htmlWebpackPlugin({
             template: './src/entry/index.html',
+            // todo 一个网页最起码的小个性要有
+            favicon: './src/assets/imgs/favicon.ico',
             minify: {
                 //去掉注释
                 removeComments: true,

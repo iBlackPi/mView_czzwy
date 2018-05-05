@@ -50,6 +50,33 @@
         },
         components: {
             ModuleLayout
+        },
+        methods: {
+            // 请求政务信息系统信息
+            getInfo(){
+                this.$httpt.get('bigScreenController.do?getCzInfomatinSystem').then(({data}) => {
+                    if(data.success){
+                        let temp = data.data;
+                        let pieData = [
+                            {value: 335, name: '互联网'},
+                            {value: 310, name: '政务外网'},
+                            {value: 274, name: '专网'}
+                        ];
+                        pieData[0].value = temp.internetInfoNum;
+                        pieData[1].value = temp.govExtrantInfoNum;
+                        pieData[2].value = temp.specialNetInfoNum;
+                        this.pieData = pieData;
+                    }else{
+                        throw new Error('获取政务统计信息失败！');
+                    }
+                })
+            }
+        },
+        mounted(){
+            let _this = this;
+            this.$nextTick(() => {
+                _this.getInfo();
+            })
         }
     }
 </script>

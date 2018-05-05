@@ -8,17 +8,17 @@
                 :showLegend=true
                 :coverOption="coverOption">
             <ve-bar
-                    :data="data1"
+                    :data="dataInternet"
                     name="互联网"
                     barWidth="20"
             ></ve-bar>
             <ve-bar
-                    :data="data2"
+                    :data="dataPolicy"
                     name="政务外网"
                     barWidth="20"
             ></ve-bar>
             <ve-bar
-                    :data="data3"
+                    :data="dataSpecial"
                     name="专网"
                     barWidth="20"
             ></ve-bar>
@@ -33,9 +33,9 @@
         data(){
             return {
                 xAxisData: ['2018', '2019', '2020'],
-                data1: [90, 200, 150],
-                data2: [100, 150, 190],
-                data3: [70, 140, 160],
+                dataInternet: [90, 200, 150],
+                dataPolicy: [100, 150, 190],
+                dataSpecial: [70, 140, 160],
                 coverOption: {
                     grid: {
                         top: '18%',
@@ -48,17 +48,23 @@
                     series: [
                         {
                             label: {
-                                show: true
+                                show: true,
+                                position: 'top',
+                                color: '#fff'
                             }
                         },
                         {
                             label: {
-                                show: true
+                                show: true,
+                                position: 'top',
+                                color: '#fff'
                             }
                         },
                         {
                             label: {
-                                show: true
+                                show: true,
+                                position: 'top',
+                                color: '#fff'
                             }
                         }
                     ]
@@ -67,6 +73,31 @@
         },
         components: {
             ModuleLayout
+        },
+        methods: {
+            getInfo(){
+                this.$httpt.get('bigScreenController.do?getInfoSysOfRemoveInDesignatedYears').then((res) => {
+                    let temp = res.data;
+                    if(temp){
+                        this.dataInternet = [];
+                        this.dataPolicy = [];
+                        this.dataSpecial = [];
+                        temp.forEach((item) => {
+                            this.dataInternet.push(item['internetInfoNum']);
+                            this.dataPolicy.push(item['govExtrantInfoNum']);
+                            this.dataSpecial.push(item['specialNetInfoNum']);
+                        });
+                    }else{
+                        throw new Error('获取2018-2020迁移数量信息失败！');
+                    }
+                })
+            }
+        },
+        mounted(){
+            let _this = this;
+            this.$nextTick(() => {
+                _this.getInfo();
+            })
         }
     }
 </script>

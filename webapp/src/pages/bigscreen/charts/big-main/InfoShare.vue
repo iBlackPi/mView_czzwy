@@ -37,7 +37,9 @@
                     series: [
                         {
                             label: {
-                                show: true
+                                show: true,
+                                color: '#fff',
+                                position: 'top'
                             }
                         }
                     ]
@@ -46,6 +48,27 @@
         },
         components: {
             ModuleLayout
+        },
+        methods: {
+            getInfo(){
+                this.$httpt.get('bigScreenController.do?getTop5Org').then(res => {
+                    if(res.data){
+                        let temp = res.data;
+                        this.data = [];
+                        Object.keys(temp).forEach((key) => {
+                            this.data.unshift(temp[key]);
+                        });
+                    }else{
+                        throw new Error('获取信息共享需求量失败！');
+                    }
+                })
+            }
+        },
+        mounted(){
+            let _this = this;
+            this.$nextTick(() => {
+                _this.getInfo();
+            })
         }
     }
 </script>

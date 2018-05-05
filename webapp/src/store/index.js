@@ -2,7 +2,8 @@ import menu from './modules/menu';
 import auth from './modules/auth';
 import login from './modules/login';
 import empowerTree from './modules/empower-tree';
-import validateInfo from './modules/validateInfo';
+import validateInfo from './modules/validate-info';
+import czCloudInfo from './modules/cz-cloud-info';
 
 export default {
     modules: {
@@ -10,6 +11,7 @@ export default {
         auth,
         login,
         empowerTree,
-        validateInfo
+        validateInfo,
+        czCloudInfo
     }
 };

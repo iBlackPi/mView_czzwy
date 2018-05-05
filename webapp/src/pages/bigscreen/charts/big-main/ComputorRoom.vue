@@ -20,12 +20,7 @@
         name: "computor-room",
         data(){
             return {
-                pieData:
-                    [
-                        {value:335, name:'自建机房'},
-                        {value:310, name:'托管机房'},
-                        {value:274, name:'租用云服务'}
-                    ],
+                pieData: [],
                 coverOption: {
                     legend: {
                         top: 60,
@@ -40,7 +35,6 @@
                                 },
                                 emphasis: {
                                     show: false,
-
                                 }
                             }
                         }
@@ -50,6 +44,33 @@
         },
         components: {
             ModuleLayout
+        },
+        methods: {
+            // 请求机房信息
+            getInfo(){
+                this.$httpt.get('bigScreenController.do?getCzMachineRoom').then(({data}) => {
+                    if(data.success){
+                        let temp = data.data;
+                        let pieData = [
+                            {value:335, name:'自建机房'},
+                            {value:310, name:'托管机房'},
+                            {value:274, name:'租用云服务'}
+                        ];
+                        pieData[0].value = temp.selfBuiltMachineRoomNum;
+                        pieData[1].value = temp.trusteeshipRoomNum;
+                        pieData[2].value = temp.cloudServiceNum;
+                        this.pieData = pieData;
+                    }else{
+                        throw new Error('获取机房信息失败！');
+                    }
+                })
+            }
+        },
+        mounted(){
+            let _this = this;
+            this.$nextTick(() => {
+                _this.getInfo();
+            })
         }
     }
 </script>

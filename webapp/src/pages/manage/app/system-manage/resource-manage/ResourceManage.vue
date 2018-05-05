@@ -5,15 +5,6 @@
                 <p slot="title" style="font-weight: normal;">资源概览</p>
                 <a href="#" slot="extra" @click.prevent="getResource">
                     <Icon type="ios-loop-strong"></Icon>
-                    <!--todo alibaba图标测试-->
-                    <!--<i class="iconfont icon-addition"></i>-->
-                    <!--<f-icon name="save"></f-icon>-->
-                    <!--<svg class="icon" aria-hidden="true">-->
-                        <!--<use xlink:href="#icon-danmai"></use>-->
-                    <!--</svg>-->
-                    <!--<svg class="icon" aria-hidden="true">-->
-                        <!--<use xlink:href="#icon-deguo"></use>-->
-                    <!--</svg>-->
                 </a>
                 <Input placeholder="输入资源名称">
                     <Button slot="append" icon="ios-search"></Button>

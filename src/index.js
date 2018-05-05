@@ -17,9 +17,7 @@ const app = express();
 app.all('*', function(req, res, next) {
     // todo Allow-Origin只允许设置一个，但是我们可以通过变量，然后代码动态的识别当前访问的地址
     // todo 这里是从req中取headers的值，而不是res
-    if(req.headers.origin === 'http://localhost:8080' || req.headers.origin === 'http://localhost:63342'){
-        res.header("Access-Control-Allow-Origin", req.headers.origin);
-    }
+    res.header("Access-Control-Allow-Origin", req.headers.origin);
     // todo The value of the 'Access-Control-Allow-Origin' header in the response
     // todo must not be the wildcard '*' when the request's credentials mode is 'include'
     // todo 如果要携带cookie，即request中带有credentials， 则Allow-Origin不能是通配符*
