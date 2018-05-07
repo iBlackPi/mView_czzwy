@@ -53,7 +53,7 @@ const instance = axios.create({
 });
 const instanceTomcat = axios.create({
     // baseURL: 'http://localhost:8088/czportal',
-    baseURL: 'http://111.62.40.193:9603',
+    baseURL: 'http://111.62.40.193:9603/czportal',
     withCredentials: true,
 });
 // 访问node服务

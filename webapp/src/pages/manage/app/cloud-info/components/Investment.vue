@@ -20,21 +20,7 @@
                 columns: [
                     {
                         title: '项目名称',
-                        key: 'projectname',
-                        filters: [
-                            {
-                                label: '项目名称',
-                                value: 1
-                            }
-                        ],
-                        filterMultiple: false,
-                        filterMethod (value, row) {
-                            if (value === 1) {
-                                return row.age > 25;
-                            } else if (value === 2) {
-                                return row.age < 25;
-                            }
-                        }
+                        key: 'projectname'
                     },
                     {
                         title: '年度',

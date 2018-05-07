@@ -161,6 +161,8 @@
             uploadSuccess(res, file, fileList){
                 // 上传成功，及时更新数据
                 this.$store.dispatch('czCloudInfo/getCloudInfo', {vm: this});
+                // 上传成功，及时更新数据
+                this.findByPage();
                 this.$Notice.success({
                     title: `${file.name}上传成功！`
                 });
