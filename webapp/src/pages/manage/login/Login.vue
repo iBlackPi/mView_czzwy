@@ -9,7 +9,7 @@
                     </Input>
                 </FormItem>
                 <FormItem prop="password">
-                    <Input autocomplete="new-password" type="password" v-model="loginModel.password" placeholder="请输入密码">
+                    <Input type="password" v-model="loginModel.password" placeholder="请输入密码">
                         <Icon type="ios-person-outline" slot="prepend"></Icon>
                     </Input>
                 </FormItem>
