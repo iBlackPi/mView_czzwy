@@ -20,19 +20,19 @@
                 columns: [
                     {
                         title: '信息系统名称',
-                        key: 'busiSysName'
+                        key: 'infomationSystemName'
                     },
                     {
                         title: '是否可云化',
-                        key: 'password'
+                        key: 'remove'
                     },
                     {
                         title: '部署位置',
-                        key: 'password'
+                        key: 'deployMode'
                     },
                     {
                         title: '服务器类型',
-                        key: 'password'
+                        key: 'serverType'
                     }
                 ]
             }

@@ -20,7 +20,7 @@
                 columns: [
                     {
                         title: '项目名称',
-                        key: 'projectName',
+                        key: 'projectname',
                         filters: [
                             {
                                 label: '项目名称',
@@ -38,22 +38,22 @@
                     },
                     {
                         title: '年度',
-                        key: 'password',
+                        key: 'year',
                         sortable: true
                     },
                     {
                         title: '硬件',
-                        key: 'password',
+                        key: 'hardware',
                         sortable: true
                     },
                     {
                         title: '软件',
-                        key: 'password',
+                        key: 'software',
                         sortable: true
                     },
                     {
                         title: '运行维护',
-                        key: 'password',
+                        key: 'maintainfee',
                         sortable: true
                     }
                 ]
