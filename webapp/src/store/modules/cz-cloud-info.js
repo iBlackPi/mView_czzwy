@@ -105,7 +105,11 @@ const actions = {
             if(res.data){
                 commit('restoreTotalInfo', {
                     totalInfo: res.data
-                })
+                });
+                // 当前部门
+                commit('restoreCurrentDepartment', {
+                    department: department
+                });
             }else{
                 console.error('获取总信息失败！');
             }

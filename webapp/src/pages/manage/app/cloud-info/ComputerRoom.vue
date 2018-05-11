@@ -2,98 +2,124 @@
     <div class="computer-room">
         <Card style="height: 100%;">
             <p slot="title" style="font-weight: normal;">机房信息维护</p>
-
-            <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
-                <FormItem label="自建机房" prop="selfBuiltMachineRoomNum">
-                    <Input v-model="formValidate.selfBuiltMachineRoomNum" :disabled="!isEdit" placeholder="自建机房个数"></Input>
-                </FormItem>
-                <FormItem label="托管机房" prop="trusteeshipRoomNum">
-                    <Input v-model="formValidate.trusteeshipRoomNum" :disabled="!isEdit" placeholder="托管机房个数"></Input>
-                </FormItem>
-                <FormItem label="租用云主机" prop="cloudServiceNum">
-                    <Input v-model="formValidate.cloudServiceNum" :disabled="!isEdit" placeholder="租用云主机个数"></Input>
-                </FormItem>
-                <FormItem v-if="isEdit">
-                    <Button type="primary" @click="handleSubmit('formValidate')">保存</Button>
-                    <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
-                </FormItem>
-            </Form>
+            <AutoComplete
+                    v-model="searchName"
+                    :data="autoCompleteData"
+                    :filter-method="filterMethod"
+                    :transfer="true"
+                    @on-select="onSelect"
+                    placeholder="搜索部门名，若存在会智能提示"
+                    clearable
+                    icon="ios-search"
+                    style="width: 300px;">
+            </AutoComplete>
+            <Table border :columns="columns" :data="computerRooms" style="margin-top: 1rem;"></Table>
+            <Page :total="totalCount" show-total show-sizer @on-change="changePage" @on-page-size-change="changePageSize" style="margin: .5rem 0 .5rem 0;"></Page>
         </Card>
-        <div class="button-container">
-            <!--编辑资源-->
-            <Button type="primary" shape="circle" icon="edit" v-if="!isEdit" @click="edit"></Button>
-            <!--todo 在v-if的渲染时，会出现渲染顺序问题，导致文字渲染不出来，这里采用v-show-->
-            <Button type="warning" shape="circle" v-show="isEdit" @click="cancelEdit">关闭编辑</Button>
-        </div>
+        <computer-room-modal></computer-room-modal>
     </div>
 </template>
 
 <script>
+    import ComputerRoomModal from './components/ComputerRoomModal';
     export default {
         name: "",
         data () {
             return {
-                formValidate: {
-                    selfBuiltMachineRoomNum: '',
-                    trusteeshipRoomNum: '',
-                    cloudServiceNum: '',
-                    // todo 后台需要，前台无实际意义
-                    // todo 该字段严谨手动改动
-                    id: ''
-                },
-                // 暂存用户最后一次保存的状态
-                // 用于用户点击“关闭修改”让文本框中数据回到最后一次保存的状态
-                formValidateLastSave: {
-                    selfBuiltMachineRoomNum: '',
-                    trusteeshipRoomNum: '',
-                    cloudServiceNum: '',
-                    id: ''
-                },
-                // 是否修改机房信息，默认不是修改状态，即提交框、重置框不显示；输入框置灰
-                isEdit: false,
-                ruleValidate: {
-                    //todo async-validator无法验证数字的问题，用正则解决
-                    selfBuiltMachineRoomNum: [
-                        { required: true, pattern: /^\d+$/, message: '请输入自建机房个数（必须数值类型）', trigger: 'blur' },
-                    ],
-                    trusteeshipRoomNum: [
-                        { required: true, pattern: /^\d+$/, message: '请输入托管机房个数（必须数值类型）', trigger: 'blur' },
-                    ],
-                    cloudServiceNum: [
-                        { required: true, pattern: /^\d+$/, message: '请输入托管云主机个数（必须数值类型）', trigger: 'blur' },
-                    ]
+                columns: [
+                    {
+                        title: 'ID',
+                        key: 'id'
+                    },
+                    {
+                        title: '部门名称',
+                        key: 'department'
+                    },
+                    {
+                        title: '自建机房',
+                        key: 'selfBuiltMachineRoomNum'
+                    },
+                    {
+                        title: '托管机房',
+                        key: 'trusteeshipRoomNum'
+                    },
+                    {
+                        title: '租用云主机',
+                        key: 'cloudServiceNum'
+                    },
+                    {
+                        title: '操作',
+                        key: 'action',
+                        width: 150,
+                        align: 'center',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.$bus.$emit('showUpdateComputerRoom', params.row);
+                                        }
+                                    }
+                                }, '修改')
+                            ]);
+                        }
+                    }
+                ],
+                computerRooms: [],
+                pageSize: 10,
+                start: 1,
+                totalCount: 0,
+                searchName: '',
+                department: ''
+            }
+        },
+        computed: {
+            // 搜索框根据用户输入智能补全功能
+            autoCompleteData(){
+                let czCloudInfo = this.$store.state.czCloudInfo.czCloudInfo;
+                // vue实例化的时候该值为默认的空数组，所以排除初始化的情况
+                if(czCloudInfo instanceof Array){
+
+                }else{
+                    return Object.keys(czCloudInfo);
                 }
             }
         },
+        watch: {
+            // 当搜索框为空时，默认搜索财政局
+            searchName(newValue, oldValue){
+                if(newValue === ''){
+                    this.department = '';
+                    this.getComputerRoomInfo();
+                }
+            }
+        },
+        components: {
+            ComputerRoomModal
+        },
         methods: {
-            handleSubmit (name) {
-                this.$refs[name].validate((valid) => {
-                    if (valid) {
-                        this.$httpt.post('machineRoomController.do?saveOrUpdateMachineRoom', this.formValidate).then(({data}) => {
-                            if(data.success){
-                                this.$Notice.success({title: '保存成功!'});
-                                // 缓存保存的数据，供“关闭编辑”后回溯最后一次的成功保存状态
-                                // 采用深拷贝
-                                this.formValidateLastSave.selfBuiltMachineRoomNum = this.formValidate.selfBuiltMachineRoomNum;
-                                this.formValidateLastSave.trusteeshipRoomNum = this.formValidate.trusteeshipRoomNum;
-                                this.formValidateLastSave.cloudServiceNum = this.formValidate.cloudServiceNum;
-                                this.formValidateLastSave.id = this.formValidate.id;
-                            }else{
-                                this.$Notice.error({title: '保存失败!'});
-                            }
-                        });
-                    }
-                })
+            changePage(destination){
+                this.start = destination;
+                this.getComputerRoomInfo();
             },
-            getComperRoomInfo(){
-                this.$httpt.get('machineRoomController.do?getCzMachineRoom').then(({data}) => {
+            changePageSize(pageSize){
+                this.pageSize = pageSize;
+                this.start = 1;
+                //翻页的时候是带着查询参数去翻页的
+                this.getComputerRoomInfo();
+            },
+            getComputerRoomInfo(){
+                this.$httpt.get(`machineRoomController.do?getCzMachineRooms&start=${this.start}&pageSize=${this.pageSize}`).then(({data}) => {
                     if(data.success){
-                        this.formValidate = data.data;
-                        // 这里要进行深拷贝，不能共用同一个对象
-                        this.formValidateLastSave.selfBuiltMachineRoomNum = data.data.selfBuiltMachineRoomNum;
-                        this.formValidateLastSave.trusteeshipRoomNum = data.data.trusteeshipRoomNum;
-                        this.formValidateLastSave.cloudServiceNum = data.data.cloudServiceNum;
-                        this.formValidateLastSave.id = data.data.id;
+                        this.computerRooms = data.data.list;
+                        this.totalCount = data.data.totalCount;
                     }else{
                         this.$Notice.error({
                             title: '获取机房信息失败'
@@ -101,24 +127,25 @@
                     }
                 })
             },
-            handleReset (name) {
-                this.$refs[name].resetFields();
+            // 搜索框根据用户输入智能补全功能：匹配用户输入
+            // option为autoCompleteData数组中的项，该方法会遍历所有项
+            filterMethod(value, option){
+                if(value !== ''){
+                    return option.indexOf(value) !== -1;
+                }
             },
-            edit(){
-                this.isEdit = true;
+            onSelect(department){
+                this.department = department;
+                this.getComputerRoomInfo();
             },
-            cancelEdit(){
-                this.isEdit = false;
-                // 点击“关闭修改”按钮后，应该让文本框中的数据回溯到最后一次成功保存的状态
-                this.formValidate.selfBuiltMachineRoomNum = this.formValidateLastSave.selfBuiltMachineRoomNum;
-                this.formValidate.trusteeshipRoomNum = this.formValidateLastSave.trusteeshipRoomNum;
-                this.formValidate.cloudServiceNum = this.formValidateLastSave.cloudServiceNum;
-                this.formValidate.id = this.formValidateLastSave.id;
-            }
         },
         mounted(){
             this.$nextTick(() => {
-                this.getComperRoomInfo();
+                this.getComputerRoomInfo();
+            });
+            //监听对话框的更新通知
+            this.$bus.$on('updateComputerRoomInfo', () => {
+                this.getComputerRoomInfo();
             });
         }
     }

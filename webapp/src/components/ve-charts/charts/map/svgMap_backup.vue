@@ -46,7 +46,7 @@
                         });
                     }
                 }
-                console.log(res);
+                // console.log(res);
                 return res;
             },
             drawMap: function(name,path){

@@ -44,7 +44,7 @@
 </template>
 
 <script>
-    import DepartmentInfoModal from './DepartmentInfoModal';
+    import DepartmentInfoModal from './components/DepartmentInfoModal';
     export default {
         name: "info-maintain",
         data(){
