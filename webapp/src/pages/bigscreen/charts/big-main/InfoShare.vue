@@ -23,8 +23,8 @@
         name: "computor-room",
         data(){
             return {
-                yAxisData: ['教育局', '质监局', '住建局', '法院', '财政局'],
-                data: [150, 200, 250, 334, 390],
+                yAxisData: ['工信局', '住建局', '发改委', '审计局', '民政局'],
+                data: [5, 6, 6, 7, 10],
                 coverOption: {
                     grid: {
                         top: '12%',
@@ -67,7 +67,7 @@
         mounted(){
             let _this = this;
             this.$nextTick(() => {
-                _this.getInfo();
+                // _this.getInfo();
             })
         }
     }

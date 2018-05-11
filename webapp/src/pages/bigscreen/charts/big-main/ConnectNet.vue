@@ -22,8 +22,8 @@
         name: "computor-room",
         data(){
             return {
-                xAxisData: ['互联网', '政务外网', '业务专网'],
-                data: [70, 80, 40],
+                xAxisData: ['互联网', '政务外网', '业务专线', '政务内网'],
+                data: [56, 60, 66, 10],
                 coverOption: {
                     grid: {
                         top: '12%',
@@ -66,7 +66,7 @@
         mounted(){
             let _this = this;
             this.$nextTick(() => {
-                _this.getInfo();
+                // _this.getInfo();
             })
         }
     }

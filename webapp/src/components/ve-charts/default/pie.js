@@ -57,7 +57,8 @@ let basicSerie =
     label: {
         normal: {
             show: true,
-            position: 'outside'
+            position: 'outside',
+            formatter: '{b}: {c}'
         },
         emphasis: {
             show: true,

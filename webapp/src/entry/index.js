@@ -47,13 +47,13 @@ const vue = new Vue();
 // 创建实例时设置配置的默认值
 // 可以根据实际需求创建多个实例
 const instance = axios.create({
-    // baseURL: 'http://10.88.8.184:3000',
-    baseURL: 'http://111.62.40.193:9601',
+    baseURL: 'http://10.88.8.184:3000',
+    // baseURL: 'http://111.62.40.193:9601',
     withCredentials: true
 });
 const instanceTomcat = axios.create({
-    // baseURL: 'http://localhost:8088/czportal',
-    baseURL: 'http://111.62.40.193:9603/czportal',
+    baseURL: 'http://localhost:8088/czportal',
+    // baseURL: 'http://111.62.40.193:9603/czportal',
     withCredentials: true,
 });
 // 访问node服务
@@ -194,7 +194,7 @@ const authCheck = (routerToName, next) => {
 
 // 每次刷新或者路由的改变，都涉及到用户可能要去请求数据，所以都要去验证用户的合法性
 router.beforeEach((to, from, next) => {
-    console.log(to.name, from.name);
+    Iview.LoadingBar.start();
     // 给页面tab加title
     if (to.meta.title) {
         document.title = to.meta.title
@@ -256,6 +256,8 @@ router.beforeEach((to, from, next) => {
 
 //300毫秒之后关闭加载动画
 router.afterEach((to, from) => {
+    // 关闭页面头部的进度条
+    Iview.LoadingBar.finish();
     setTimeout(() => {
         //跳转完,关闭加载动画
         router.app.$Spin.hide();

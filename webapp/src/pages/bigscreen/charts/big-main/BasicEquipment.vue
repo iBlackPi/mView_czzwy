@@ -14,7 +14,6 @@
                     barWidth="20"
             ></ve-bar>
         </ve-rect-coordinate>
-
     </module-layout>
 </template>
 
@@ -24,11 +23,11 @@
         name: "computor-room",
         data(){
             return {
-                xAxisData: ['小机', 'X86服务器', '虚机', '网络设备', 'PC终端'],
-                data: [10, 250, 200, 334, 390],
+                xAxisData: ['小机', 'X86服务器', '虚机', '网络设备'],
+                data: [14, 342, 90, 390],
                 coverOption: {
                     grid: {
-                        top: '12%',
+                        top: '15%',
                         bottom: '15%'
                     },
                     legend: {
@@ -66,9 +65,8 @@
             }
         },
         mounted(){
-            let _this = this;
             this.$nextTick(() => {
-                _this.getInfo();
+                // this.getInfo();
             })
         }
     }

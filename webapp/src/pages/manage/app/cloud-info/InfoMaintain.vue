@@ -19,7 +19,7 @@
                 <!--action="http://111.62.40.193:9603/czportal/upLoadExcelController.do?upLoadExcel"-->
                 <!--action="http://10.88.8.184:8088/czportal/upLoadExcelController.do?upLoadExcel"-->
                 <Upload multiple
-                        action="http://111.62.40.193:9603/czportal/upLoadExcelController.do?upLoadExcel"
+                        action="http://10.88.8.184:8088/czportal/upLoadExcelController.do?upLoadExcel"
                         name="excelFileUpload"
                         :show-upload-list="false"
                         :on-success="uploadSuccess"
@@ -160,13 +160,25 @@
             },
             // 上传成功回调
             uploadSuccess(res, file, fileList){
+                if(res.success){
+                    this.$Message.success({
+                            content: `${file.name}上传成功`,
+                        }
+                    );
+                }else{
+                    this.$Loading.error();
+                    this.$Message.error({
+                            content: `${file.name}部分上传失败！${res.msg}`,
+                            duration: 0,
+                            closable: true
+                        }
+                    );
+                }
                 // 上传成功，及时更新数据
                 this.$store.dispatch('czCloudInfo/getCloudInfo', {vm: this});
                 // 上传成功，及时更新数据
                 this.findByPage();
-                this.$Notice.success({
-                    title: `${file.name}上传成功！`
-                });
+
             },
             // 验证excel文件命名
             beforeUpload(file){

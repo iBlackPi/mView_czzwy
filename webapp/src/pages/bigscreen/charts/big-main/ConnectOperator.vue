@@ -9,6 +9,7 @@
             <ve-sub-gauge :data="dataMobile" :center="positionLeft"></ve-sub-gauge>
             <ve-sub-gauge :data="dataTele" :center="positionCenter"></ve-sub-gauge>
             <ve-sub-gauge :data="dataUnicom" :center="positionRight"></ve-sub-gauge>
+            <ve-sub-gauge :data="dataUnicom" :center="positionLRight"></ve-sub-gauge>
         </ve-gauge>
     </module-layout>
 </template>
@@ -19,12 +20,14 @@
         name: "computor-room",
         data(){
             return {
-                dataMobile: [{value: 30, name: '移动'}],
-                dataTele: [{value: 50, name: '电信'}],
-                dataUnicom: [{value: 90, name: '联通'}],
-                positionLeft: ['20%', '50%'],
-                positionCenter: ['50%', '50%'],
-                positionRight: ['80%', '50%'],
+                dataMobile: [{value: 150, name: '移动'}],
+                dataTele: [{value: 34, name: '电信'}],
+                dataUnicom: [{value: 87, name: '联通'}],
+                dataSARFT: [{value: 36, name: '广电'}],
+                positionLeft: ['13%', '50%'],
+                positionCenter: ['37.5%', '50%'],
+                positionRight: ['62.5%', '50%'],
+                positionLRight: ['87%', '50%'],
                 coverOption: {
 
                 }

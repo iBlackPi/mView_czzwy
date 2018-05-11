@@ -20,7 +20,11 @@
         name: "computor-room",
         data(){
             return {
-                pieData: [],
+                pieData: [
+                    {value: 64, name:'自建机房'},
+                    {value: 14, name:'托管机房'},
+                    {value: 11, name:'租用云服务'}
+                ],
                 coverOption: {
                     legend: {
                         top: 60,
@@ -31,7 +35,7 @@
                             label: {
                                 normal: {
                                     show: true,
-                                    formatter: `{b}:{d}`
+                                    formatter: `{c}`
                                 },
                                 emphasis: {
                                     show: false,
@@ -52,9 +56,9 @@
                     if(data.success){
                         let temp = data.data;
                         let pieData = [
-                            {value:335, name:'自建机房'},
-                            {value:310, name:'托管机房'},
-                            {value:274, name:'租用云服务'}
+                            {value: 64, name:'自建机房'},
+                            {value: 14, name:'托管机房'},
+                            {value: 11, name:'租用云服务'}
                         ];
                         pieData[0].value = temp.selfBuiltMachineRoomNum;
                         pieData[1].value = temp.trusteeshipRoomNum;
@@ -67,9 +71,8 @@
             }
         },
         mounted(){
-            let _this = this;
             this.$nextTick(() => {
-                _this.getInfo();
+                // this.getInfo();
             })
         }
     }

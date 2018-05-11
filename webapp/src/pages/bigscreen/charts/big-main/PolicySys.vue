@@ -22,9 +22,10 @@
             return {
                 pieData:
                     [
-                        {value: 335, name: '互联网'},
-                        {value: 310, name: '政务外网'},
-                        {value: 274, name: '专网'}
+                        {value: 112, name: '互联网'},
+                        {value: 20, name: '政务外网'},
+                        {value: 110, name: '专网'},
+                        {value: 192, name: '统建'}
                     ],
                 coverOption: {
                     legend: {
@@ -36,7 +37,7 @@
                             label: {
                                 normal: {
                                     show: true,
-                                    formatter: `{b}:{d}`
+                                    formatter: `{c}`
                                 },
                                 emphasis: {
                                     show: false,
@@ -75,7 +76,7 @@
         mounted(){
             let _this = this;
             this.$nextTick(() => {
-                _this.getInfo();
+                // _this.getInfo();
             })
         }
     }

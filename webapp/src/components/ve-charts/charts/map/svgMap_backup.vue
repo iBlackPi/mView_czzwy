@@ -165,7 +165,6 @@
                             shape: path
                         }]
                 };
-                debugger;
                 chart.setOption(option);
 
                 // 点击地图，去往后台信息维护系统

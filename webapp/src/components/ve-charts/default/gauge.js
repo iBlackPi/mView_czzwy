@@ -32,7 +32,7 @@ let option = {
             clockwise: true,
             splitNumber: 10,
             min: 0,
-            max: 100,
+            max: 200,
             title : {
                 // 其余属性默认使用全局文本样式，详见TEXTSTYLE
                 fontWeight: 'normal',
@@ -65,7 +65,7 @@ let option = {
             },
             detail: {
                 offsetCenter: [0, '65%'],
-                formatter: '{value}分',
+                formatter: '{value}',
                 // todo 默认字体大小适中
                 fontSize: 15
             },

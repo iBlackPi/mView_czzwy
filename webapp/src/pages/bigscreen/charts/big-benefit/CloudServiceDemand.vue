@@ -20,11 +20,11 @@
         data(){
             return {
                 data:  [{
-                    value : [430, 100, 280, 350, 500],
+                    value : [3, 5, 7, 9, 10],
                     name : '云服务目录需求'
                 }],
                 indicator: [
-                    {name: '云安全'}, {name: 'IaaS'}, {name: 'PaaS'}, {name: '灾备'}, {name: '云运维'}
+                    {name: '增值服务'}, {name: '安全'}, {name: '网络'}, {name: '灾备'}, {name: '云运维'}
                 ],
                 coverOption: {
                     series: [
