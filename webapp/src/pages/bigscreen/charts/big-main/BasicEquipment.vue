@@ -60,7 +60,7 @@
                             this.data.push(temp[key]);
                         });
                     }else{
-                        throw new Error('获取基础设备信息失败！');
+                        throw Error('获取基础设备信息失败！');
                     }
                 })
             }

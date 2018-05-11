@@ -1,5 +1,5 @@
 const state = {
-    // 总的统计信息
+    // 总的概览统计信息
     czCloudInfo: [],
     // 网络接入情况
     isConnectNet: {
@@ -12,7 +12,8 @@ const state = {
     // 业务系统
     busiSys: [],
     // 当前所展示的部门。点击概览页面表格中部门名称和搜索部门时更新该值
-    currentDepartment: ''
+    currentDepartment: '',
+    totalInfo: {}
 };
 const mutations = {
     restoreCloudInfo(state, payload){
@@ -29,6 +30,9 @@ const mutations = {
     },
     restoreCurrentDepartment(state, payload){
         state.currentDepartment = payload.department;
+    },
+    restoreTotalInfo(state, payload){
+        state.totalInfo = payload.totalInfo;
     }
 };
 const actions = {
@@ -50,11 +54,11 @@ const actions = {
     // 获取网络接入情况
     getIsConnectNet({commit}, {vm, department}){
         vm.$httpt.post(`bigScreenController.do?getNetDetails&department=${department}`).then((res) => {
-            let temp = res.data;
-            if(res.data.success){
+            if(res.data){
                 commit('restoreIsConnectNet', {
-                    isConnectNet: temp
+                    isConnectNet: res.data
                 });
+                // 当前部门
                 commit('restoreCurrentDepartment', {
                     department: department
                 });
@@ -94,8 +98,22 @@ const actions = {
         }).catch(err => {
             throw new Error('获取业务系统状况失败:' + err);
         })
+    },
+    // 获取数据库中全部表全部字段信息
+    getTotalInfo({commit}, {vm, department}){
+        vm.$httpt.get(`bigScreenController.do?getInfoDetail&department=${department}`).then(res => {
+            if(res.data){
+                commit('restoreTotalInfo', {
+                    totalInfo: res.data
+                })
+            }else{
+                console.error('获取总信息失败！');
+            }
+        }).catch(err => {
+            throw new Error('获取总信息失败:' + err);
+        })
     }
-}
+};
 
 export default {
     namespaced: true,

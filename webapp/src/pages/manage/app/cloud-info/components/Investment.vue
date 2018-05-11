@@ -14,40 +14,83 @@
                 where: {
                     countPerPage: 10,
                     currentPage: 1,
-                    department: '住建局'
+                    department: '财政局'
                 },
                 totalCount: 0,
                 columns: [
                     {
                         title: '项目名称',
-                        key: 'projectname'
+                        key: 'projectname',
+                        width: 150,
+                        fixed: 'left'
                     },
                     {
                         title: '年度',
                         key: 'year',
-                        sortable: true
+                        sortable: true,
+                        width: 150
                     },
                     {
                         title: '硬件',
                         key: 'hardware',
-                        sortable: true
+                        sortable: true,
+                        width: 150
                     },
                     {
                         title: '软件',
                         key: 'software',
-                        sortable: true
+                        sortable: true,
+                        width: 150
                     },
                     {
                         title: '运行维护',
                         key: 'maintainfee',
-                        sortable: true
+                        sortable: true,
+                        width: 150
+                    },
+                    {
+                        title: '经费来源（请下拉选择，另预算内基建投资含国债项目资金）',
+                        key: 'feesorce',
+                        width: 250
+                    },
+                    {
+                        title: '项目建设内容',
+                        key: 'buildcontent',
+                        width: 150
+                    },
+                    {
+                        title: '使用效果（可另附页详细说明）',
+                        key: 'useeffect',
+                        width: 200
+                    },
+                    {
+                        title: '存在问题',
+                        key: 'problem',
+                        width: 150
+                    },
+                    {
+                        title: '提升建议',
+                        key: 'upsuggest',
+                        width: 150
+                    },
+                    {
+                        title: '其它（需要补充说明的内容）',
+                        key: 'other',
+                        width: 200
                     }
                 ]
             }
         },
         computed: {
             totalInfo(){
-                return this.$store.state.czCloudInfo.investment;
+                let CzItproject = this.$store.state.czCloudInfo.totalInfo.CzItproject;
+                if(CzItproject){
+                    this.totalCount = CzItproject.totalCount;
+                    return CzItproject.list;
+                }else{
+                    this.totalCount = 0;
+                    return [];
+                }
             },
             // todo 如果想让计算属性响应其依赖的变化，必须得先绑定依赖，而绑定依赖的办法就是你要去有机会事先调用该计算属性的getter方法
             // todo 因为计算属性绑定的函数就是默认作为该属性的getter方法，你在某个地方只要访问该变量，即可完成绑定
@@ -73,9 +116,6 @@
             searchDepartment(){
                 this.$store.dispatch('czCloudInfo/getInvestment', {vm: this, where: this.where});
             }
-        },
-        mounted(){
-            this.$store.dispatch('czCloudInfo/getInvestment', {vm: this, where: this.where});
         }
     }
 </script>

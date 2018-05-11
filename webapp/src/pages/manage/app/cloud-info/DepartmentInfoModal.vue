@@ -13,7 +13,7 @@
                         <h3>
                             <span v-if="isConnectNet.intenet === true">已接入互联网</span>
                             <span v-else-if="isConnectNet.intenet === false">未接入互联网</span>
-                            <span v-else>暂无数据</span>
+                            <span v-else>互联网暂无数据</span>
                         </h3>
                     </div>
                 </Card>
@@ -23,7 +23,7 @@
                         <h3>
                             <span v-if="isConnectNet.govExtranet === true">已接入政务外网</span>
                             <span v-else-if="isConnectNet.govExtranet === false">未接入政务外网</span>
-                            <span v-else>暂无数据</span>
+                            <span v-else>政务外网暂无数据</span>
                         </h3>
                     </div>
                 </Card>
@@ -33,7 +33,7 @@
                         <h3>
                             <span v-if="isConnectNet.specialNetwork === true">已接入专网</span>
                             <span v-else-if="isConnectNet.specialNetwork === false">未接入专网</span>
-                            <span v-else>暂无数据</span>
+                            <span v-else>专网暂无数据</span>
                         </h3>
                     </div>
                 </Card>
@@ -80,7 +80,7 @@
               where: {
                   countPerPage: 10,
                   currentPage: 1,
-                  department: '住建局'
+                  department: '财政局'
               }
           }
         },
@@ -107,10 +107,7 @@
                 this.modal = true;
                 this.title = departmentName + '单位信息化资源详情';
                 this.where.department = departmentName;
-                // 获取更新投资信息
-                this.$store.dispatch('czCloudInfo/getInvestment', {vm: this, where: this.where});
-                // 获取更新业务系统信息
-                this.$store.dispatch('czCloudInfo/getBusiSys', {vm: this, where: this.where});
+                this.$store.dispatch('czCloudInfo/getTotalInfo', {vm: this, department: departmentName});
                 // 获取网络接入信息
                 this.$store.dispatch('czCloudInfo/getIsConnectNet', {vm: this, department: departmentName});
             })

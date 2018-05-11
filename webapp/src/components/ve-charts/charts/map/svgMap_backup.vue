@@ -122,7 +122,7 @@
                             name: 'Top 5',
                             type: 'effectScatter',
                             coordinateSystem: 'geo',
-                            data: this.convertData(_this.dataInfo3, _this.geoCoordMap3),
+                            data: this.convertData(_this.dataInfo, _this.geoCoordMap),
                             symbolSize: function (val) {
                                 return 15;
                             },
@@ -170,7 +170,7 @@
 
                 // 点击地图，去往后台信息维护系统
                 chart.on('click', () => {
-                    _this.$router.push({name: 'home'});
+                   _this.$router.push({name: 'home'});
                 });
 
                 // 切换地图数据的开关, 由于地图数据太多，这里自动切换分批展示
@@ -178,20 +178,20 @@
                     data = [],
                     geoData = {};
                 window.setInterval(() => {
-                    if(isChangeFlag % 3 === 1){
+                    if(isChangeFlag % 3 === 0){
                         data = _this.dataInfo2;
                         geoData = _this.geoCoordMap2;
-                    }else if(isChangeFlag % 3 === 2){
+                    }else if(isChangeFlag % 3 === 1){
                         data = _this.dataInfo3;
                         geoData = _this.geoCoordMap3;
-                    }else if(isChangeFlag % 3 === 0){
+                    }else if(isChangeFlag % 3 === 2){
                         data = _this.dataInfo;
                         geoData = _this.geoCoordMap;
                     }
                     isChangeFlag ++;
                     option.series[0].data = this.convertData(data, geoData);
                     chart.setOption(option);
-                }, 15 * 1000);
+                }, 3000);
 
                 //防止别的图表的resize被覆盖
                 window.addEventListener('resize', () => {
