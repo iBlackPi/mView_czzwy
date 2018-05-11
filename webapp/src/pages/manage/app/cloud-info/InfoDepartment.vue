@@ -228,12 +228,7 @@
                 //todo 此处如果已经出发过on-select事件后再clear选项则会再次进入该方法，而此时department为空串，不合理
                 //todo 猜测可能是iview的bug
                 department === '' ? this.where.department = '财政局' : this.where.department = department;
-                // 查询部门的投资信息
-                this.$store.dispatch('czCloudInfo/getInvestment', {vm: this, where: this.where});
-                // 查询部门系统信息
-                this.$store.dispatch('czCloudInfo/getBusiSys', {vm: this, where: this.where});
-                // 查询网络接入情况
-                this.$store.dispatch('czCloudInfo/getIsConnectNet', {vm: this, department: department});
+                this.$store.dispatch('czCloudInfo/getTotalInfo', {vm: this, department: this.where.department});
             },
             refresh(){
                 this.onSelect(this.where.department);
@@ -262,12 +257,7 @@
             searchName(newValue, oldValue){
                 if(newValue === ''){
                     this.where.department = '财政局';
-                    // 查询部门的投资信息
-                    this.$store.dispatch('czCloudInfo/getInvestment', {vm: this, where: this.where});
-                    // 查询部门系统信息
-                    this.$store.dispatch('czCloudInfo/getBusiSys', {vm: this, where: this.where});
-                    // 查询网络接入情况
-                    this.$store.dispatch('czCloudInfo/getIsConnectNet', {vm: this, department: this.where.department});
+                    this.$store.dispatch('czCloudInfo/getTotalInfo', {vm: this, department: '财政局'});
                 }
             }
         },

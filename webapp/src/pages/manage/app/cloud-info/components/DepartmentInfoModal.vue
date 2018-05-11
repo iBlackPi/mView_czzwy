@@ -69,8 +69,8 @@
 </template>
 
 <script>
-    import Investment from './components/Investment';
-    import BusiSysInfo from './components/BusiSysInfo';
+    import Investment from './Investment';
+    import BusiSysInfo from './BusiSysInfo';
     export default {
         name: "",
         data(){

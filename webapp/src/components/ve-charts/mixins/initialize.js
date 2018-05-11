@@ -17,7 +17,7 @@ export default {
             _this.y = _this.lastOption;
             //todo 测试用，随时删除
             // console.log('最终option');
-            console.log(_this.lastOption);
+            // console.log(_this.lastOption);
             myChart.setOption(_this.lastOption);
             myChart.on('click',function(params){
                 if(params.componentType === 'series') {

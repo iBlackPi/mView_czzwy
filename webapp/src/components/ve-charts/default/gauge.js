@@ -65,7 +65,7 @@ let option = {
             },
             detail: {
                 offsetCenter: [0, '65%'],
-                formatter: '{value}分',
+                formatter: '{value}',
                 // todo 默认字体大小适中
                 fontSize: 15
             },
