@@ -16,7 +16,7 @@ import '../assets/util/icon.js';
 import Icon from 'vue-awesome/components/Icon.vue';
 //todo 采用阿里巴巴字体图标库、svg图标库（支持彩色）
 import '../assets/css/iconfont.css';
-import '../assets/font/iconfont';
+// import '../assets/font/iconfont';
 
 import App from './App.vue';
 import { routes } from '@/router/index';

@@ -1,8 +1,11 @@
 <template>
     <section class="header-content">
-        <span @click="goToManage" style="font-family: '时尚中黑简体';">沧州市政务信息化资源统计</span>
+        <span @click="goToManage" style="font-family: 'fationblack';">沧州市政务信息化资源统计</span>
+        <span class="time-container">
+            {{time}}
+        </span>
         <span @click="changeUrl" class="change-url">
-            <Icon type="arrow-swap"></Icon>
+            <i class="icon iconfont icon-qiehuan"></i>
         </span>
         <!--0、1上浮动画-->
         <ul class="num-effect">
@@ -24,6 +27,11 @@
 <script>
     export default {
         name: "custom-header",
+        data() {
+           return {
+               time: ''
+           }
+        },
         methods: {
             changeUrl(){
                 // 切换大屏
@@ -34,28 +42,73 @@
             },
             goToManage(){
                 this.$router.push({name: 'login'});
+            },
+            dateFormat(fmt) {
+                let date = new Date();
+                let o = {
+                    "M+" : date.getMonth()+1,                 //月份
+                    "d+" : date.getDate(),                    //日
+                    "h+" : date.getHours(),                   //小时
+                    "m+" : date.getMinutes(),                 //分
+                    "s+" : date.getSeconds(),                 //秒
+                    "q+" : Math.floor((date.getMonth()+3)/3), //季度
+                    "S"  : date.getMilliseconds()             //毫秒
+                };
+                if(/(y+)/.test(fmt)) {
+                    fmt=fmt.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length));
+                }
+                for(let k in o) {
+                    if(new RegExp("("+ k +")").test(fmt)){
+                        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+                    }
+                }
+                return fmt;
             }
+        },
+        created() {
+            setInterval(() => {
+                this.time = this.dateFormat('yyyy-MM-dd hh:mm:ss');
+            }, 1000)
         }
     }
 </script>
 
 <style scoped type="text/less" lang="less">
+    .icon-qiehuan:hover {
+        color: rgba(3, 162, 251, 1);
+    }
     .header-content {
         height: 100%;
         color: #fff;
-        font-size: 1.9rem;
-        letter-spacing: .1rem;
+        font-size: 1.5rem;
+        letter-spacing: .2rem;
         text-align: center;
+
+        background: url(../../../assets/imgs/head-bg.png);
+        background-size: 100% 100%;
         &>span:nth-child(1) {
             .vertical_center;
             z-index: 9;
         }
+        .time-container {
+            font-size: 1rem;
+            text-align: left;
+            color: rgba(255, 255, 255, .7);
+            font-family: led;
+            width: 30%;
+            .vertical_center(27%, 16%);
+        }
         .change-url {
-            .vertical_center(50%, 98%);
+            .vertical_center(23%, 98.5%);
             z-index: 9;
-            &:hover {
-                cursor: pointer;
-                color: #03a9ff;
+            &>i {
+                font-size: 1rem;
+                color: rgba(3, 180, 251, 1);
+                transition: font-size .1s linear;
+                &:hover {
+                    font-size: 1.3rem;
+                    cursor: pointer;
+                }
             }
         }
     }

@@ -14,14 +14,12 @@ var option = {
         textStyle:{
             color: '#fff',
             fontSize:16,
-            fontWeight:'normal',
-            fontFamily:"Microsoft YaHei"
+            fontWeight:'normal'
         },
         subtextStyle:{
             color: '#ccc',
             fontSize:13,
-            fontWeight:'normal',
-            fontFamily:"Microsoft YaHei"
+            fontWeight:'normal'
         }
     },
     tooltip: {
@@ -76,7 +74,6 @@ var option = {
                 textStyle:{
                     color:'#999',
                     fontWeight:'normal',
-                    fontFamily:'Microsoft YaHei',
                     fontSize:13
                 }
             },
@@ -85,7 +82,6 @@ var option = {
                 textStyle:{
                     color: '#fff',
                     fontWeight:'normal',
-                    fontFamily:'Microsoft YaHei',
                     fontSize: 13
                 }
             }

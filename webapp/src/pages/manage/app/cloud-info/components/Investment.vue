@@ -56,7 +56,7 @@
                     {
                         title: '项目建设内容',
                         key: 'buildcontent',
-                        width: 150
+                        width: 250
                     },
                     {
                         title: '使用效果（可另附页详细说明）',

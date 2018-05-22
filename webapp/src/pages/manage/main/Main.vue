@@ -2,9 +2,10 @@
 <template>
     <div class="main">
         <div class="header">
-            <div class="logo">
-                <Icon type="ios-pie-outline" style="font-size: 1.6rem; font-weight: bold; color: #2D8CF0;"></Icon>
-                沧州市政务信息化资源统计
+            <div class="logo" @click="goHome">
+                <!--<Icon type="ios-pie-outline" style="font-size: 1.6rem; font-weight: bold; color: #2D8CF0;"></Icon>-->
+                <logo></logo>
+                <span style="margin-left: 2.2rem;">沧州市政务信息化资源统计</span>
             </div>
             <div class="header-content">
                 <header-content></header-content>
@@ -35,6 +36,7 @@
     .move-enter {
         transform: translateX(100%);
     }
+
     .move-enter-to {
         transform: translateX(0);
     }
@@ -42,6 +44,7 @@
     .move-leave {
         transform: translateX(0);
     }
+
     .move-leave-to {
         transform: translateX(-100%);
     }
@@ -55,6 +58,8 @@
     import AsideMenu from '../../../components/aside-menu/AsideMenu.vue';
     import Breadcrumb from '../../../components/bread-crumb/BreadCrumb.vue';
     import HeaderContent from './main-component/HeaderContent.vue';
+    import Logo from './main-component/Logo';
+
     export default {
         data() {
             return {
@@ -64,11 +69,15 @@
         components: {
             'aside-menu': AsideMenu,
             'bread-crumb': Breadcrumb,
-            'header-content': HeaderContent
+            'header-content': HeaderContent,
+            Logo
         },
         methods: {
             changeMenuCollapse(menuCollapse) {
                 this.menuCollapse = menuCollapse;
+            },
+            goHome() {
+                this.$router.push({name: 'home'});
             }
         },
         mounted() {
@@ -93,7 +102,8 @@
             background-color: @headerBgcolorDark;
 
             .logo {
-                width: 360px;/*TODO 测试用*/
+                position: relative;
+                width: 360px;
                 height: @headerHeight;
                 line-height: @headerHeight;
                 float: left;
@@ -101,7 +111,8 @@
                 font-size: 1.3rem;
                 letter-spacing: .1rem;
                 padding-left: 1rem;
-                font-family: 时尚中黑简体;
+                font-family: fationblack;
+                cursor: pointer;
             }
 
             .header-content {
@@ -120,7 +131,7 @@
         .content-container {
             width: 100%;
             height: calc(~"100% - @{headerHeight}");
-            
+
             .aside-menu {
                 width: @menuWidth;
                 transition: all 300ms linear;
@@ -173,5 +184,49 @@
                 overflow: auto;
             }
         }
+    }
+    .svg-wrapper {
+        height: 60px;
+        margin: 0 auto;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 320px;
+    }
+
+    .shape {
+        fill: transparent;
+        stroke-dasharray: 140 540;
+        stroke-dashoffset: -474;
+        stroke-width: 8px;
+        stroke: #19f6e8;
+    }
+
+    .text {
+        color: #fff;
+        font-family: 'Roboto Condensed';
+        font-size: 22px;
+        letter-spacing: 8px;
+        line-height: 32px;
+        position: relative;
+        top: -48px;
+    }
+
+    @keyframes draw {
+        0% {
+            stroke-dasharray: 140 540;
+            stroke-dashoffset: -474;
+            stroke-width: 8px;
+        }
+        100% {
+            stroke-dasharray: 760;
+            stroke-dashoffset: 0;
+            stroke-width: 2px;
+        }
+    }
+
+    .svg-wrapper:hover .shape {
+        -webkit-animation: 0.5s draw linear forwards;
+        animation: 0.5s draw linear forwards;
     }
 </style>

@@ -1,12 +1,14 @@
 <template>
-    <module-layout title="基础设备统计">
+    <module-layout :title="sum">
         <ve-rect-coordinate
                 id="rectTest2"
                 style="height:100%"
                 backgroundColor=""
                 :xAxisData="xAxisData"
                 :showLegend=true
-                :coverOption="coverOption">
+                :coverOption="coverOption"
+                :color="colors"
+                >
             <ve-bar
                     :data="data"
                     id="basic-equipment"
@@ -23,15 +25,16 @@
         name: "computor-room",
         data(){
             return {
+                colors: ['#01A2FC','#F9D135','#01B344','#01A2FC'],
                 xAxisData: ['小机', 'X86服务器', '虚机', '网络设备'],
-                data: [14, 342, 90, 390],
+                data: [12, 495, 118, 390],
                 coverOption: {
                     grid: {
-                        top: '15%',
-                        bottom: '15%'
+                        top: '25%',
+                        bottom: '20%'
                     },
                     legend: {
-                        top: -10,
+                        top: 0,
                         right: -30
                     },
                     series: [
@@ -44,6 +47,15 @@
                         }
                     ]
                 }
+            }
+        },
+        computed: {
+            sum() {
+                let sum = 0;
+                this.data.forEach(item => {
+                    sum += item;
+                });
+                return `基础设备数量统计 总量：<span style="color: #217bcc;">${sum}</span>`;
             }
         },
         components: {

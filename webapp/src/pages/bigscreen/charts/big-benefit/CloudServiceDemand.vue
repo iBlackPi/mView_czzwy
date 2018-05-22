@@ -1,5 +1,5 @@
 <template>
-    <module-layout title="云服务目录需求">
+    <module-layout :title="sum">
         <ve-radar
                 id="cloud-service-demand"
                 :data="data"
@@ -24,7 +24,11 @@
                     name : '云服务目录需求'
                 }],
                 indicator: [
-                    {name: '增值服务'}, {name: '安全'}, {name: '网络'}, {name: '灾备'}, {name: '云运维'}
+                    {name: '增值服务', max: 15},
+                    {name: '安全', max: 15},
+                    {name: '网络', max: 15},
+                    {name: '灾备', max: 15},
+                    {name: '云运维', max: 15}
                 ],
                 coverOption: {
                     series: [
@@ -42,6 +46,15 @@
                         }
                     ]
                 }
+            }
+        },
+        computed: {
+            sum(){
+                let sum = 0;
+                this.data[0].value.forEach(item => {
+                    sum += item;
+                });
+                return `云服务目录需求 总量：<span style="color: #217bcc;">${sum}</span>`;
             }
         },
         components: {

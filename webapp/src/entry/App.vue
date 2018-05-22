@@ -6,12 +6,20 @@
 </template>
 
 <style>
-    html,body{
+    @font-face {
+        font-family: fationblack;
+        src: url(../assets/font/technology.ttf);
+    }
+    @font-face {
+        font-family: led;
+        src: url(../assets/font/UnidreamLED.ttf);
+    }
+    html, body {
         width: 100%;
         height: 100%;
         overflow: hidden;
     }
-    .app{
+    .app {
         width: 100%;
         height: 100%;
     }

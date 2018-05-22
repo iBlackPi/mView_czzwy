@@ -1,5 +1,5 @@
 <template>
-    <module-layout title="具备上云条件的系统">
+    <module-layout :title="sum">
         <ve-pie
                 :rippleAnimation="true"
                 style="width: 100%; height: 100%;"
@@ -7,7 +7,7 @@
                 backgroundColor="transparent"
                 id="move-to-cloud"
                 :data="pieData"
-                :radius="['55%','75%']"
+                :radius="['45%','65%']"
                 :coverOption="coverOption"
                 :rippleSize = 5
         ></ve-pie>
@@ -22,21 +22,21 @@
             return {
                 pieData:
                     [
-                        {value:335, name:'互联网'},
-                        {value:310, name:'政务外网'},
-                        {value:274, name:'专网'}
+                        {value: 54, name: '互联网'},
+                        {value: 11, name: '政务外网'},
+                        {value: 143, name: '业务专网'}
                     ],
                 coverOption: {
                     legend: {
-                        top: 60,
-                        right: 0
+                        top: 90,
+                        right: 10
                     },
                     series: [
                         {
                             label: {
                                 normal: {
                                     show: true,
-                                    formatter: `{b}:{d}`
+                                    formatter: `{c}`
                                 },
                                 emphasis: {
                                     show: false,
@@ -46,6 +46,15 @@
                         }
                     ]
                 }
+            }
+        },
+        computed: {
+            sum(){
+                let sum = 0;
+                this.pieData.forEach(item => {
+                    sum += item.value;
+                });
+                return `具备上云条件的系统 总量：<span style="color: #217bcc;">${sum}</span>`;
             }
         },
         components: {
@@ -75,7 +84,7 @@
         mounted(){
             let _this = this;
             this.$nextTick(() => {
-                _this.getInfo();
+                // _this.getInfo();
             })
         }
     }

@@ -77,7 +77,6 @@
                         textStyle: {
                             color: '#999',
                             fontWeight:'normal',
-                            fontFamily:'Microsoft YaHei',
                             fontSize: 13
                         },
                         show: false
@@ -92,7 +91,6 @@
                         textStyle: {
                             color: '#fff',
                             fontWeight:'normal',
-                            fontFamily:'Microsoft YaHei',
                             fontSize: 13
                         },
                         show: false

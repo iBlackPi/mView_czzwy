@@ -1,5 +1,5 @@
 <template>
-    <module-layout title="2018-2020年迁移数量">
+    <module-layout :title="sum">
         <ve-rect-coordinate
                 id="move-count"
                 style="height:100%"
@@ -32,17 +32,17 @@
         name: "computor-room",
         data(){
             return {
-                xAxisData: ['2018', '2019', '2020'],
-                dataInternet: [90, 200, 150],
-                dataPolicy: [100, 150, 190],
-                dataSpecial: [70, 140, 160],
+                xAxisData: ['第一批', '第二批', '第三批'],
+                dataInternet: [50, 11, 34],
+                dataPolicy: [3, 0, 30],
+                dataSpecial: [1, 0, 49],
                 coverOption: {
                     grid: {
-                        top: '18%',
-                        bottom: '15%'
+                        top: '25%',
+                        bottom: '20%'
                     },
                     legend: {
-                        top: -10,
+                        top: 0,
                         right: -30
                     },
                     series: [
@@ -74,6 +74,15 @@
         components: {
             ModuleLayout
         },
+        computed: {
+            sum() {
+                let temp = [];
+                for(let i = 0, len = this.dataInternet.length; i < len; i ++) {
+                    temp.push(this.dataInternet[i] + this.dataPolicy[i] + this.dataSpecial[i]);
+                }
+                return `2018-2020年迁移数量 总量依次为：<span style="color: #217bcc;">${temp[0]}、${temp[1]}、${temp[2]}</span>`;
+            }
+        },
         methods: {
             getInfo(){
                 this.$httpt.get('bigScreenController.do?getInfoSysOfRemoveInDesignatedYears').then((res) => {
@@ -96,7 +105,7 @@
         mounted(){
             let _this = this;
             this.$nextTick(() => {
-                _this.getInfo();
+                // _this.getInfo();
             })
         }
     }

@@ -1,13 +1,13 @@
 <template>
-    <module-layout title="机房信息">
+    <module-layout :title="sum">
         <ve-pie
                 :rippleAnimation="true"
                 style="width: 100%; height: 100%;"
-                :center="['40%', '45%']"
+                :center="['40%', '50%']"
                 backgroundColor="transparent"
                 id="pie"
                 :data="pieData"
-                :radius="['55%','75%']"
+                :radius="['45%','65%']"
                 :coverOption="coverOption"
                 :rippleSize = 5
         ></ve-pie>
@@ -21,14 +21,14 @@
         data(){
             return {
                 pieData: [
-                    {value: 64, name:'自建机房'},
+                    {value: 71, name:'自建机房'},
                     {value: 14, name:'托管机房'},
-                    {value: 11, name:'租用云服务'}
+                    {value: 30, name:'租用云服务'}
                 ],
                 coverOption: {
                     legend: {
-                        top: 60,
-                        right: 0
+                        top: 90,
+                        right: 20
                     },
                     series: [
                         {
@@ -68,6 +68,15 @@
                         throw new Error('获取机房信息失败！');
                     }
                 })
+            }
+        },
+        computed: {
+            sum() {
+                let sum = 0;
+                this.pieData.forEach(item => {
+                    sum += item.value;
+                });
+                return `机房信息 总量：<span style="color: #217bcc;">${sum}</span>`;
             }
         },
         mounted(){

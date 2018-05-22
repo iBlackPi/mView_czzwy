@@ -1,5 +1,5 @@
 <template>
-    <module-layout title="单位接入网络数量">
+    <module-layout :title="sum">
         <ve-rect-coordinate
                 id="connect-net"
                 style="height:100%"
@@ -23,14 +23,14 @@
         data(){
             return {
                 xAxisData: ['互联网', '政务外网', '业务专线', '政务内网'],
-                data: [56, 60, 66, 10],
+                data: [64, 60, 66, 10],
                 coverOption: {
                     grid: {
-                        top: '12%',
-                        bottom: '15%'
+                        top: '25%',
+                        bottom: '20%'
                     },
                     legend: {
-                        top: -10,
+                        top: 0,
                         right: -30
                     },
                     series: [
@@ -43,6 +43,15 @@
                         }
                     ]
                 }
+            }
+        },
+        computed: {
+            sum() {
+                let sum = 0;
+                this.data.forEach(item => {
+                    sum += item;
+                });
+                return `单位接入网络数量 总量：<span style="color: #217bcc;">${sum}</span>`;
             }
         },
         components: {

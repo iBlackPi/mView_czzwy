@@ -4,8 +4,18 @@
         <div class="star">
             <Tooltip content="回到大屏" placement="bottom" class="icon-middle">
                 <span @click="GoToBigscreen" class="go-to-bigscreen">
-                    <Icon type="arrow-swap" style="font-size: 1.5rem;color: #5AAAFF;"></Icon>
+                    <i class="icon iconfont icon-qiehuan" style="font-size: 1.2rem;color: #5AAAFF;"></i>
                 </span>
+                <div slot="content">
+                    <section class="bigscreen-shortcut" @click="GoToBigscreen">
+                        <div class="mask"></div>
+                        <span>①</span>
+                    </section>
+                    <section class="bigscreen-shortcut" @click="GoToBigscreen('two')">
+                        <div class="mask"></div>
+                        <span>②</span>
+                    </section>
+                </div>
             </Tooltip>
         </div>
         <div class="notice" @click="notice">
@@ -15,7 +25,7 @@
         </div>
         <div class="star" @click="addFavorite">
             <Tooltip content="收藏" placement="bottom" class="icon-middle">
-                <f-icon name="star-o" class="header-icon header-icon-color"></f-icon>
+                <f-icon name="star-o" style="color: #FFE793;" class="header-icon header-icon-color"></f-icon>
             </Tooltip>
         </div>
         <div class="split"></div>
@@ -48,7 +58,6 @@
 </template>
 
 <script>
-
     export default {
         data() {
             return {
@@ -111,7 +120,11 @@
             lagoutCancel(){
 
             },
-            GoToBigscreen(){
+            GoToBigscreen(bigscreenFlag){
+                if(bigscreenFlag === 'two') {
+                    this.$router.push({name: 'bigBenefit'});
+                    return;
+                }
                 this.$router.push({name: 'bigMain'});
             }
         }
@@ -126,12 +139,45 @@
         }
         cursor: pointer;
     }
+    .bigscreen-shortcut {
+        position: relative;
+        width: 12rem;
+        height: 7rem;
+        font-size: 2rem;
+        background-size: 100% 100%;
+        & > .mask {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0);
+            transition: background-color .4s linear;
+        }
+        & > span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255, 255, 255, 0);
+            transition: color .5s linear;
+        }
+        &:hover span {
+            color: rgba(255, 255, 255, 1);
+        }
+        &:hover .mask {
+            background-color: rgba(0, 0, 0, .4);
+        }
+        &:nth-child(1) {
+            background-image: url(../../../../assets/imgs/bigscreenOne.png);
+        }
+        &:nth-child(2) {
+            margin-top: .5rem;
+            background-image: url(../../../../assets/imgs/bigscreenTwo.png);
+        }
+    }
     .header-avator-con {
         position: relative;
         z-index: 20;
         line-height: @headerHeight;
         height: @headerHeight;
-
         & > div {
             padding: 0 20px;
             line-height: @headerIconHeight;

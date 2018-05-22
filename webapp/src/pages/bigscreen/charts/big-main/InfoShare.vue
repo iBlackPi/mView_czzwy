@@ -10,7 +10,7 @@
             <ve-bar
                     :data="data"
                     id="basic-equipment"
-                    name="数量(台)"
+                    name="数量(个)"
                     barWidth="10"
             ></ve-bar>
         </ve-rect-coordinate>
@@ -27,11 +27,11 @@
                 data: [5, 6, 6, 7, 10],
                 coverOption: {
                     grid: {
-                        top: '12%',
-                        bottom: '15%'
+                        top: '25%',
+                        bottom: '20%'
                     },
                     legend: {
-                        top: -10,
+                        top: 0,
                         right: -30
                     },
                     series: [
@@ -39,7 +39,7 @@
                             label: {
                                 show: true,
                                 color: '#fff',
-                                position: 'top'
+                                position: 'right'
                             }
                         }
                     ]

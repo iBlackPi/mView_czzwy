@@ -2,22 +2,31 @@
 <template>
     <div class="login" @keydown.enter="handleSubmit">
         <div class="login-container" @click="changeShowLoginInfo">
-            <Form ref="loginRef" :model="loginModel" :rules="loginRules">
-                <FormItem prop="loginName">
-                    <Input type="text" v-model="loginModel.loginName" placeholder="请输入用户名">
-                        <Icon type="ios-person-outline" slot="prepend"></Icon>
-                    </Input>
-                </FormItem>
-                <FormItem prop="password">
-                    <Input type="password" v-model="loginModel.password" placeholder="请输入密码">
-                        <Icon type="ios-person-outline" slot="prepend"></Icon>
-                    </Input>
-                </FormItem>
-                <FormItem class="login-btn-container">
-                    <Button long @click="handleSubmit" type="primary">登 录</Button>
-                    <div class="login-info" v-show="showLoginInfo">{{loginInfo}}</div>
-                </FormItem>
-            </Form>
+            <div class="login-header">
+                <div class="login-header-logo"></div>
+                <div class="login-header-title">
+                    沧州政务信息化统计
+                </div>
+            </div>
+            <div class="form-container">
+                <Form ref="loginRef" :model="loginModel" :rules="loginRules">
+                    <FormItem prop="loginName">
+                        <i class="iconfont icon-yonghu1 form-icon"></i>
+                        <Input type="text" v-model="loginModel.loginName" placeholder="请输入用户名">
+                        </Input>
+                    </FormItem>
+                    <FormItem prop="password">
+                        <i class="iconfont icon-mima form-icon"></i>
+                        <Input type="password" v-model="loginModel.password" placeholder="请输入密码">
+                        </Input>
+                    </FormItem>
+                    <FormItem class="login-btn-container">
+                        <Button long @click="handleSubmit" type="primary" class="submit-btn">登 录</Button>
+                        <div class="login-info" v-show="showLoginInfo">{{loginInfo}}</div>
+                    </FormItem>
+                </Form>
+            </div>
+
         </div>
     </div>
 </template>

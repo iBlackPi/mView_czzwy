@@ -1,5 +1,5 @@
 <template>
-    <module-layout title="2018-2020年基础资源需求量">
+    <module-layout :title="sum">
         <ve-rect-coordinate
                 id="base-reource"
                 style="height:100%"
@@ -32,17 +32,17 @@
         name: "computor-room",
         data(){
             return {
-                xAxisData: ['2018', '2019', '2020'],
-                dataCPU: [90, 250, 150],
-                dataMemory: [100, 170, 190],
-                dataRestore: [70, 140, 160],
+                xAxisData: ['第一批', '第二批', '第三批'],
+                dataCPU: [1340, 282, 1064],
+                dataMemory: [4113, 896, 7522],
+                dataRestore: [113, 40, 60],
                 coverOption: {
                     grid: {
-                        top: '18%',
-                        bottom: '15%'
+                        top: '25%',
+                        bottom: '20%'
                     },
                     legend: {
-                        top: -10,
+                        top: 0,
                         right: -30
                     },
                     series: [
@@ -74,6 +74,15 @@
         components: {
             ModuleLayout
         },
+        computed: {
+            sum() {
+                let temp = [];
+                for(let i = 0, len = this.dataCPU.length; i < len; i ++) {
+                    temp.push(this.dataCPU[i] + this.dataMemory[i] + this.dataRestore[i]);
+                }
+                return `2018-2020年基础资源需求 总量：<span style="color: #217bcc;">${temp[0]}、${temp[1]}、${temp[2]}</span>`;
+            }
+        },
         methods: {
             getInfo(){
                 this.$httpt.get('bigScreenController.do?getResources').then((res) => {
@@ -96,7 +105,7 @@
         mounted(){
             let _this = this;
             this.$nextTick(() => {
-                _this.getInfo();
+                // _this.getInfo();
             })
         }
     }

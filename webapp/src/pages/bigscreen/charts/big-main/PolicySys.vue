@@ -1,13 +1,13 @@
 <template>
-    <module-layout title="政务信息系统统计">
+    <module-layout :title="sum">
         <ve-pie
                 :rippleAnimation="true"
                 style="width: 100%; height: 100%;"
-                :center="['40%', '45%']"
+                :center="['40%', '50%']"
                 backgroundColor="transparent"
                 id="policy-sys"
                 :data="pieData"
-                :radius="['55%','75%']"
+                :radius="['45%','65%']"
                 :coverOption="coverOption"
                 :rippleSize = 5
         ></ve-pie>
@@ -22,10 +22,10 @@
             return {
                 pieData:
                     [
-                        {value: 112, name: '互联网'},
-                        {value: 20, name: '政务外网'},
-                        {value: 110, name: '专网'},
-                        {value: 192, name: '统建'}
+                        {value: 99, name: '互联网'},
+                        {value: 11, name: '政务外网'},
+                        {value: 169, name: '专网'},
+                        {value: 213, name: '统建'}
                     ],
                 coverOption: {
                     legend: {
@@ -47,6 +47,15 @@
                         }
                     ]
                 }
+            }
+        },
+        computed: {
+            sum() {
+                let sum = 0;
+                this.pieData.forEach(item => {
+                    sum += item.value;
+                });
+                return `政务信息系统统计 总量：<span style="color: #217bcc;">${sum}</span>`;
             }
         },
         components: {

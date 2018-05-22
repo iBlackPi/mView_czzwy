@@ -13,6 +13,7 @@
                     icon="ios-search"
                     style="width: 300px;">
             </AutoComplete>
+            <Button type="primary" icon="ios-search" @click="search">搜索</Button>
             <Table border :columns="columns" :data="computerRooms" style="margin-top: 1rem;"></Table>
             <Page :total="totalCount" show-total show-sizer @on-change="changePage" @on-page-size-change="changePageSize" style="margin: .5rem 0 .5rem 0;"></Page>
         </Card>
@@ -46,6 +47,10 @@
                     {
                         title: '租用云主机',
                         key: 'cloudServiceNum'
+                    },
+                    {
+                        title: '是否有信息科',
+                        key: 'temp1'
                     },
                     {
                         title: '操作',
@@ -93,7 +98,7 @@
             }
         },
         watch: {
-            // 当搜索框为空时，默认搜索财政局
+            // 当搜索框为空时，默认搜索全部
             searchName(newValue, oldValue){
                 if(newValue === ''){
                     this.department = '';
@@ -105,6 +110,11 @@
             ComputerRoomModal
         },
         methods: {
+            search(){
+                this.start = 1;
+                this.department = this.searchName;
+                this.getComputerRoomInfo();
+            },
             changePage(destination){
                 this.start = destination;
                 this.getComputerRoomInfo();
@@ -116,7 +126,7 @@
                 this.getComputerRoomInfo();
             },
             getComputerRoomInfo(){
-                this.$httpt.get(`machineRoomController.do?getCzMachineRooms&start=${this.start}&pageSize=${this.pageSize}`).then(({data}) => {
+                this.$httpt.get(`machineRoomController.do?getCzMachineRooms&start=${this.start}&pageSize=${this.pageSize}&department=${this.department}`).then(({data}) => {
                     if(data.success){
                         this.computerRooms = data.data.list;
                         this.totalCount = data.data.totalCount;
@@ -143,10 +153,22 @@
             this.$nextTick(() => {
                 this.getComputerRoomInfo();
             });
-            //监听对话框的更新通知
+            //监听对话框的更新通知，修改成功通知父组件表格及时更新
             this.$bus.$on('updateComputerRoomInfo', () => {
                 this.getComputerRoomInfo();
             });
+        },
+        //todo 尽快的获取数据
+        //todo 如果用户直接进入后台页面，那总信息就无法获取到
+        //todo 所以这里尽快的去获取下总览信息，供对话框中的搜索框自动提示功能使用
+        created(){
+            this.$store.dispatch('czCloudInfo/getCloudInfo', {vm: this});
+        },
+        //todo 尽快的获取数据
+        //todo 如果用户直接进入后台页面，那总信息就无法获取到
+        //todo 所以这里尽快的去获取下总览信息，供对话框中的搜索框自动提示功能使用
+        created(){
+            this.$store.dispatch('czCloudInfo/getCloudInfo', {vm: this});
         }
     }
 </script>

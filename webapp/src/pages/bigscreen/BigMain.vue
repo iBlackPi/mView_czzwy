@@ -29,8 +29,13 @@
             </section>
             <section class="bigmain-content-bottom">
                 <section class="bigmain-content-bottom-left">
-                    <connect-operator></connect-operator>
+                    <benefit-one></benefit-one>
                 </section>
+
+                <section class="bigmain-content-bottom-center">
+                    <info-share-needed></info-share-needed>
+                </section>
+
                 <section class="bigmain-content-bottom-right">
                     <info-share></info-share>
                 </section>
@@ -44,10 +49,11 @@
     import PolicySys from './charts/big-main/PolicySys';
     import BasicEquipment from './charts/big-main/BasicEquipment';
     import ConnectNet from './charts/big-main/ConnectNet';
-    import ConnectOperator from './charts/big-main/ConnectOperator';
+    import BenefitOne from './charts/big-main/BenefitOne';
     import InfoShare from './charts/big-main/InfoShare';
     import CzDowntown from './common/CzDowntown';
     import CustomHeader from './common/CustomHeader';
+    import InfoShareNeeded from './charts/big-main/InfoShareNeeded';
     export default {
         name: "big-main",
         data(){
@@ -61,9 +67,10 @@
             PolicySys,
             BasicEquipment,
             ConnectNet,
-            ConnectOperator,
+            BenefitOne,
             InfoShare,
-            CustomHeader
+            CustomHeader,
+            InfoShareNeeded
         }
     }
 </script>
@@ -73,16 +80,17 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
+        background: #0A0D17;
         background: url(../../assets/imgs/home_bg.jpg) repeat-x;
-        /*animation: move_bg 25s linear alternate infinite;*/
+        animation: move_bg 25s linear alternate infinite;
         background-size: cover;
     }
     .bigmain-top {
-        .position_absolute(0, 0, 100%, 9%);
+        .position_absolute(0, 0, 100%, 7%);
         .module-common;
     }
     .bigmain-content {
-        .position_absolute(10%, 0, 100%, 90%);
+        .position_absolute(8%, 0, 100%, 92%);
         .bigmain-content-top {
             .position_absolute(0, 0, 100%, 66%);
             .bigmain-content-top-left {
@@ -115,11 +123,15 @@
         .bigmain-content-bottom {
             .position_absolute(67%, 0, 100%, 33%);
             .bigmain-content-bottom-left {
-                .position_absolute(0, 0, 49.75%, 100%);
+                .position_absolute(0, 0, 33%, 100%);
+                .module-common;
+            }
+            .bigmain-content-bottom-center {
+                .position_absolute(0, 33.5%, 33%, 100%);
                 .module-common;
             }
             .bigmain-content-bottom-right {
-                .position_absolute_right(0, 0, 49.75%, 100%);
+                .position_absolute_right(0, 0, 33%, 100%);
                 .module-common;
             }
         }

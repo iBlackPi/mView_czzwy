@@ -26,25 +26,40 @@
                         :before-upload="beforeUpload"
                         :format="['xls','XLS','xls','XLSX']"
                         :on-format-error="handleFormatError">
-                    <Tooltip placement="right" content="支持批量导入excel" transfer :delay="1000">
+                    <Tooltip placement="top" content="支持批量导入excel" transfer :delay="500">
                         <Button style="background-color: #2D8CF0; color: #fff;" type="ghost" icon="ios-cloud-upload-outline">
                             导入EXCEL
                         </Button>
                     </Tooltip>
                 </Upload>
             </FormItem>
+            <FormItem style="">
+                <Tooltip placement="top" content="支持批量导入excel" transfer :delay="500">
+                    <Button style="background-color: #2D8CF0; color: #fff;" type="ghost" icon="ios-download-outline" @click="exportData">
+                        导出EXCEL
+                    </Button>
+                </Tooltip>
+            </FormItem>
         </Form>
         <!--展示信息化资源统计总览-->
-        <Table border :columns="columns" :data="totalInfo"></Table>
+        <Table border :columns="columns" :data="totalInfo" ref="info_maintain_table"></Table>
         <!--分页-->
         <Page :total="totalCount" show-total show-sizer @on-change="changePage" @on-page-size-change="changePageSize" style="margin: .5rem 0 .5rem 0;"></Page>
         <!--对话框：显示部门具体信息-->
         <department-info-modal></department-info-modal>
+        <info-sys-tip></info-sys-tip>
+        <computer-room-tip></computer-room-tip>
+        <move-to-cloud></move-to-cloud>
+        <net-device-tip></net-device-tip>
     </div>
 </template>
 
 <script>
     import DepartmentInfoModal from './components/DepartmentInfoModal';
+    import ComputerRoomTip from './tips/ComputerRoomTip';
+    // todo 该head数据中需要vm实例，调用emit方法，此处只能从export中传入
+    // todo script环境中，export环境外的this是该组件对象，而不是vm对象
+    import columns from './table-heads/info-maintain-head';
     export default {
         name: "info-maintain",
         data(){
@@ -54,73 +69,7 @@
                 currentPage: 1,
                 totalCount: 0,
                 totalInfo: [],
-                columns: [
-                    {
-                        title: '单位名称',
-                        key: 'department',
-                        render: (h, params) => {
-                            return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'primary',
-                                        size: 'small'
-                                    },
-                                    style: {
-                                        marginRight: '5px'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            // 点击单位的同时，弹出对话框并通知对话框中的组件都去更新自己的数据
-                                            this.$bus.$emit('showDepartmentInfoModal', params.row.department);
-                                        }
-                                    }
-                                }, params.row.department)
-                            ]);
-                        }
-                    },
-                    {
-                        title: '信息化投资',
-                        key: 'money',
-                        sortable: true
-                    },
-                    {
-                        title: '业务系统数量',
-                        key: 'bussinessNum',
-                        sortable: true
-                    },
-                    {
-                        title: '可云化系统数',
-                        key: 'removeNum',
-                        sortable: true
-                    },
-                    {
-                        title: '机房数量',
-                        key: 'machineroomNum',
-                        sortable: true
-                    },
-                    {
-                        title: '服务器台数',
-                        key: 'serverNum',
-                        sortable: true
-                    },
-                    {
-                        title: '资源目录数量',
-                        key: 'cataLogNum',
-                        sortable: true
-                    },
-                    {
-                        title: '是否有互联网',
-                        key: 'hasInternet',
-                    },
-                    {
-                        title: '是否接入政务外网',
-                        key: 'hasgovExtrant',
-                    },
-                    {
-                        title: '是否有专网',
-                        key: 'hasspecialNet',
-                    }
-                ]
+                columns: columns(this)
             }
         },
         computed: {
@@ -144,7 +93,11 @@
             }
         },
         components: {
-            DepartmentInfoModal
+            DepartmentInfoModal,
+            InfoSysTip: () => import('./tips/InfoSysTip'),
+            ComputerRoomTip,
+            MoveToCloud: () => import('./tips/MoveToCloud'),
+            NetDeviceTip: () => import('./tips/NetDeviceTip')
         },
         methods: {
             // 搜索框根据用户输入智能补全功能：匹配用户输入
@@ -215,8 +168,10 @@
                             temp.hasInternet ? temp.hasInternet = '是' : temp.hasInternet = '否';
                             temp.hasgovExtrant ? temp.hasgovExtrant = '是' : temp.hasgovExtrant = '否';
                             temp.hasspecialNet ? temp.hasspecialNet = '是' : temp.hasspecialNet = '否';
+                            temp.temp1 === null || temp.temp1 === 'null' ? temp.temp1 = '否' : temp.temp1;
                         });
                         this.totalInfo = data.data.list;
+                        console.log('totalInfo ===========================', this.totalInfo);
                         this.totalCount = data.data.totalCount;
                     }else{
                         this.$Notice.error({
@@ -224,6 +179,12 @@
                         })
                     }
                 })
+            },
+            exportData (type) {
+                this.$refs.info_maintain_table.exportCsv({
+                    filename: 'Sorting and filtering data',
+                    original: false
+                });
             }
         },
         mounted(){
@@ -231,10 +192,10 @@
                this.findByPage();
             });
         },
-        //todo 尽快的获取数据
-        //todo 如果用户直接进入后台页面，那总信息就无法获取到
-        //todo 所以这里尽快的去获取下总览信息，供对话框中的搜索框自动提示功能使用
         created(){
+            //todo 尽快的获取数据
+            //todo 如果用户直接进入后台页面，那总信息就无法获取到
+            //todo 所以这里尽快的去获取下总览信息，供对话框中的搜索框自动提示功能使用
             this.$store.dispatch('czCloudInfo/getCloudInfo', {vm: this});
         }
         // todo 从store中取出总览信息，但这里涉及到分页，所以此处另有分页接口，暂时保留，上线前可删

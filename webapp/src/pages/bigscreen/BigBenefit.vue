@@ -27,10 +27,13 @@
             </section>
             <section class="bigmain-content-bottom">
                 <section class="bigmain-content-bottom-left">
-                    <benefit-one></benefit-one>
+                    <connect-operator></connect-operator>
+                </section>
+                <section class="bigmain-content-bottom-center">
+                    <benefit-two></benefit-two>
                 </section>
                 <section class="bigmain-content-bottom-right">
-                    <benefit-two></benefit-two>
+                    <benefit-two2></benefit-two2>
                 </section>
             </section>
         </section>
@@ -42,8 +45,9 @@
     import MoveCount from './charts/big-benefit/MoveCount';
     import BaseResource from './charts/big-benefit/BaseResource';
     import CloudServiceDemand from './charts/big-benefit/CloudServiceDemand';
-    import BenefitOne from './charts/big-benefit/BenefitOne';
+    import ConnectOperator from './charts/big-benefit/ConnectOperator';
     import BenefitTwo from './charts/big-benefit/BenefitTwo';
+    import BenefitTwo2 from './charts/big-benefit/BenefitTwo2';
     import CzDowntown from './common/CzDowntown';
     import CustomHeader from './common/CustomHeader';
     export default {
@@ -54,9 +58,10 @@
             MoveCount,
             BaseResource,
             CloudServiceDemand,
-            BenefitOne,
+            ConnectOperator,
             BenefitTwo,
-            CustomHeader
+            CustomHeader,
+            BenefitTwo2
         }
     }
 </script>
@@ -66,16 +71,17 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
+        background: #0A0D17;
         background: url(../../assets/imgs/home_bg.jpg) repeat-x;
         background-size: cover;
-        /*animation: move_bg 25s linear alternate infinite;*/
+        animation: move_bg 25s linear alternate infinite;
     }
     .bigmain-top {
-        .position_absolute(0, 0, 100%, 9%);
+        .position_absolute(0, 0, 100%, 7%);
         .module-common;
     }
     .bigmain-content {
-        .position_absolute(10%, 0, 100%, 90%);
+        .position_absolute(8%, 0, 100%, 92%);
         .bigmain-content-top {
             .position_absolute(0, 0, 100%, 66%);
             .bigmain-content-top-left {
@@ -91,6 +97,8 @@
             }
             .bigmain-content-top-center {
                 .position_absolute(0, 25.5%, 49%, 100%);
+                /*background-image: url(../../assets/imgs/map-bg.png);*/
+                /*background-size: 100% 100%;*/
                 .module-common;
             }
             .bigmain-content-top-right {
@@ -108,11 +116,15 @@
         .bigmain-content-bottom {
             .position_absolute(67%, 0, 100%, 33%);
             .bigmain-content-bottom-left {
-                .position_absolute(0, 0, 49.75%, 100%);
+                .position_absolute(0, 0, 33%, 100%);
+                .module-common;
+            }
+            .bigmain-content-bottom-center {
+                .position_absolute(0, 33.5%, 33%, 100%);
                 .module-common;
             }
             .bigmain-content-bottom-right {
-                .position_absolute_right(0, 0, 49.75%, 100%);
+                .position_absolute_right(0, 0, 33%, 100%);
                 .module-common;
             }
         }

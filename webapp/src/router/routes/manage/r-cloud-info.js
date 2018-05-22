@@ -30,5 +30,21 @@ export default {
             breadcrumb: '机房维护',
             title: '机房维护'
         }
+    },{
+        name: 'info-sys-maintain',
+        path: 'info-sys-maintain',
+        component: () => import('../../../pages/manage/app/cloud-info/InfoSysMaintain'),
+        meta: {
+            breadcrumb: '信息化系统维护',
+            title: '信息化系统维护'
+        }
+    },{
+        name: 'resource-catalog-manage',
+        path: 'resource-catalog-manage',
+        component: () => import('../../../pages/manage/app/cloud-info/ResourceCatalogManage'),
+        meta: {
+            breadcrumb: '资源目录管理',
+            title: '资源目录管理'
+        }
     }]
 };
