@@ -22,15 +22,15 @@
         name: "computor-room",
         data(){
             return {
-                xAxisData: ['互联网', '政务外网', '业务专线', '政务内网'],
-                data: [64, 60, 66, 10],
+                xAxisData: ['互联网', '政务外网', '业务专线', '政务内网', '公务内网'],
+                data: [55, 60, 62, 10, 50],
                 coverOption: {
                     grid: {
-                        top: '25%',
-                        bottom: '20%'
+                        top: '30%',
+                        bottom: '25%'
                     },
                     legend: {
-                        top: 0,
+                        top: 10,
                         right: -30
                     },
                     series: [

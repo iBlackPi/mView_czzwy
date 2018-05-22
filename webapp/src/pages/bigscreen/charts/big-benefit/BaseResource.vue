@@ -38,11 +38,12 @@
                 dataRestore: [113, 40, 60],
                 coverOption: {
                     grid: {
-                        top: '25%',
-                        bottom: '20%'
+                        top: '30%',
+                        bottom: '25%',
+                        left: '15%'
                     },
                     legend: {
-                        top: 0,
+                        top: 10,
                         right: -30
                     },
                     series: [
@@ -80,7 +81,7 @@
                 for(let i = 0, len = this.dataCPU.length; i < len; i ++) {
                     temp.push(this.dataCPU[i] + this.dataMemory[i] + this.dataRestore[i]);
                 }
-                return `2018-2020年基础资源需求 总量：<span style="color: #217bcc;">${temp[0]}、${temp[1]}、${temp[2]}</span>`;
+                return `基础资源需求 总量：<span style="color: #217bcc;">${temp[0]}、${temp[1]}、${temp[2]}</span>`;
             }
         },
         methods: {

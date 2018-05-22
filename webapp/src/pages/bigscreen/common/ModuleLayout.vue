@@ -1,7 +1,7 @@
 <template>
     <div class="module-layout">
         <section class="module-layout-title">
-            <p style="padding-left: .2rem;">
+            <p style="padding-left: .2rem; white-space: nowrap;">
                 <!--<Icon style="color: rgba(21, 107, 252, 1);" type="ionic"></Icon>-->
                 <i style="color: rgba(3, 162, 251, 1);" class="icon iconfont icon-biaoti1"></i>
                 &nbsp;

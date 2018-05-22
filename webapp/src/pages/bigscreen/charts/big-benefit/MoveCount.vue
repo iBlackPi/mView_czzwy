@@ -38,11 +38,11 @@
                 dataSpecial: [1, 0, 49],
                 coverOption: {
                     grid: {
-                        top: '25%',
-                        bottom: '20%'
+                        top: '30%',
+                        bottom: '25%'
                     },
                     legend: {
-                        top: 0,
+                        top: 10,
                         right: -30
                     },
                     series: [
@@ -80,7 +80,7 @@
                 for(let i = 0, len = this.dataInternet.length; i < len; i ++) {
                     temp.push(this.dataInternet[i] + this.dataPolicy[i] + this.dataSpecial[i]);
                 }
-                return `2018-2020年迁移数量 总量依次为：<span style="color: #217bcc;">${temp[0]}、${temp[1]}、${temp[2]}</span>`;
+                return `迁移数量 总量：<span style="color: #217bcc;">${temp[0]}、${temp[1]}、${temp[2]}</span>`;
             }
         },
         methods: {

@@ -1,5 +1,5 @@
 <template>
-    <module-layout title="信息共享需求量TOP5">
+    <module-layout title="信息共享被需求单位TOP5">
         <ve-rect-coordinate
                 id="info-share-needed"
                 style="height:100%"

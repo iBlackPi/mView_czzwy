@@ -1,5 +1,5 @@
 <template>
-    <module-layout title="信息共享需求量TOP5">
+    <module-layout title="信息共享需求单位TOP5">
         <ve-rect-coordinate
                 id="info-share"
                 style="height:100%"
@@ -23,8 +23,8 @@
         name: "computor-room",
         data(){
             return {
-                yAxisData: ['工信局', '住建局', '发改委', '审计局', '民政局'],
-                data: [5, 6, 6, 7, 10],
+                yAxisData: ['住建局', '发改委', '审计局', '民政局', '公安局'],
+                data: [6, 6, 7, 10, 32],
                 coverOption: {
                     grid: {
                         top: '25%',

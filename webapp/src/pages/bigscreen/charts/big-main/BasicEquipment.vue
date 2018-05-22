@@ -27,14 +27,14 @@
             return {
                 colors: ['#01A2FC','#F9D135','#01B344','#01A2FC'],
                 xAxisData: ['小机', 'X86服务器', '虚机', '网络设备'],
-                data: [12, 495, 118, 390],
+                data: [12, 495, 118, 679],
                 coverOption: {
                     grid: {
-                        top: '25%',
-                        bottom: '20%'
+                        top: '30%',
+                        bottom: '25%'
                     },
                     legend: {
-                        top: 0,
+                        top: 10,
                         right: -30
                     },
                     series: [

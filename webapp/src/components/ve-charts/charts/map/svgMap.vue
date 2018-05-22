@@ -137,8 +137,8 @@
                                 zhengwuNum = temp.zhengwuNum;
                                 netNum = temp.netNum;
                             }
-                            return `<span style="color: #01A2FC">${departmentName}</span><br>
-                                    <span style="color: rgba(255, 255, 255, .8);">
+                            return `<span style="color: #01A2FC; font-size: .8rem;">${departmentName}</span><br>
+                                    <span style="color: rgba(255, 255, 255, .8); font-size: .6rem;">
                                         是否有信息科：<span style="color: #217bcc;"> ${temp1}</span><br>
                                         业务系统数量：<span style="color: #217bcc;"> ${bussinessNum}</span><br>
                                         可云化系统数：<span style="color: #217bcc;"> ${removeNum}</span><br>
