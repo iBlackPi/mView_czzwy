@@ -33,7 +33,7 @@
         data(){
             return {
                 xAxisData: ['第一批', '第二批', '第三批'],
-                dataInternet: [50, 11, 34],
+                dataInternet: [59, 11, 34],
                 dataPolicy: [3, 0, 30],
                 dataSpecial: [1, 0, 49],
                 coverOption: {

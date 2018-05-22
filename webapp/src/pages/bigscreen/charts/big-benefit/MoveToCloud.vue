@@ -22,9 +22,9 @@
             return {
                 pieData:
                     [
-                        {value: 54, name: '互联网'},
+                        {value: 63, name: '互联网'},
                         {value: 11, name: '政务外网'},
-                        {value: 143, name: '业务专网'}
+                        {value: 113, name: '业务专网'}
                     ],
                 coverOption: {
                     legend: {
