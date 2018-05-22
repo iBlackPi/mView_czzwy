@@ -16,7 +16,7 @@
                 </div>
                 <div class="fun" @click="goBusiPage">
                     <i class="icon iconfont icon-huizong-"></i>
-                    <span>信息系统汇总</span>
+                    <span>资源目录汇总</span>
                 </div>
                 <div class="fun" @click="goBusiPage">
                     <i class="icon iconfont icon-home"></i>
@@ -48,7 +48,7 @@
                 if(text === '信息化系统详情') {
                     this.$router.push({name: 'info-sys-maintain'});
                 }
-                if(text === '信息系统汇总') {
+                if(text === '资源目录汇总') {
                     this.$router.push({name: 'resource-catalog-manage'});
                 }
                 if(text === '机房信息') {

@@ -171,7 +171,7 @@
                             temp.temp1 === null || temp.temp1 === 'null' ? temp.temp1 = '否' : temp.temp1;
                         });
                         this.totalInfo = data.data.list;
-                        console.log('totalInfo ===========================', this.totalInfo);
+                        console.log('totalIN', this.totalInfo);
                         this.totalCount = data.data.totalCount;
                     }else{
                         this.$Notice.error({

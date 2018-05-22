@@ -45,7 +45,7 @@
                                     style="width: 100%; height: 100%;"
                                     :center="['40%', '50%']"
                                     backgroundColor="transparent"
-                                    id="move-to-cloud"
+                                    id="info-system"
                                     :data="pieData"
                                     :radius="['55%','75%']"
                                     :coverOption="coverOption"
@@ -231,6 +231,15 @@
                         for(let t = 0; t < newarr2.length; t++) {
                             newarr2[t] = 0;
                         }
+                        for(let p = 0; p < this.selectTwo.length; p++) {
+                            for(let j = 0; j < data.data.list.length; j++) {
+                                if(this.selectTwo[p] === data.data.list[j].network) {
+                                    newarr2[p]++;
+                                }
+                            }
+                        }
+                        this.xAxisData = this.selectTwo;
+                        this.data = newarr2;
                     }else {
                         console.error('分页获取表3 信息化系统调研表信息失败')
                     }
@@ -273,6 +282,7 @@
                     this.selectThree = [...new Set(tempThree)].filter(item => {
                         return item !== '';
                     });
+                    this.changePage();
                 }else {
                     console.error('分页获取表3 信息化系统调研表信息失败')
                 }
@@ -281,7 +291,7 @@
             })
         },
         mounted() {
-            this.changePage();
+
         }
     }
 </script>
