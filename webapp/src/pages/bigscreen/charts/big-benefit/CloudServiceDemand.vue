@@ -20,7 +20,7 @@
         data(){
             return {
                 data:  [{
-                    value : [3, 5, 7, 9, 10],
+                    value : [3, 5, 6, 8, 9],
                     name : '云服务目录需求'
                 }],
                 indicator: [

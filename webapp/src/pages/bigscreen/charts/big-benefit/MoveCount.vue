@@ -33,9 +33,10 @@
         data(){
             return {
                 xAxisData: ['第一批', '第二批', '第三批'],
-                dataInternet: [59, 11, 34],
-                dataPolicy: [3, 0, 30],
-                dataSpecial: [1, 0, 49],
+                // 50 3 1  11 0 0 34 30 49
+                dataInternet: [50, 3, 1],
+                dataPolicy: [11, 0, 0],
+                dataSpecial: [34, 30, 49],
                 coverOption: {
                     grid: {
                         top: '30%',
