@@ -103,21 +103,22 @@
                         }
                     },
                     tooltip : {
+                        backgroundColor: 'rgba(0,0,0,.5)',
                         formatter(params){
-                            let money = '暂无数据',
-                                temp1 = '暂无数据',
-                                netDeviceNum = '暂无数据',
-                                bussinessNum = '暂无数据',
-                                removeNum = '暂无数据',
-                                machineroomNum = '暂无数据',
-                                serverNum = '暂无数据',
-                                hasInternet = '暂无数据',
-                                hasgovExtrant = '暂无数据',
-                                hasspecialNet = '暂无数据',
-                                internetNum = '暂无数据',
-                                zhengwuNum = '暂无数据',
-                                netNum = '暂无数据',
-                                cataLogNum = '暂无数据';
+                            let money = '0',
+                                temp1 = '0',
+                                netDeviceNum = '0',
+                                bussinessNum = '0',
+                                removeNum = '0',
+                                machineroomNum = '0',
+                                serverNum = '0',
+                                hasInternet = '0',
+                                hasgovExtrant = '0',
+                                hasspecialNet = '0',
+                                internetNum = '0',
+                                zhengwuNum = '0',
+                                netNum = '0',
+                                cataLogNum = '0';
                             //todo 命名空间就代表store中的state，所以可以直接点属性获取数据
                             let departmentName = params.name || params.data.fromName;
                             let temp = _this.$store.state.czCloudInfo.czCloudInfo[departmentName];
@@ -137,19 +138,48 @@
                                 zhengwuNum = temp.zhengwuNum;
                                 netNum = temp.netNum;
                             }
-                            return `<span style="color: #01A2FC; font-size: .8rem;">${departmentName}</span><br>
-                                    <span style="color: rgba(255, 255, 255, .8); font-size: .6rem;">
-                                        是否有信息科：<span style="color: #217bcc;"> ${temp1}</span><br>
-                                        业务系统数量：<span style="color: #217bcc;"> ${bussinessNum}</span><br>
-                                        可云化系统数：<span style="color: #217bcc;"> ${removeNum}</span><br>
-                                        机房个数：<span style="color: #217bcc;"> ${machineroomNum}</span><br>
-                                        服务器台数：<span style="color: #217bcc;"> ${serverNum}</span><br>
-                                        互联网线路数：<span style="color: #217bcc;"> ${internetNum}</span><br>
-                                        政务外网线路数：<span style="color: #217bcc;"> ${zhengwuNum}</span><br>
-                                        专网线路数：<span style="color: #217bcc;"> ${netNum}</span><br>
-                                        资源目录数量：<span style="color: #217bcc;"> ${cataLogNum}</span><br>
-                                        网络设备数量：<span style="color: #217bcc;"> ${netDeviceNum}</span>
-                                    </span>`;
+                            return `<section class="map-modal" style="position: relative;width: 25rem;">
+                                        <section class="map-modal-item">
+                                            <span class="map-modal-item-data">${temp1}</span>
+                                            <p class="map-modal-item-title">是否有信息科</p>
+                                        </section>
+                                        <section class="map-modal-item">
+                                            <span class="map-modal-item-data">${bussinessNum}</span>
+                                            <p class="map-modal-item-title">业务系统数量</p>
+                                        </section>
+                                        <section class="map-modal-item">
+                                            <span class="map-modal-item-data">${removeNum}</span>
+                                            <p class="map-modal-item-title">可云化系统数</p>
+                                        </section>
+                                        <section class="map-modal-item">
+                                            <span class="map-modal-item-data">${machineroomNum}</span>
+                                            <p class="map-modal-item-title">机房个数</p>
+                                        </section>
+                                        <section class="map-modal-item">
+                                            <span class="map-modal-item-data">${serverNum}</span>
+                                            <p class="map-modal-item-title">服务器台数</p>
+                                        </section>
+                                        <section class="map-modal-item">
+                                            <span class="map-modal-item-data">${internetNum}</span>
+                                            <p class="map-modal-item-title">互联网线路数</p>
+                                        </section>
+                                        <section class="map-modal-item">
+                                            <span class="map-modal-item-data">${zhengwuNum}</span>
+                                            <p class="map-modal-item-title">政务外网线路数</p>
+                                        </section>
+                                        <section class="map-modal-item">
+                                            <span class="map-modal-item-data">${netNum}</span>
+                                            <p class="map-modal-item-title">专网线路数</p>
+                                        </section>
+                                        <section class="map-modal-item">
+                                            <span class="map-modal-item-data">${cataLogNum}</span>
+                                            <p class="map-modal-item-title">资源目录数量</p>
+                                        </section>
+                                        <section class="map-modal-item">
+                                            <span class="map-modal-item-data">${netDeviceNum}</span>
+                                            <p class="map-modal-item-title">网络设备数量</p>
+                                        </section>
+                                    </section>`;
                         }
                     },
                     series : [
@@ -207,7 +237,7 @@
                                 show: false
                             },
                             shape: path
-                        },{
+                        }/*,{
                             name: '沧州信息化资源分布',
                             type: 'lines',
                             zlevel: 10,
@@ -233,7 +263,7 @@
                                 }
                             },
                             data: this.convertLineData({line: this.lineOne, geoFlag: 'geoCoordMap'})
-                        }]
+                        }*/]
                 };
                 chart.setOption(option);
 
@@ -247,6 +277,7 @@
                                 department: departmentName //保证每次点击路由的query项都是不一样的，确保会重新刷新view
                             }});
                     }else {
+                        debugger;
                         _this.$router.push({name: 'home'});
                     }
                 });
@@ -277,7 +308,7 @@
                     isChangeFlag ++;
                     console.log('---------------linedata------------',lineData, this.convertLineData(lineData));
                     option.series[0].data = this.convertData(data, geoData);
-                    option.series[2].data = this.convertLineData(lineData);
+                    // option.series[2].data = this.convertLineData(lineData);
                     chart.setOption(option);
                 }, 15 * 1000);
 
@@ -311,3 +342,42 @@
         }
     }
 </script>
+<style lang="less" >
+    .map-modal-item {
+        position: relative;
+        float: left;
+        width: 6rem;
+        height: 4rem;
+        border: 1px solid transparent;
+        margin: .1rem;
+        background-color: rgba(24, 38, 101, 0.5);
+        .map-modal-item-data {
+            color: #05A2FA;
+            font-size: 1.2rem;
+            font-weight: bold;
+            .middle-center(35%, 50%);
+        }
+        .map-modal-item-title {
+            color: rgba(255,255,255,.7);
+            font-size: .8rem;
+            white-space: nowrap;
+            .middle-center(80%, 50%);
+        }
+        .map-modal-item-left {
+            color: #01FDAD;
+            font-size: 1rem;
+            .middle-center(35%, 30%);
+        }
+        .map-modal-item-right {
+            color: #01FDAD;
+            font-size: 1rem;
+            .middle-center(35%, 70%);
+        }
+    }
+    .middle-center(@top: 50%, @left: 50%) {
+        position: absolute;
+        top: @top;
+        left: @left;
+        transform: translate(-50%, -50%);
+    }
+</style>

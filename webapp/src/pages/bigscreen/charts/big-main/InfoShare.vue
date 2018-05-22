@@ -19,28 +19,129 @@
 
 <script>
     import ModuleLayout from '../../common/ModuleLayout';
+
+    let myColor = ['#05A2FA'];
+    let myBgColor = ['rgba(5,162,250,0.2)'];
+    let gain = 0.9;
     export default {
         name: "computor-room",
-        data(){
+        data() {
             return {
                 yAxisData: ['住建局', '发改委', '审计局', '民政局', '公安局'],
                 data: [6, 6, 7, 10, 32],
                 coverOption: {
                     grid: {
                         top: '25%',
-                        bottom: '20%'
+                        bottom: '20%',
+                        left: '15%'
                     },
                     legend: {
-                        top: 0,
+                        top: 10,
                         right: -30
                     },
-                    series: [
-                        {
-                            label: {
-                                show: true,
-                                color: '#fff',
-                                position: 'right'
+                    yAxis: [{
+                        type: 'category',
+                        axisTick: {
+                            show: false
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: 'rgba(160,160,160,0.3)',
                             }
+                        },
+                        axisLabel: {
+                            textStyle: {
+                                // color: function (param, index) {
+                                //     return myColor[index]
+                                // },
+                                color: '#fff',
+                                fontSize: 13 * gain,
+                            }
+                        },
+                        data: ['互联网', '政务外网', '业务专线', '政务内网', '公务内网']
+                    }, {
+                        type: 'category',
+                        axisLine: {
+                            show: false
+                        },
+                        axisTick: {
+                            show: false
+                        },
+                        axisLabel: {
+                            show: false
+                        },
+                        splitArea: {
+                            show: false
+                        },
+                        splitLine: {
+                            show: false
+                        },
+                        data: []
+                    }
+                    ],
+                    series: [{
+                        type: 'bar',
+                        yAxisIndex: 1,
+                        itemStyle: {
+                            normal: {
+                                show: true,
+                                color: function (params) {
+                                    let num = myBgColor.length;
+                                    return myBgColor[params.dataIndex % num]
+                                },
+                                barBorderRadius: 50,
+                                borderWidth: 0,
+                                borderColor: '#333',
+                            }
+                        },
+                        label: {
+                            normal: {
+                                show: true,
+                                formatter: function (params) {
+                                    let stuNum = 0;
+                                    [6, 6, 7, 10, 32].forEach(function (value, index, array) {
+                                        if (params.dataIndex == index) {
+                                            stuNum = value;
+                                        }
+                                    })
+                                    return stuNum;
+                                },
+                                position: 'right',
+                                textStyle: {
+                                    // color:function(params) {
+                                    //     let num=myBgColor.length;
+                                    //     return myBgColor[params.dataIndex%num]
+                                    // },
+                                    color: '#fff',
+                                    fontSize: '1rem',
+                                }
+                            }
+                        },
+                        barWidth: '25%',
+                        data: [40, 40, 40, 40, 40]
+                    },
+                        {
+                            type: 'bar',
+                            itemStyle: {
+                                normal: {
+                                    show: true,
+                                    color: function (params) {
+                                        let num = myColor.length;
+                                        return myColor[params.dataIndex % num]
+                                    },
+                                    barBorderRadius: 50,
+                                    borderWidth: 0,
+                                    borderColor: '#333',
+                                }
+                            },
+                            label: {
+                                normal: {
+                                    show: false,
+
+                                }
+                            },
+                            barWidth: '25%',
+                            data: [6, 6, 7, 10, 32]
                         }
                     ]
                 }
@@ -50,21 +151,21 @@
             ModuleLayout
         },
         methods: {
-            getInfo(){
+            getInfo() {
                 this.$httpt.get('bigScreenController.do?getTop5Org').then(res => {
-                    if(res.data){
+                    if (res.data) {
                         let temp = res.data;
                         this.data = [];
                         Object.keys(temp).forEach((key) => {
                             this.data.unshift(temp[key]);
                         });
-                    }else{
+                    } else {
                         throw new Error('获取信息共享需求量失败！');
                     }
                 })
             }
         },
-        mounted(){
+        mounted() {
             let _this = this;
             this.$nextTick(() => {
                 // _this.getInfo();

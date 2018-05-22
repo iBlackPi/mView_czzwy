@@ -18,6 +18,9 @@
 
 <script>
     import ModuleLayout from '../../common/ModuleLayout';
+    let myColor = ['#05A2FA'];
+    let myBgColor = ['rgba(5,162,250,0.2)'];
+    let gain = 0.9;
     export default {
         name: "computor-room",
         data(){
@@ -27,19 +30,112 @@
                 coverOption: {
                     grid: {
                         top: '25%',
-                        bottom: '20%'
+                        bottom: '20%',
+                        left: '15%'
                     },
                     legend: {
-                        top: 0,
+                        top: 10,
                         right: -30
                     },
-                    series: [
-                        {
-                            label: {
-                                show: true,
-                                color: '#fff',
-                                position: 'right'
+                    yAxis: [{
+                        type: 'category',
+                        axisTick: {
+                            show: false
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: 'rgba(160,160,160,0.3)',
                             }
+                        },
+                        axisLabel: {
+                            textStyle: {
+                                // color: function (param, index) {
+                                //     return myColor[index]
+                                // },
+                                color: '#fff',
+                                fontSize: 13 * gain,
+                            }
+                        },
+                        data: ['国土局', '统计局', '人社局', '教育局', '工商局']
+                    }, {
+                        type: 'category',
+                        axisLine: {
+                            show: false
+                        },
+                        axisTick: {
+                            show: false
+                        },
+                        axisLabel: {
+                            show: false
+                        },
+                        splitArea: {
+                            show: false
+                        },
+                        splitLine: {
+                            show: false
+                        },
+                        data: []
+                    }
+                    ],
+                    series: [{
+                        type: 'bar',
+                        yAxisIndex: 1,
+                        itemStyle: {
+                            normal: {
+                                show: true,
+                                color: function (params) {
+                                    let num = myBgColor.length;
+                                    return myBgColor[params.dataIndex % num]
+                                },
+                                barBorderRadius: 50,
+                                borderWidth: 0,
+                                borderColor: '#333',
+                            }
+                        },
+                        label: {
+                            normal: {
+                                show: true,
+                                formatter: function (params) {
+                                    let stuNum = 0;
+                                    [7, 8, 8, 11, 13].forEach(function (value, index, array) {
+                                        if (params.dataIndex == index) {
+                                            stuNum = value;
+                                        }
+                                    })
+                                    return stuNum;
+                                },
+                                position: 'right',
+                                textStyle: {
+                                    color: '#fff',
+                                    fontSize: '1rem',
+                                }
+                            }
+                        },
+                        barWidth: '25%',
+                        data: [20, 20, 20, 20, 20]
+                    },
+                        {
+                            type: 'bar',
+                            itemStyle: {
+                                normal: {
+                                    show: true,
+                                    color: function (params) {
+                                        let num = myColor.length;
+                                        return myColor[params.dataIndex % num]
+                                    },
+                                    barBorderRadius: 50,
+                                    borderWidth: 0,
+                                    borderColor: '#333',
+                                }
+                            },
+                            label: {
+                                normal: {
+                                    show: false,
+
+                                }
+                            },
+                            barWidth: '25%',
+                            data: [7, 8, 8, 11, 13]
                         }
                     ]
                 }

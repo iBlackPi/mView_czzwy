@@ -74,7 +74,6 @@
         }
     }
 </script>
-
 <style scoped type="text/less" lang="less">
     .bigmain {
         width: 100%;
@@ -153,6 +152,7 @@
         width: @width;
         height: @height;
     }
+
     .module-common {
         background-color: rgba(24,38,101,.3);
     }

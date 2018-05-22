@@ -29,7 +29,7 @@ export default {
         {name: '侨联', value: 14},
         {name: '残联', value: 2},
 
-        {name: '数据中心', value: 2}
+        // {name: '数据中心', value: 2}
     ],
     geoCoordMap:
         {

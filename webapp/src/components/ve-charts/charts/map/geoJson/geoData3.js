@@ -29,7 +29,7 @@ export default {
         {name: '安监局', value: 2},
         {name: '体育局', value: 9},
 
-        {name: '数据中心', value: 2}
+        // {name: '数据中心', value: 2}
     ],
     geoCoordMap:
         {

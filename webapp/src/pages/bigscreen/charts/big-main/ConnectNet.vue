@@ -18,6 +18,9 @@
 
 <script>
     import ModuleLayout from '../../common/ModuleLayout';
+    let myColor = ['#E6CD46', '#06B15B', '#05A2FA', '#13b5b1', '#06B15B'];
+    let myBgColor = ['rgba(239,207,62,0.2)', 'rgba(6,177,89,0.2)', 'rgba(5,162,250,0.2)', 'rgba(19,181,177,0.2)', 'rgba(6,177,89,0.2)'];
+    let gain = 0.9;
     export default {
         name: "computor-room",
         data(){
@@ -33,13 +36,108 @@
                         top: 10,
                         right: -30
                     },
-                    series: [
-                        {
-                            label: {
-                                show: true,
-                                position: 'top',
-                                color: '#fff'
+                    xAxis: [{
+                        type: 'category',
+                        axisTick: {
+                            show: false
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: 'rgba(160,160,160,0.3)',
                             }
+                        },
+                        axisLabel: {
+                            textStyle: {
+                                color: function (param, index) {
+                                    return myColor[index]
+                                },
+                                fontSize: 13 * gain,
+                            }
+                        },
+                        data: ['互联网', '政务外网', '业务专线', '政务内网', '公务内网']
+                    }, {
+                        type: 'category',
+                        axisLine: {
+                            show: false
+                        },
+                        axisTick: {
+                            show: false
+                        },
+                        axisLabel: {
+                            show: false
+                        },
+                        splitArea: {
+                            show: false
+                        },
+                        splitLine: {
+                            show: false
+                        },
+                        data: []
+                    }
+                    ],
+                    series: [{
+                        type: 'bar',
+                        xAxisIndex: 1,
+                        itemStyle: {
+                            normal: {
+                                show: true,
+                                color: function(params) {
+                                    let num=myBgColor.length;
+                                    return myBgColor[params.dataIndex%num]
+                                },
+                                barBorderRadius: 50,
+                                borderWidth: 0,
+                                borderColor: '#333',
+                            }
+                        },
+                        label:{
+                            normal:{
+                                show:true,
+                                formatter: function(params) {
+                                    var stuNum = 0;
+                                    [55, 60, 62, 10, 50].forEach(function(value, index, array) {
+                                        if (params.dataIndex == index) {
+                                            stuNum = value;
+                                        }
+                                    })
+                                    return stuNum ;
+                                },
+                                position: 'top',
+                                textStyle:{
+                                    // color:function(params) {
+                                    //     var num=myBgColor.length;
+                                    //     return myBgColor[params.dataIndex%num]
+                                    // },
+                                    color: '#fff',
+                                    fontSize: '1rem',
+                                }
+                            }
+                        },
+                        barWidth: '25%',
+                        data: [80, 80, 80, 80, 80]
+                    },
+                        {
+                            type: 'bar',
+                            itemStyle: {
+                                normal: {
+                                    show: true,
+                                    color: function(params) {
+                                        var num=myColor.length;
+                                        return myColor[params.dataIndex%num]
+                                    },
+                                    barBorderRadius: 50,
+                                    borderWidth: 0,
+                                    borderColor: '#333',
+                                }
+                            },
+                            label: {
+                                normal: {
+                                    show: false,
+
+                                }
+                            },
+                            barWidth: '25%',
+                            data: [55, 60, 62, 10, 50]
                         }
                     ]
                 }
