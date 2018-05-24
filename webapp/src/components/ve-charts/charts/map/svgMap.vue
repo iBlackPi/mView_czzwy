@@ -70,8 +70,9 @@
                     this.dataInfo = dataInfoTemp;
                     this.dataInfo2 = dataInfo2Temp;
                     this.dataInfo3 = dataInfo3Temp;
-                    debugger;
-                    this.getGeoJson(this.name);
+                    this.$nextTick(() => {
+                        this.getGeoJson(this.name);
+                    });
                 }
             }
         },
@@ -111,7 +112,7 @@
             drawMap: function (name, path) {
                 let chart = this.$echarts.init(document.getElementById(this.id));
                 let _this = this;
-                debugger;
+                // debugger;
                 let option = {
                     backgroundColor: '',
                     geo: {
@@ -318,7 +319,7 @@
                             }
                         });
                     } else {
-                        debugger;
+                        // debugger;
                         _this.$router.push({name: 'home'});
                     }
                 });

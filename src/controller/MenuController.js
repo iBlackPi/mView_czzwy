@@ -6,7 +6,7 @@ router.use('/menuController.do', (req, res, next) => {
     const m = req.query;
     //认证用户是否合法
     if(m.m === 'findMenu'){
-        menuService.findMenu({type: 'leaf'}, (menus) => {
+        menuService.findMenu({}, (menus) => {
             if(menus){
                 req.ajaxJson.data = menus;
                 res.send(req.ajaxJson);

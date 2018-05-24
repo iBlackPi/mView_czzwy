@@ -14,7 +14,7 @@ console.log('--',rBigBenefit, rBigMain);
 const redirectToIndex = {
     path: '/',
     redirect: {
-        name: 'bigMain'
+        name: 'login'
     }
 };
 

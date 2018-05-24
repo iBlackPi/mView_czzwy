@@ -31,8 +31,10 @@ const mutations = {
         state.routeCount = 0;
     },
     restoreMenu(state, payload){
-        state.menuList = payload.data;
-        state.menuData = buildTree(payload.data, payload.order, (item) => {
+        state.menuList = payload.data.filter(item => {
+            return item.type === 'leaf'
+        });
+        state.menuData = buildTree(state.menuList, payload.order, (item) => {
             let obj = {
                 name: item.location,
                 title: item.title

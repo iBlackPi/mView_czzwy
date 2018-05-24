@@ -19,13 +19,13 @@ import '../assets/css/iconfont.css';
 // import '../assets/font/iconfont';
 
 import App from './App.vue';
-import { routes } from '@/router/index';
+import {routes} from '@/router/index';
 import storeConfig from '@/store/index';
 
-import { buildTree } from '@/assets/util/utils';
+import {buildTree} from '@/assets/util/utils';
 
 /*该文件放在上方会报错,原因未知*/
-import { Base64 } from 'js-base64';
+import {Base64} from 'js-base64';
 
 // 将工具挂在到vue原型
 Vue.use(Vuex);
@@ -75,7 +75,7 @@ const store = new Vuex.Store(storeConfig);
 //函数中返回值会作为请求的data参数
 instance.interceptors.request.use((config) => {
     //post请求时,将请求体序列化
-    if(config.method === 'post') {
+    if (config.method === 'post') {
         config.data = qs.stringify(config.data);
     }
     return config;
@@ -108,16 +108,16 @@ instance.interceptors.response.use((response) => {
 
     //如果请求后台，后台返回success标志位是失败则判断是哪些错误码做相应处理，否则直接return response
     //因为所有ajax请求，错误的处理逻辑都是一样的
-    if(!success){
+    if (!success) {
         //如果拦截器拦截的是判断用户是否成功登录的ajax请求，则不做路由相关的处理，因为此处处理和判断用户是否登录的逻辑重复了
         //如果是其他api的调用则根据返回码处理
-        if(response.config.url !== '/loginController.do?m=validateUser'){
-            if(code === 401) {
+        if (response.config.url !== '/loginController.do?m=validateUser') {
+            if (code === 401) {
                 router.push({
                     replace: true,
                     name: 'error-401'
                 });
-            } else if(code === 403) {//todo 403不是协议号，只代表用户session失效
+            } else if (code === 403) {//todo 403不是协议号，只代表用户session失效
                 //将用户权限清空
                 vm.$store.commit('auth/resetState');
                 //将跟菜单相关数据清空
@@ -128,7 +128,7 @@ instance.interceptors.response.use((response) => {
                 router.push({
                     name: 'login'
                 });
-            } else if(code === 500) {
+            } else if (code === 500) {
                 //服务器内部会做标准的ajaxJson封装，此处只需在页面弹出相应的提示即可
                 vm.$Notice.error({
                     title: '500',
@@ -167,19 +167,19 @@ const authCheck = (routerToName, next) => {
             data: data.data,
             order: 'orderNo'
         });
-        for(let index in data.data){
-            if(data.data[index].location === routerToName){//如果在路由列表中,则直接放过
+        for (let index in data.data) {
+            if (data.data[index].location === routerToName) {//如果在路由列表中,则直接放过
                 hasAuth = true;
                 next();
                 break;
             }
         }
-        if(!hasAuth){
+        if (!hasAuth) {
             next({name: 'error-401', replace: true});
         }
         //将数组形式的菜单转换为树形格式的菜单数据，用于左侧树形菜单的渲染
         //todo 这种用法是绝对不允许的，要通过mutation显示的改变state，而不是直接赋值
-        //todo 这个逻辑是为了拿到menuData数据，却放在了路由处理中，是绝对不允许的，业务分离，分开放置
+        //todo 这个逻辑是为了拿到menuData数据，却放在了路由处理中，是绝对不允许的，单一职责，分开放置
         // vm.$store.state.menu.menuData = buildTree(data.data, 'orderNo', (item) => {
         //     let obj = {
         //         name: item.location,
@@ -201,55 +201,56 @@ router.beforeEach((to, from, next) => {
     }
     //如果路由是到401或者404页面的，不涉及到用户获取数据，那么无需去后台验证，直接跳转即可，走else逻辑
     //如果不是401或404，那么就要去验证用户请求的合法性
-    if(to.name !== 'error-401' && to.name !== 'error-404' && to.name !=='bigBenefit' && to.name !=='bigMain'){
+    // if(to.name !== 'error-401' && to.name !== 'error-404' && to.name !=='bigBenefit' && to.name !=='bigMain'){
+    if (to.name !== 'error-401' && to.name !== 'error-404') {
         //向后台询问，判断用户是否仍然是登录状态
-        instance.get('/validateController.do?m=validateUser').then(({ data }) => {
-            if(data.success){
+        instance.get('/validateController.do?m=validateUser').then(({data}) => {
+            if (data.success) {
                 //把用户的授权信息放入store中
                 vm.$store.commit('validateInfo/restoreUserResourceInfo', data.data);
                 //如果路由存在，则去判断路由是否为登录页面
-                if(to.name !== null){
+                if (to.name !== null) {
                     //用户在登录状态时，不允许回到登录界面
                     //用户如果在登录页面就代表用户session退出，保持状态的一致性，防止出现安全问题
                     //如果不是登录界面，则判断该用户是否有权限访问该路由
-                    if(to.name === 'login'){
+                    if (to.name === 'login') {
                         //todo 执行该段代码后，此处不会再次触发路由守卫
                         next({name: 'home'});
-                    }else if(to.name === 'home' || to.name === 'main'){
+                    } else if (to.name === 'home' || to.name === 'main') {
                         //在用户登录成功的情况下，就认为用户有权限访问home页,不需要进行权限验证
                         //不做权限验证还有一个原因是后台获取的菜单数据，并没有home这一项，所以也无法验证
                         next();
                         //以上两段逻辑的结果看似都是跳转到home页，但是不能将其合并，因为逻辑本身不一样，不合并有更好的可维护性
-                    } else{
+                    } else {
                         //判断用户是否有该路由权限
                         //todo 这里处理if中方式并不严谨，因为用户在刷新之前的某个时间，后台改变其该路由权限，那么用户刷新时还是要验证，但这里没有做验证
                         //todo 当只是路由改变的情况下，还是正常去验证用户有没有该权限
                         // if(!vm.$store.state.menu.menuList){
-                            authCheck(to.name, next);
+                        authCheck(to.name, next);
                         // }else{
                         //     next();
                         // }
                     }
-                }else{//如果路由不存在
+                } else {//如果路由不存在
                     //此处应该做replace处理，防止回退按钮点击两次
                     //todo 解释原因
                     next({name: 'error-404', replace: true});
                 }
-            }else{//如果是未登录状态，则跳转到登录页面
+            } else {//如果是未登录状态，则跳转到登录页面
                 //防止路由死循环
                 //路由到显示调用路由到login后，又触发路由守卫，又会执行此处到login的逻辑，陷入死循环
-                if(to.name !== 'login'){
+                if (to.name !== 'login') {
                     //todo 做了判断，执行该段代码next({name: 'login'})后，不会再次触发路由守卫，非常奇怪？？？
                     //todo 猜测：当你事先已经执行过一遍next()到login,之后再次执行next({name: 'login'})就不会再次触发守卫
                     next({name: 'login'});
-                }else{
+                } else {
                     next();
                 }
                 //todo 如果不作如上判断，会陷入死循环next({name: 'login'})会再次触发守卫
                 // next({name: 'login'});
             }
         })
-    }else{
+    } else {
         next();
     }
 });
