@@ -28,6 +28,9 @@
 
 <script>
     import ModuleLayout from '../../common/ModuleLayout';
+    let myColor = ['#E6CD46', '#06B15B', '#05A2FA', '#13b5b1', '#06B15B'];
+    let myBgColor = ['rgba(239,207,62,0.2)', 'rgba(6,177,89,0.2)', 'rgba(5,162,250,0.2)', 'rgba(19,181,177,0.2)', 'rgba(6,177,89,0.2)'];
+    let gain = 0.9;
     export default {
         name: "computor-room",
         data(){
@@ -46,29 +49,200 @@
                         top: 10,
                         right: -30
                     },
-                    series: [
-                        {
-                            label: {
-                                show: true,
-                                position: 'top',
-                                color: '#fff'
+                    xAxis: [{
+                        type: 'category',
+                        axisTick: {
+                            show: false
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: 'rgba(160,160,160,0.3)',
                             }
                         },
-                        {
-                            label: {
-                                show: true,
-                                position: 'top',
-                                color: '#fff'
+                        axisLabel: {
+                            interval: 0,
+                            textStyle: {
+                                color: '#fff',
+                                fontSize: 13 * gain,
                             }
                         },
-                        {
-                            label: {
+                        data: ['第一批', '第二批', '第三批']
+                    }, {
+                        type: 'category',
+                        axisLine: {
+                            show: false
+                        },
+                        axisTick: {
+                            show: false
+                        },
+                        axisLabel: {
+                            show: false
+                        },
+                        splitArea: {
+                            show: false
+                        },
+                        splitLine: {
+                            show: false
+                        },
+                        data: ['第一批', '第二批', '第三批']
+                    }],
+                    series: [{
+                        type: 'bar',
+                        xAxisIndex: 1,
+                        itemStyle: {
+                            normal: {
                                 show: true,
-                                position: 'top',
-                                color: '#fff'
+                                color: 'rgba(5,162,250,0.2)',
+                                barBorderRadius: 50,
+                                borderWidth: 0,
+                                borderColor: '#333',
                             }
-                        }
-                    ]
+                        },
+                        label:{
+                            normal:{
+                                show:true,
+                                formatter: function(params) {
+                                    var stuNum = 0;
+                                    [50, 3, 1].forEach(function(value, index, array) {
+                                        if (params.dataIndex == index) {
+                                            stuNum = value;
+                                        }
+                                    })
+                                    return stuNum ;
+                                },
+                                position: 'top',
+                                textStyle:{
+                                    color: '#fff',
+                                    fontSize: '1rem',
+                                }
+                            }
+                        },
+                        barWidth: '15%',
+                        data: [80, 80, 80]
+                    },{
+                        type: 'bar',
+                        xAxisIndex: 1,
+                        itemStyle: {
+                            normal: {
+                                show: true,
+                                color: 'rgba(239,207,62,0.2)',
+                                barBorderRadius: 50,
+                                borderWidth: 0,
+                                borderColor: '#333',
+                            }
+                        },
+                        label:{
+                            normal:{
+                                show:true,
+                                formatter: function(params) {
+                                    var stuNum = 0;
+                                    [11, 0, 0].forEach(function(value, index, array) {
+                                        if (params.dataIndex == index) {
+                                            stuNum = value;
+                                        }
+                                    })
+                                    return stuNum ;
+                                },
+                                position: 'top',
+                                textStyle:{
+                                    color: '#fff',
+                                    fontSize: '1rem',
+                                }
+                            }
+                        },
+                        barWidth: '15%',
+                        data: [80, 80, 80]
+                    },{
+                        type: 'bar',
+                        xAxisIndex: 1,
+                        itemStyle: {
+                            normal: {
+                                show: true,
+                                color: 'rgba(6,177,89,0.2)',
+                                barBorderRadius: 50,
+                                borderWidth: 0,
+                                borderColor: '#333',
+                            }
+                        },
+                        label:{
+                            normal:{
+                                show:true,
+                                formatter: function(params) {
+                                    var stuNum = 0;
+                                    [34, 30, 49].forEach(function(value, index, array) {
+                                        if (params.dataIndex == index) {
+                                            stuNum = value;
+                                        }
+                                    })
+                                    return stuNum ;
+                                },
+                                position: 'top',
+                                textStyle:{
+                                    color: '#fff',
+                                    fontSize: '1rem',
+                                }
+                            }
+                        },
+                        barWidth: '15%',
+                        data: [80, 80, 80]
+                    }, {
+                        type: 'bar',
+                        itemStyle: {
+                            normal: {
+                                show: true,
+                                color: '#01A2FC',
+                                barBorderRadius: 50,
+                                borderWidth: 0,
+                                borderColor: '#333',
+                            }
+                        },
+                        label: {
+                            normal: {
+                                show: false,
+
+                            }
+                        },
+                        barWidth: '15%',
+                        data: [50, 3, 1]
+                    }, {
+                        type: 'bar',
+                        itemStyle: {
+                            normal: {
+                                show: true,
+                                color: '#DFCD55',
+                                barBorderRadius: 50,
+                                borderWidth: 0,
+                                borderColor: '#333',
+                            }
+                        },
+                        label: {
+                            normal: {
+                                show: false,
+
+                            }
+                        },
+                        barWidth: '15%',
+                        data: [11, 0, 0]
+                    }, {
+                        type: 'bar',
+                        itemStyle: {
+                            normal: {
+                                show: true,
+                                color: '#01B344',
+                                barBorderRadius: 50,
+                                borderWidth: 0,
+                                borderColor: '#333',
+                            }
+                        },
+                        label: {
+                            normal: {
+                                show: false,
+
+                            }
+                        },
+                        barWidth: '15%',
+                        data: [34, 30, 49]
+                    }]
                 }
             }
         },

@@ -47,10 +47,9 @@
                             }
                         },
                         axisLabel: {
+                            interval: 0,
                             textStyle: {
-                                color: function (param, index) {
-                                    return myColor[index]
-                                },
+                                color: '#fff',
                                 fontSize: 13 * gain,
                             }
                         },

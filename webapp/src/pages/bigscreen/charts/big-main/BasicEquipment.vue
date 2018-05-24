@@ -52,10 +52,9 @@
                             }
                         },
                         axisLabel: {
+                            interval: 0,
                             textStyle: {
-                                color: function (param, index) {
-                                    return myColor[index]
-                                },
+                                color: '#fff',
                                 fontSize: 13 * gain,
                             }
                         },
@@ -109,10 +108,6 @@
                                 },
                                 position: 'top',
                                 textStyle:{
-                                    // color:function(params) {
-                                    //     var num=myBgColor.length;
-                                    //     return myBgColor[params.dataIndex%num]
-                                    // },
                                     color: '#fff',
                                     fontSize: '1rem',
                                 }

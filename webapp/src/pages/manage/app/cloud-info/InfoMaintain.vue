@@ -19,7 +19,7 @@
                 <!--action="http://111.62.40.193:9603/czportal/upLoadExcelController.do?upLoadExcel"-->
                 <!--action="http://10.88.8.184:8088/czportal/upLoadExcelController.do?upLoadExcel"-->
                 <Upload multiple
-                        action="http://10.88.8.184:8088/czportal/upLoadExcelController.do?upLoadExcel"
+                        action="http://111.62.40.193:9603/czportal/upLoadExcelController.do?upLoadExcel"
                         name="excelFileUpload"
                         :show-upload-list="false"
                         :on-success="uploadSuccess"

@@ -1,5 +1,6 @@
 <template>
     <div class="card-content" ref="mychart">
+        <input type="hidden" v-model="cloudInfo"/>
         <div style="height: 100%;width: 100%" :id="id"></div>
         <slot></slot>
     </div>
@@ -13,6 +14,7 @@
     import data3 from './geoJson/geoData3';
     import allDepartments from './geoJson/all-departments';
     import {lineOne, lineTwo, lineThree} from './geoJson/lines-data';
+
     export default {
         name: 've-svgMap',
         mixins: [emitter],
@@ -26,7 +28,7 @@
                 required: true
             }
         },
-        data (){
+        data() {
             return {
                 dataInfo: data1.dataInfo,
                 geoCoordMap: data1.geoCoordMap,
@@ -37,6 +39,40 @@
                 lineOne: lineOne,
                 lineTwo: lineTwo,
                 lineThree: lineThree,
+            }
+        },
+        computed: {
+            cloudInfo() {
+                let cloudInfo = this.$store.state.czCloudInfo.czCloudInfo;
+                // 初次加载store中没有数据，会报错，这里做判断
+                if (!(cloudInfo instanceof Array)) {
+                    let dataInfoTemp = [];
+                    let dataInfo2Temp = [];
+                    let dataInfo3Temp = [];
+                    this.dataInfo.forEach(item => {
+                        let tempObj = {name: '', value: ''};
+                        tempObj.name = item.name;
+                        tempObj.value = cloudInfo[item.name] ? cloudInfo[item.name].bussinessNum : 0;
+                        dataInfoTemp.push(tempObj);
+                    });
+                    this.dataInfo2.forEach(item => {
+                        let tempObj = {name: '', value: ''};
+                        tempObj.name = item.name;
+                        tempObj.value = cloudInfo[item.name] ? cloudInfo[item.name].bussinessNum : 0;
+                        dataInfo2Temp.push(tempObj);
+                    });
+                    this.dataInfo3.forEach(item => {
+                        let tempObj = {name: '', value: ''};
+                        tempObj.name = item.name;
+                        tempObj.value = cloudInfo[item.name] ? cloudInfo[item.name].bussinessNum : 0;
+                        dataInfo3Temp.push(tempObj);
+                    });
+                    this.dataInfo = dataInfoTemp;
+                    this.dataInfo2 = dataInfo2Temp;
+                    this.dataInfo3 = dataInfo3Temp;
+                    debugger;
+                    this.getGeoJson(this.name);
+                }
             }
         },
         methods: {
@@ -72,9 +108,10 @@
                 }
                 return res;
             },
-            drawMap: function(name,path){
+            drawMap: function (name, path) {
                 let chart = this.$echarts.init(document.getElementById(this.id));
                 let _this = this;
+                debugger;
                 let option = {
                     backgroundColor: '',
                     geo: {
@@ -91,20 +128,20 @@
                             }
                         },
                         itemStyle: {
-                            normal:{
+                            normal: {
                                 areaColor: 'rgba(0, 0, 0, 0)',
                                 borderColor: 'rgba(0, 0, 0, 0.2)',
                                 backgroundColor: 'rgba(0, 0, 0, 0)'
                             },
-                            emphasis:{
+                            emphasis: {
                                 show: false,
                                 areaColor: 'rgba(255,0,0,0)'
                             }
                         }
                     },
-                    tooltip : {
+                    tooltip: {
                         backgroundColor: 'rgba(0,0,0,.5)',
-                        formatter(params){
+                        formatter(params) {
                             let money = '0',
                                 temp1 = '0',
                                 netDeviceNum = '0',
@@ -122,7 +159,7 @@
                             //todo 命名空间就代表store中的state，所以可以直接点属性获取数据
                             let departmentName = params.name || params.data.fromName;
                             let temp = _this.$store.state.czCloudInfo.czCloudInfo[departmentName];
-                            if(temp){
+                            if (temp) {
                                 money = temp.money;
                                 netDeviceNum = temp.netDeviceNum;
                                 bussinessNum = temp.bussinessNum;
@@ -132,13 +169,14 @@
                                 temp.hasInternet ? hasInternet = '是' : hasInternet = '否';
                                 temp.hasgovExtrant ? hasgovExtrant = '是' : hasgovExtrant = '否';
                                 temp.hasspecialNet ? hasspecialNet = '是' : hasspecialNet = '否';
-                                temp.temp1 === null || temp.temp1 === 'null' || temp.temp1 === '否'? temp1 = '否' : temp1 = '是';
+                                temp.temp1 === null || temp.temp1 === 'null' || temp.temp1 === '否' ? temp1 = '否' : temp1 = '是';
                                 cataLogNum = temp.cataLogNum;
                                 internetNum = temp.internetNum;
                                 zhengwuNum = temp.zhengwuNum;
                                 netNum = temp.netNum;
                             }
-                            return `<section class="map-modal" style="position: relative;width: 25rem;">
+                            return `<section class="map-modal" style="position: relative;width: 21.2rem;">
+                                        <section style="text-align: center;margin: .1rem .25rem .1rem .1rem;padding: .2rem 0 .2rem 0; background-color: rgba(24, 38, 101, .3)">${departmentName}</section>
                                         <section class="map-modal-item">
                                             <span class="map-modal-item-data">${temp1}</span>
                                             <p class="map-modal-item-title">是否有信息科</p>
@@ -182,21 +220,22 @@
                                     </section>`;
                         }
                     },
-                    series : [
+                    series: [
                         {
                             name: '沧州信息化资源分布',
                             type: 'effectScatter',
                             coordinateSystem: 'geo',
                             data: this.convertData(_this.dataInfo, _this.geoCoordMap),
                             symbolSize: function (val) {
-                                if(val[2] < 10) {
-                                    return Math.random() * 10 + 5;
+                                // debugger;
+                                if (val[2] < 5) {
+                                    return Math.random() * 5 + 5;
                                 }
-                                if(val[2] >= 10 && val[2] < 20) {
-                                    return val[2];
+                                if (val[2] >= 5 && val[2] < 10) {
+                                    return Math.random() * 5 + 10;
                                 }
-                                if(val[2] >= 20) {
-                                    return Math.random() * 25 + 1;
+                                if (val[2] >= 10) {
+                                    return Math.random() * 5 + 15;
                                 }
                             },
                             showEffectOn: 'render',
@@ -271,12 +310,14 @@
                 chart.on('click', (params) => {
                     // 如果点击地图上的点，则跳转到改点对应的信息详情后台页面,并展示该部门的数据
                     // 如果不是点击部门，则跳转到后台home页
-                    if(allDepartments.includes(params.name) || allDepartments.includes(params.data.fromName)) {
+                    if (allDepartments.includes(params.name) || allDepartments.includes(params.data.fromName)) {
                         let departmentName = params.name || params.data.fromName;
-                        _this.$router.push({name: 'department-info', query: {
+                        _this.$router.push({
+                            name: 'department-info', query: {
                                 department: departmentName //保证每次点击路由的query项都是不一样的，确保会重新刷新view
-                            }});
-                    }else {
+                            }
+                        });
+                    } else {
                         debugger;
                         _this.$router.push({name: 'home'});
                     }
@@ -288,25 +329,25 @@
                     geoData = {},
                     lineData = {line: this.lineOne, geoFlag: 'geoCoordMap'};
                 window.setInterval(() => {
-                    if(isChangeFlag % 3 === 1){
+                    if (isChangeFlag % 3 === 1) {
                         data = _this.dataInfo2;
                         geoData = _this.geoCoordMap2;
                         lineData.line = this.lineTwo;
                         lineData.geoFlag = 'geoCoordMap2';
-                    }else if(isChangeFlag % 3 === 2){
+                    } else if (isChangeFlag % 3 === 2) {
                         data = _this.dataInfo3;
                         geoData = _this.geoCoordMap3;
                         lineData.line = this.lineThree;
                         lineData.geoFlag = 'geoCoordMap3';
-                    }else if(isChangeFlag % 3 === 0){
+                    } else if (isChangeFlag % 3 === 0) {
                         data = _this.dataInfo;
                         geoData = _this.geoCoordMap;
                         lineData = this.lineOne;
                         lineData.geoFlag = 'geoCoordMap';
                         lineData.line = this.lineOne;
                     }
-                    isChangeFlag ++;
-                    console.log('---------------linedata------------',lineData, this.convertLineData(lineData));
+                    isChangeFlag++;
+                    console.log('---------------linedata------------', lineData, this.convertLineData(lineData));
                     option.series[0].data = this.convertData(data, geoData);
                     // option.series[2].data = this.convertLineData(lineData);
                     chart.setOption(option);
@@ -317,49 +358,39 @@
                     chart.resize();
                 })
             },
-            getGeoJson: function(name){
-                let data = require('./geoJson/'+name+'.geojson'),
-                    path = require('./svgImg/path/'+name+'.js');
-                this.$echarts.registerMap(name,data);
-                this.drawMap(name,path.default);
+            getGeoJson(name) {
+                let data = require('./geoJson/' + name + '.geojson'),
+                    path = require('./svgImg/path/' + name + '.js');
+                this.$echarts.registerMap(name, data);
+                this.drawMap(name, path.default);
             }
         },
+        created() {
+
+        },
         mounted() {
-            this.getGeoJson(this.name);
-            let cloudInfo = this.$store.state.czCloudInfo.czCloudInfo;
-            // 初次加载store中没有数据，会报错，这里做判断
-            if(cloudInfo.length > 0) {
-                this.dataInfo.forEach(item => {
-                    item.value = cloudInfo[item.name].bussinessNum;
-                });
-                this.dataInfo2.forEach(item => {
-                    item.value = cloudInfo[item.name].bussinessNum;
-                });
-                this.dataInfo3.forEach(item => {
-                    item.value = cloudInfo[item.name].bussinessNum;
-                });
-            }
+            // this.getGeoJson(this.name);
         }
     }
 </script>
-<style lang="less" >
+<style lang="less">
     .map-modal-item {
         position: relative;
         float: left;
-        width: 6rem;
+        width: 4rem;
         height: 4rem;
         border: 1px solid transparent;
         margin: .1rem;
-        background-color: rgba(24, 38, 101, 0.5);
+        background-color: rgba(24, 38, 101, 0.6);
         .map-modal-item-data {
-            color: #05A2FA;
-            font-size: 1.2rem;
+            color: #07E0FC;
+            font-size: 1rem;
             font-weight: bold;
             .middle-center(35%, 50%);
         }
         .map-modal-item-title {
-            color: rgba(255,255,255,.7);
-            font-size: .8rem;
+            color: rgba(255, 255, 255, .7);
+            font-size: .4rem;
             white-space: nowrap;
             .middle-center(80%, 50%);
         }
@@ -374,6 +405,7 @@
             .middle-center(35%, 70%);
         }
     }
+
     .middle-center(@top: 50%, @left: 50%) {
         position: absolute;
         top: @top;
