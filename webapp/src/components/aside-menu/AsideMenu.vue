@@ -34,8 +34,6 @@
         },
         //todo
         created() {
-            //todo 直接采用store方式获取数据
-            // this.getMenuData();
             //todo 这里有个设计缺陷，为了保证用户在登录成功进来能够加载菜单数据，这里调用菜单api
             //todo 在路由权限认证模块也会请求，但用户登录登录成功到home时，不需要验证，所以不会加载菜单数据
             //todo 但是在刷新页面的时候，路由权限认证模块也会去请求一次，刷新一下
@@ -58,34 +56,6 @@
             }
         },
         methods: {
-            /*获取菜单数据*/
-            getMenuData() {
-                //todo 什么情况下菜单为空？？？？只有刷新的时候，没必要判断空
-                // if(this.$store.state.menu.menuData.length === 0 || this.menuData.length === 0) {
-                //     this.$http.get('menuController.do?m=findMenu').then(({data}) => {
-                        //todo 改变store中的值应该用mutation，而不是直接更改
-                        /*this.$store.state.menu.menuData = this.menuData = buildTree(data.data, 'orderNo', (item) => {
-                            let obj = {
-                                name: item.location,
-                                title: item.title
-                            };
-                            return item.icon ? Object.assign(obj, {
-                                icon: item.icon
-                            }) : obj;
-                        })[0].children;//由于后台有一个根节点,此处剔除*/
-                        //todo 调用modules的方法，要写modules的名字
-                        //todo 将菜单信息存入store中,并做相应处理
-                //         this.$store.commit('menu/restoreMenu', {
-                //             data: data.data,
-                //             order: 'orderNo'
-                //         });
-                //         //由于采用的是异步获取数据,此处需要手动更新菜单的状态
-                //         this.$nextTick(() => {
-                //             this.$refs['sideRef'].updateStatus();
-                //         });
-                //     });
-                // }
-            },
             /*点击菜单,改变路由*/
             changeSelect(name) {
                 //更改当前点击的路由次数

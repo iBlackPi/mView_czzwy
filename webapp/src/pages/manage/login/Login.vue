@@ -86,13 +86,14 @@
                             if(data.success) {
                                 /*设置用户信息*/
                                 this.$store.state.login.userName = this.loginModel.loginName;
-                                this.$store.state.login.needAskIsLogin = true;
-                                //todo 将用户信息缓存到localStorage本地
+                                //将用户信息缓存到localStorage本地
                                 localStorage.setItem('username', this.loginModel.loginName);
                                 //路由跳转到主页面
                                 this.$router.push({
-                                    //todo 直接导航到子路由可以加载祖先路由,反之不会
-                                    name: 'home'
+                                    name: 'home',
+                                    query: {
+                                        t: +new Date() //保证每次点击路由的query项都是不一样的，确保会重新刷新view
+                                    }
                                 });
                             } else {
                                 this.$Spin.hide();

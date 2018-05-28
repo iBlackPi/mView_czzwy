@@ -8,11 +8,13 @@
 <style>
     @font-face {
         font-family: fationblack;
+        src: url(../assets/font/technology.eot) format('embedded-opentype');
         src: url(../assets/font/technology.ttf);
     }
     @font-face {
         font-family: led;
         src: url(../assets/font/UnidreamLED.ttf);
+        src: url(../assets/font/UnidreamLED.eot?t=1526873306616#iefix) format('embedded-opentype');
     }
     html, body {
         width: 100%;

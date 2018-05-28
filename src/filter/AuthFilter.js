@@ -9,6 +9,11 @@ router.use((req, res, next) => {
         message: '',
         data: null
     };
+    res.header( "Pragma", "no-cache" );
+    res.header( "Cache-Control", "must-revalidate" );
+    res.header( "Cache-Control", "no-cache" );
+    res.header( "Cache-Control", "no-store" );
+    res.header("Expires", 0);
     const ms = req.query;
     //todo 过滤器
     //其他请求一律先判断有没有session，没有则跳到登录页

@@ -100,19 +100,18 @@
             lagoutOk() {
                 this.$http.get('/loginController.do?m=logout').then(({data}) => {
                     if(data.success) {
-                        //cookies登录状态和用户名
-                        //this.$cookies.set('isLogin', false);
-                        //this.$cookies.set('userName', '');
                         //将用户信息从浏览器localStorage清除
                         localStorage.removeItem('username');
                         //将用户权限清空
                         this.$store.commit('auth/resetState');
                         //将跟菜单相关数据
                         this.$store.commit('menu/resetState');
-                        this.$store.state.login.needAskIsLogin = true;
                         //跳转到登录页面
                         this.$router.push({
-                            name: 'login'
+                            name: 'login',
+                            query: {
+                                t: +new Date() //保证每次点击路由的query项都是不一样的，确保会重新刷新view
+                            }
                         });
                     }
                 });

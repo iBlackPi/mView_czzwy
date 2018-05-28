@@ -3,7 +3,6 @@
  */
 
 const state = {
-    needAskIsLogin: true,
     userName: ''
 };
 
