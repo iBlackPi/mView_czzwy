@@ -205,7 +205,7 @@
         computed: {
             departmentInfo(){
                 // 初始化的时候，由于store中信息是异步的，数据还没有获取到，会导致页面取值错误
-                if(this.$store.state.czCloudInfo.czCloudInfo.length !== 0){
+                if(JSON.stringify(this.$store.state.czCloudInfo.czCloudInfo) !== '{}'){
                     return this.$store.state.czCloudInfo.czCloudInfo[this.where.department];
                 }else {
                     return {

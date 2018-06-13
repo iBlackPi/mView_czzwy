@@ -65,7 +65,7 @@ module.exports = {
                 use: ['css-loader', 'postcss-loader']
             })
         }, {
-            test: /\.(png|jpeg|jpg|svg|gif)$/i,
+            test: /\.(png|jpeg|jpg|svg|gif|webp)$/i,
             loader: 'url-loader',
             options: {
                 limit: 2048,

@@ -58,8 +58,11 @@
                                     formatter: `{b}:{d}({c})`
                                 },
                                 emphasis: {
-                                    show: false,
-
+                                    show: true,
+                                    textStyle: {
+                                        fontSize: '20px',
+                                        fontWeight: 'bold'
+                                    }
                                 }
                             }
                         }

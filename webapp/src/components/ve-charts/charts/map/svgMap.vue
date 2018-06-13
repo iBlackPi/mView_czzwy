@@ -348,7 +348,6 @@
                         lineData.line = this.lineOne;
                     }
                     isChangeFlag++;
-                    console.log('---------------linedata------------', lineData, this.convertLineData(lineData));
                     option.series[0].data = this.convertData(data, geoData);
                     // option.series[2].data = this.convertLineData(lineData);
                     chart.setOption(option);

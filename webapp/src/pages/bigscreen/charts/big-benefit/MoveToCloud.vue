@@ -10,7 +10,8 @@
                 :radius="['45%','65%']"
                 :coverOption="coverOption"
                 :rippleSize = 5
-        ></ve-pie>
+                @click-series="goToManage">
+        </ve-pie>
     </module-layout>
 </template>
 
@@ -39,8 +40,11 @@
                                     formatter: `{c}`
                                 },
                                 emphasis: {
-                                    show: false,
-
+                                    show: true,
+                                    textStyle: {
+                                        fontSize: '20px',
+                                        fontWeight: 'bold'
+                                    }
                                 }
                             }
                         }
@@ -61,6 +65,9 @@
             ModuleLayout
         },
         methods: {
+            goToManage() {
+                this.$router.push({name: 'move-info'});
+            },
             // 请求具备上云条件系统统计信息
             getInfo(){
                 this.$httpt.get('bigScreenController.do?getCzInfomatinSystemOfRemove').then(({data}) => {

@@ -12,7 +12,7 @@ export default [
     },
     {
         title: '系统分类',
-        key: 'systemType',
+        key: 'systemClassify',
         width: 150
     },
     {
@@ -36,6 +36,11 @@ export default [
         width: 150
     },
     {
+        title: '部署方式',
+        key: 'deployMode',
+        width: 150
+    },
+    {
         title: '用户数',
         key: 'userNumber',
         width: 150
@@ -47,12 +52,12 @@ export default [
     },
     {
         title: '架构',
-        key: 'architecture',
+        key: 'framework',
         width: 150
     },
     {
         title: '状态',
-        key: 'statuss',
+        key: 'status',
         width: 150
     },
     {
@@ -77,7 +82,7 @@ export default [
     },
     {
         title: '数据产生的方式',
-        key: 'produceType',
+        key: 'dataGenerationMode',
         width: 200
     },
     {
@@ -127,37 +132,37 @@ export default [
     },
     {
         title: '数据库类型和版本',
-        key: 'databasee',
+        key: 'databaseType',
         width: 150
     },
     {
         title: '部署模式',
-        key: 'deployType',
+        key: 'deployPattern',
         width: 150
     },
     {
         title: '数据量',
-        key: 'dataSize',
+        key: 'dataAmount',
         width: 150
     },
     {
         title: '年增长量',
-        key: 'increaseSize',
+        key: 'yearGrowth',
         width: 150
     },
     {
         title: '中间件类型版本',
-        key: 'middlewareVision',
+        key: 'middlewareType',
         width: 150
     },
     {
         title: '部署模式',
-        key: 'deployMode',
+        key: 'midDeployPattern',
         width: 150
     },
     {
         title: '其它软件（杀毒、运维、安全工具等）',
-        key: 'otherSoft',
+        key: 'otherSoftware',
         width: 250
     },
     {
@@ -187,22 +192,22 @@ export default [
     },
     {
         title: '是否在保',
-        key: 'safeguard',
+        key: 'isMaintenance',
         width: 150
     },
     {
         title: '维保截至时间',
-        key: 'safeguardDeadline',
+        key: 'maintenanceDeadline',
         width: 250
     },
     {
         title: '维保单位',
-        key: 'safeguardDept',
+        key: 'maintenanceDept',
         width: 150
     },
     {
         title: '部署位置',
-        key: 'machineRoom',
+        key: 'deployLocation',
         width: 150
     },
     {
@@ -232,12 +237,12 @@ export default [
     },
     {
         title: 'CPU使用均值',
-        key: 'cpuAvgUse',
+        key: 'cpuUseAverage',
         width: 150
     },
     {
         title: 'CPU使用峰值',
-        key: 'cpuTopUse',
+        key: 'cpuUseTop',
         width: 150
     },
     {
@@ -247,8 +252,13 @@ export default [
     },
     {
         title: '内存使用率均值',
-        key: 'memoryAvgUse',
-        width: 150
+        key: 'memoryUseAverage',
+        width: 250
+    },
+    {
+        title: '内存使用率峰值',
+        key: 'memoryUseTop',
+        width: 250
     },
     {
         title: '本地存储容量',
@@ -257,7 +267,7 @@ export default [
     },
     {
         title: '本地磁盘使用率',
-        key: 'localStorgeRate',
+        key: 'localDiskUse',
         width: 200
     },
     {
@@ -272,12 +282,17 @@ export default [
     },
     {
         title: '共享存储使用率',
-        key: 'shareStorgeRate',
+        key: 'shareStorageUse',
         width: 200
     },
     {
         title: 'IP地址',
         key: 'serverIp',
+        width: 150
+    },
+    {
+        title: '特殊外设说明',
+        key: 'specialDescription',
         width: 150
     },
     {
@@ -301,8 +316,18 @@ export default [
         width: 150
     },
     {
-        title: '建设模式',
-        key: 'buildMode',
+        title: '与其它系统依赖和数据交互关系',
+        key: 'otherSystemRelationship',
+        width: 150
+    },
+    {
+        title: '系统当前存在的主要问题',
+        key: 'systemProblem',
+        width: 250
+    },
+    {
+        title: '优化措施',
+        key: 'optimizationMeasures',
         width: 150
     }
 ]

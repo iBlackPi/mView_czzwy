@@ -46,5 +46,29 @@ export default {
             breadcrumb: '资源目录管理',
             title: '资源目录管理'
         }
+    },{
+        name: 'department-static',
+        path: 'department-static',
+        component: () => import('../../../pages/manage/app/cloud-info/DepartmentStatic'),
+        meta: {
+            breadcrumb: '资源目录管理',
+            title: '资源目录管理'
+        }
+    },{
+        name: 'net-info',
+        path: 'net-info',
+        component: () => import('../../../pages/manage/app/cloud-info/NetInfo'),
+        meta: {
+            breadcrumb: '网络情况',
+            title: '网络情况'
+        }
+    },{
+        name: 'move-info',
+        path: 'move-info',
+        component: () => import('../../../pages/manage/app/cloud-info/MoveInfo'),
+        meta: {
+            breadcrumb: '迁移情况',
+            title: '迁移情况'
+        }
     }]
 };

@@ -2,30 +2,30 @@
     <div class="home">
         <!--<info-maintain></info-maintain>-->
         <section class="fun-container">
-                <div class="fun"  @click="goBusiPage">
-                    <i class="icon iconfont icon-caidan"></i>
-                    <span>信息总览</span>
-                </div>
-                <div class="fun" @click="goBusiPage">
-                    <i class="icon iconfont icon-map"></i>
-                    <span>部门信息</span>
-                </div>
-                <div class="fun" @click="goBusiPage">
-                    <i class="icon iconfont icon-cube"></i>
-                    <span>信息化系统详情</span>
-                </div>
-                <div class="fun" @click="goBusiPage">
-                    <i class="icon iconfont icon-huizong-"></i>
-                    <span>资源目录汇总</span>
-                </div>
-                <div class="fun" @click="goBusiPage">
-                    <i class="icon iconfont icon-home"></i>
-                    <span>机房信息</span>
-                </div>
-                <div class="fun" @click="goBusiPage">
-                    <i class="icon iconfont icon-navicon-dphf"></i>
-                    <span>大屏</span>
-                </div>
+            <div class="fun" ref="fun" path="info-maintain">
+                <i class="icon iconfont icon-caidan"></i>
+                <span>信息总览</span>
+            </div>
+            <div class="fun" path="department-info">
+                <i class="icon iconfont icon-map"></i>
+                <span>部门信息</span>
+            </div>
+            <div class="fun" path="info-sys-maintain">
+                <i class="icon iconfont icon-cube"></i>
+                <span>信息化系统详情</span>
+            </div>
+            <div class="fun" path="resource-catalog-manage">
+                <i class="icon iconfont icon-huizong-"></i>
+                <span>资源目录汇总</span>
+            </div>
+            <div class="fun" path="computer-room">
+                <i class="icon iconfont icon-home"></i>
+                <span>机房信息</span>
+            </div>
+            <div class="fun" path="bigMain">
+                <i class="icon iconfont icon-navicon-dphf"></i>
+                <span>大屏</span>
+            </div>
         </section>
     </div>
 </template>
@@ -37,27 +37,24 @@
             InfoMaintain
         },
         methods: {
-            goBusiPage(e) {
-                let text = e.currentTarget.children[1].innerText;
-                if(text === '信息总览') {
-                    this.$router.push({name: 'info-maintain'});
-                }
-                if(text === '部门信息') {
-                    this.$router.push({name: 'department-info'});
-                }
-                if(text === '信息化系统详情') {
-                    this.$router.push({name: 'info-sys-maintain'});
-                }
-                if(text === '资源目录汇总') {
-                    this.$router.push({name: 'resource-catalog-manage'});
-                }
-                if(text === '机房信息') {
-                    this.$router.push({name: 'computer-room'});
-                }
-                if(text === '大屏') {
-                    this.$router.push({name: 'bigMain'});
-                }
+            goBusiPage(path) {
+                this.$router.push({name: path});
             }
+        },
+        mounted() {
+            //todo 这里对dom进行了操作，不是vue提倡的用法；考虑到代码的扩展性，如果这样写，当新增链接时我不用再更改js代码
+            //todo 只需要在template中尽情添加模块即可，js代码和html都会变得清晰简单
+            //todo dom对象类数组不能直接使用数组的forEach方法
+            [...document.getElementsByClassName('fun')].forEach(item => {
+                item.addEventListener('click', (e) => {
+                    this.goBusiPage(e.currentTarget.getAttribute('path'));
+                });
+            })
+        },
+        created() {
+            //todo 尽快的获取数据,用户登录成功访问的页面为home页，所以在这里获取总信息
+            //todo 所以这里尽快的去获取总览信息，供对话框中的搜索框自动提示功能使用
+            this.$store.dispatch('czCloudInfo/getCloudInfo', {vm: this});
         }
     }
 </script>
@@ -134,6 +131,7 @@
             transform: rotate(-25deg);
         }
     }
+
     /*垂直水平居中*/
     .center_middle(@top: 50%, @left: 50%) {
         position: absolute;

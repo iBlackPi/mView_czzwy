@@ -6,7 +6,8 @@
                 backgroundColor=""
                 :xAxisData="xAxisData"
                 :showLegend=true
-                :coverOption="coverOption">
+                :coverOption="coverOption"
+                @click-series="goToManage">
             <ve-bar
                     :data="dataInternet"
                     name="互联网"
@@ -259,6 +260,9 @@
             }
         },
         methods: {
+            goToManage() {
+                this.$router.push({name: 'move-info'});
+            },
             getInfo(){
                 this.$httpt.get('bigScreenController.do?getInfoSysOfRemoveInDesignatedYears').then((res) => {
                     let temp = res.data;

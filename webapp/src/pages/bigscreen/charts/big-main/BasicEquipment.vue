@@ -8,7 +8,7 @@
                 :showLegend=true
                 :coverOption="coverOption"
                 :color="colors"
-        >
+                @click-series="goToManage">
             <ve-bar
                     :data="data"
                     id="basic-equipment"
@@ -156,6 +156,9 @@
             ModuleLayout
         },
         methods: {
+            goToManage() {
+                this.$router.push({name: 'info-maintain'});
+            },
             getInfo() {
                 this.$httpt.get('bigScreenController.do?getBasicDevice').then(({data}) => {
                     if (data.success) {

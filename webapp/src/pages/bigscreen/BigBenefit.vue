@@ -74,7 +74,7 @@
         background: #0A0D17;
         background: url(../../assets/imgs/bg2.jpg) repeat-x;
         background-size: cover;
-        animation: move_bg 25s linear alternate infinite;
+        /*animation: move_bg 25s linear alternate infinite;*/
     }
     .bigmain-top {
         .position_absolute(0, 0, 100%, 7%);

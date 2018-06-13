@@ -1,6 +1,6 @@
 <template>
     <module-layout title="运营商接入数量">
-        <ul class="icon_lists clear">
+        <ul class="icon_lists clear" @click="goToManage">
             <li>
                 <i class="icon iconfont icon-yidonglogo"></i>
                 <div class="name">150个</div>
@@ -51,6 +51,9 @@
             ModuleLayout
         },
         methods: {
+            goToManage() {
+                this.$router.push({name: 'move-info'});
+            },
             getInfo(){
                 this.$httpt.get('bigScreenController.do?getOperator').then(({data}) => {
                     if(data.success){
@@ -79,6 +82,7 @@
         display: flex;
         flex-flow: row nowrap;
         margin-top: 1rem;
+        cursor: pointer;
     }
 
     .icon_lists li {

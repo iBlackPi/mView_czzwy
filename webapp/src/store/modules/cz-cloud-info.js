@@ -1,6 +1,6 @@
 const state = {
     // 总的概览统计信息
-    czCloudInfo: [],
+    czCloudInfo: {},
     // 网络接入情况
     isConnectNet: {
         intenet: 0,

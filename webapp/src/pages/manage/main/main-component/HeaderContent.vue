@@ -15,6 +15,10 @@
                         <div class="mask"></div>
                         <span>②</span>
                     </section>
+                    <section class="bigscreen-shortcut" @click="GoToBigscreen('three')">
+                        <div class="mask"></div>
+                        <span>③</span>
+                    </section>
                 </div>
             </Tooltip>
         </div>
@@ -48,7 +52,7 @@
             <f-icon name="power-off" class="header-icon"></f-icon>
         </div>
 
-        <Modal v-model="lagoutModal" @on-ok="lagoutOk" @on-cancel="lagoutCancel" width="400">
+        <Modal v-model="lagoutModal" @on-ok="logoutOk" @on-cancel="logoutCancel" width="400">
             <p>
                 <Icon type="android-alert"></Icon>
                 确定退出?
@@ -97,7 +101,7 @@
             lagout() {
                 this.lagoutModal = true;
             },
-            lagoutOk() {
+            logoutOk() {
                 this.$http.get('/loginController.do?m=logout').then(({data}) => {
                     if(data.success) {
                         //将用户信息从浏览器localStorage清除
@@ -116,15 +120,18 @@
                     }
                 });
             },
-            lagoutCancel(){
+            logoutCancel(){
 
             },
             GoToBigscreen(bigscreenFlag){
+                let name = 'bigMain';
                 if(bigscreenFlag === 'two') {
-                    this.$router.push({name: 'bigBenefit'});
-                    return;
+                    name = 'bigBenefit';
                 }
-                this.$router.push({name: 'bigMain'});
+                if(bigscreenFlag === 'three') {
+                    name = 'bigOther'
+                }
+                this.$router.push({name: name});
             }
         }
     };
@@ -139,6 +146,7 @@
         cursor: pointer;
     }
     .bigscreen-shortcut {
+        cursor: pointer;
         position: relative;
         width: 12rem;
         height: 7rem;
@@ -170,6 +178,10 @@
         &:nth-child(2) {
             margin-top: .5rem;
             background-image: url(../../../../assets/imgs/bigscreenTwo.png);
+        }
+        &:nth-child(3) {
+            margin-top: .5rem;
+            background-image: url(../../../../assets/imgs/bigscreenThree.png);
         }
     }
     .header-avator-con {

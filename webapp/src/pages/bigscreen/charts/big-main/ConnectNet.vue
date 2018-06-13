@@ -6,7 +6,8 @@
                 backgroundColor=""
                 :xAxisData="xAxisData"
                 :showLegend=true
-                :coverOption="coverOption">
+                :coverOption="coverOption"
+                @click-series="goToManage">
             <ve-bar
                     :data="data"
                     name="数量（个）"
@@ -155,6 +156,9 @@
             ModuleLayout
         },
         methods: {
+            goToManage() {
+                this.$router.push({name: 'net-info'})
+            },
             getInfo(){
                 this.$httpt.get('bigScreenController.do?getOrgInfo').then(({data}) => {
                     if(data.success){

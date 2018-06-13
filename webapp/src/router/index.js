@@ -4,7 +4,7 @@ import Home from '../pages/manage/app/Home.vue';
 
 import rSystemManage from './routes/manage/r-system-manage';
 import rCloudInfo from './routes/manage/r-cloud-info';
-import {rBigMain, rBigBenefit} from './routes/bigscreen/r-bigscreen'
+import {rBigMain, rBigBenefit, rBigOther} from './routes/bigscreen/r-bigscreen'
 console.log('--',rBigBenefit, rBigMain);
 //todo 路由不应该集中在一个文件中，各自的导航放到各自的导航中，index只作为一个统一出口
 /**
@@ -102,6 +102,7 @@ export const routes = [
     rSystemManage, //系统管理
     rBigBenefit, //大屏效益页
     rBigMain, //大屏主页
+    rBigOther, //大屏附加信息页
     rCloudInfo, //云信息维护
     redirectToIndex, //根路由跳转到指定页
     loginRouter, //登录路由

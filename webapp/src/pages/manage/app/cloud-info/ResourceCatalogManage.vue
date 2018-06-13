@@ -2,18 +2,23 @@
     <div class="investment">
         <!--搜索表单-->
         <Form ref="formInline" :model="formInline" :rules="ruleInline" inline>
+            <FormItem prop="department">
+                <Input type="text" v-model="formInline.department" clearable placeholder="部门名称">
+                <Icon type="cube" slot="prepend" style="color: #28f;"></Icon>
+                </Input>
+            </FormItem>
             <FormItem prop="infoSysName">
                 <Input type="text" v-model="formInline.infoSysName" clearable placeholder="信息系统名称">
                 <Icon type="cube" slot="prepend" style="color: #28f;"></Icon>
                 </Input>
             </FormItem>
-            <FormItem prop="sysDeployNet">
-                <Select v-model="formInline.sysDeployNet" placeholder="部署网络" clearable style="width: 200px;">
+            <FormItem prop="shareType">
+                <Select v-model="formInline.shareType" placeholder="共享类型" clearable style="width: 200px;">
                     <Option v-for="(item, key) in selectOne" :key="key" :value="item">{{item}}</Option>
                 </Select>
             </FormItem>
-            <FormItem prop="sysMaintain">
-                <Select v-model="formInline.sysMaintain" placeholder="运维状况" clearable style="width: 200px;">
+            <FormItem prop="isOpen">
+                <Select v-model="formInline.isOpen" placeholder="是否向社会开放" clearable style="width: 200px;">
                     <Option v-for="(item, key) in selectTwo" :key="key" :value="item">{{item}}</Option>
                 </Select>
             </FormItem>
@@ -29,7 +34,7 @@
                 <!--信息化系统数据可视化-->
                 <div slot="content" class="info-sys-important">
                     <Card class="card">
-                        <p slot="title">信息化系统维护情况</p>
+                        <p slot="title">信息化系统共享情况（是否开放）</p>
                         <div style="height: 10rem;">
                             <ve-pie
                                     :rippleAnimation="true"
@@ -45,7 +50,7 @@
                         </div>
                     </Card>
                     <Card class="card">
-                        <p slot="title">信息化系统部署网络</p>
+                        <p slot="title">信息化系统开放情况（开放类型）</p>
                         <div style="height: 10rem;">
                             <ve-rect-coordinate
                                     id="connect-net"
@@ -73,7 +78,7 @@
 </template>
 
 <script>
-    import columns from './table-heads/resource-catalog-maintain';
+    import columns from './table-heads/resource-catalog-manage-head';
     export default {
         name: "",
         data(){
@@ -102,7 +107,11 @@
                                     formatter: `{b}:{d}({c})`
                                 },
                                 emphasis: {
-                                    show: false,
+                                    show: true,
+                                    textStyle: {
+                                        fontSize: '20px',
+                                        fontWeight: 'bold'
+                                    }
                                 }
                             }
                         }
@@ -160,9 +169,10 @@
                 totalCount: 0,
                 totalInfo: [],
                 formInline: {
+                    department: '',
                     infoSysName: '',
-                    sysDeployNet: '',
-                    sysMaintain: '',
+                    shareType: '',
+                    isOpen: '',
                     pageSize: 10,
                     currentPage: 1
                 },
@@ -182,9 +192,10 @@
             changePage(destination = this.formInline.currentPage){
                 // 翻页的时候是带着查询参数去翻页的
                 this.$httpt.get('bigScreenController.do?getResourceCatalogPagination&' +
+                    'department=' + this.formInline.department+ '&' +
                     'infoSysName=' + this.formInline.infoSysName+ '&' +
-                    'sysDeployNet=' + this.formInline.sysDeployNet+ '&' +
-                    'sysMaintain=' + this.formInline.sysMaintain+ '&' +
+                    'shareType=' + this.formInline.shareType+ '&' +
+                    'isOpen=' + this.formInline.isOpen+ '&' +
                     'currentPage='+ destination +'&' +
                     'pageSize=' + this.formInline.pageSize).then(({data}) => {
                     if(data.success) {
@@ -197,7 +208,7 @@
                         }
                         for(let p = 0; p < this.selectTwo.length; p++) {
                             for(let j = 0; j < data.data.list.length; j++) {
-                                if(this.selectTwo[p] === data.data.list[j].sysMaintain) {
+                                if(this.selectTwo[p] === data.data.list[j].isOpen) {
                                     newarr1[p]++;
                                 }
                             }
@@ -218,7 +229,7 @@
                         }
                         for(let p = 0; p < this.selectOne.length; p++) {
                             for(let j = 0; j < data.data.list.length; j++) {
-                                if(this.selectOne[p] === data.data.list[j].sysDeployNet) {
+                                if(this.selectOne[p] === data.data.list[j].shareType) {
                                     newarr2[p]++;
                                 }
                             }
@@ -250,17 +261,22 @@
         },
         created() {
             this.$httpt.get('bigScreenController.do?getResourceCatalogPagination&' +
+                'department=&' +
                 'infoSysName=&' +
-                'sysDeployNet=&' +
-                'sysMaintain=&' +
+                'shareType=&' +
+                'isOpen=&' +
                 'currentPage=0&' +
                 'pageSize=100000').then(({data}) => {
                 if(data.success) {
                     let tempOne = [];
                     let tempTwo = [];
                     data.data.list.forEach(item => {
-                        tempOne.push(item.sysDeployNet);
-                        tempTwo.push(item.sysMaintain);
+                        if(item.shareType !== null && item.shareType !== 'null') {
+                            tempOne.push(item.shareType);
+                        }
+                        if(item.isOpen !== null && item.isOpen !== 'null') {
+                            tempTwo.push(item.isOpen);
+                        }
                     });
                     this.selectOne = [...new Set(tempOne)].filter(item => {
                         return item !== '' && item !== null && item !== 'null';
@@ -271,7 +287,7 @@
                     // 该方法初始化中有逻辑依赖这个回调中的值，所以该方法放在这里调用
                     this.changePage();
                 }else {
-                    console.error('分页获取表11 信息化系统调研表信息失败')
+                    console.error('分页资源目录表信息失败')
                 }
             }).catch(err => {
                 throw Error(err);

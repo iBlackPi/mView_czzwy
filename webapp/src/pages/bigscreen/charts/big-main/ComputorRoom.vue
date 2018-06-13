@@ -10,6 +10,7 @@
                 :radius="['45%','65%']"
                 :coverOption="coverOption"
                 :rippleSize = 5
+                @click-series="goToManage"
         ></ve-pie>
     </module-layout>
 </template>
@@ -38,7 +39,11 @@
                                     formatter: `{c}`
                                 },
                                 emphasis: {
-                                    show: false,
+                                    show: true,
+                                    textStyle: {
+                                        fontSize: '20px',
+                                        fontWeight: 'bold'
+                                    }
                                 }
                             }
                         }
@@ -68,6 +73,10 @@
                         throw new Error('获取机房信息失败！');
                     }
                 })
+            },
+            // 从大屏进入机房信息管理界面
+            goToManage(params) {
+                this.$router.push({name: 'computer-room'});
             }
         },
         computed: {

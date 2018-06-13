@@ -207,7 +207,6 @@
                 this.deleteUsers(this.bulkFlag ? temp : this.selectedUser.id)
             },
             selectionChange(selection){
-                console.log('selectionChange===========', selection);
                 this.selections = selection;
             },
             deleteUsers(userId){

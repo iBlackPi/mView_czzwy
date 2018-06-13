@@ -6,7 +6,8 @@
                 backgroundColor=""
                 :xAxisData="xAxisData"
                 :showLegend=true
-                :coverOption="coverOption">
+                :coverOption="coverOption"
+                @click-series="goToManage">
             <ve-bar
                     :data="dataCPU"
                     name="CPU"
@@ -268,6 +269,9 @@
             }
         },
         methods: {
+            goToManage() {
+                this.$router.push({name: 'move-info'});
+            },
             getInfo() {
                 this.$httpt.get('bigScreenController.do?getResources').then((res) => {
                     let temp = res.data;

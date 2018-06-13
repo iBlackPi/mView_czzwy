@@ -81,7 +81,6 @@
             }
         },
         mounted() {
-            console.log('=======================main:', this);
             //第一个进入的时候初始化当前路由被点击次数(没有此方法会导致刷新之后,第一个点击菜单不请求数据)
             this.$store.commit('menu/changeRouteCount', this.$route.name);
         }

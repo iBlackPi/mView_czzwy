@@ -95,7 +95,7 @@
         <Card style="width: 100%; margin-top: 1%;">
             <p slot="title">
                 <Icon type="ios-film-outline"></Icon>
-                项目参与和配合人员名单
+                单位提供信息人员名单
             </p>
             <people-associated></people-associated>
         </Card>

@@ -52,7 +52,6 @@
                 this.modal = false;
             },
             checkChange(selectedResource){
-                console.log('=====================',selectedResource);
                 this.newEmpowerData = selectedResource;
             }
         },

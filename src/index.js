@@ -25,6 +25,11 @@ app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Credentials","true");
     res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, origin, Authorization, Accept,X-Requested-With");
     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header( "Pragma", "no-cache" );
+    res.header( "Cache-Control", "must-revalidate" );
+    res.header( "Cache-Control", "no-cache" );
+    res.header( "Cache-Control", "no-store" );
+    res.header("Expires", 0);
     next();
 });
 //用来解析post请求，否则req.body未定义

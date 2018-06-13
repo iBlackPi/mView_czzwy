@@ -22,11 +22,6 @@
                     <Option v-for="(item, key) in selectTwo" :key="key" :value="item">{{item}}</Option>
                 </Select>
             </FormItem>
-            <FormItem prop="safeguardDept">
-                <Select v-model="formInline.safeguardDept" placeholder="维保单位" clearable style="width: 200px;">
-                    <Option v-for="(item, key) in selectThree" :key="key" :value="item">{{item}}</Option>
-                </Select>
-            </FormItem>
             <FormItem>
                 <Button type="primary" @click="handleSubmit('formInline')">搜索</Button>
             </FormItem>
@@ -49,7 +44,7 @@
                                     :data="pieData"
                                     :radius="['55%','75%']"
                                     :coverOption="coverOption"
-                                    :rippleSize = 5
+                                    :rippleSize=5
                             ></ve-pie>
                         </div>
                     </Card>
@@ -77,23 +72,25 @@
 
         <Table border :columns="columns" :data="totalInfo" style="margin-top: 1rem;"></Table>
         <!--分页-->
-        <Page :total="totalCount" show-total show-sizer @on-change="changePage" @on-page-size-change="changePageSize" style="margin: .5rem 0 .5rem 0;"></Page>
+        <Page :total="totalCount" show-total show-sizer @on-change="changePage" @on-page-size-change="changePageSize"
+              style="margin: .5rem 0 .5rem 0;"></Page>
     </div>
 </template>
 
 <script>
     import columns from './table-heads/info-sys-maintain-head';
+
     export default {
         name: "",
-        data(){
+        data() {
             return {
                 isOpen: '1',
                 columns: columns,
                 pieData:
                     [
-                        {value: 71, name:'互联网'},
-                        {value: 19, name:'政务外网'},
-                        {value: 90, name:'业务专网'}
+                        {value: 71, name: '互联网'},
+                        {value: 19, name: '政务外网'},
+                        {value: 90, name: '业务专网'}
                     ],
                 coverOption: {
                     legend: {
@@ -111,8 +108,11 @@
                                     formatter: `{b}:{d}({c})`
                                 },
                                 emphasis: {
-                                    show: false,
-
+                                    show: true,
+                                    textStyle: {
+                                        fontSize: '20px',
+                                        fontWeight: 'bold'
+                                    }
                                 }
                             }
                         }
@@ -133,7 +133,7 @@
                         }
                     },
                     xAxis: {
-                        type : 'category',
+                        type: 'category',
                         axisLabel: {
                             show: true,
                             interval: 0,
@@ -174,16 +174,15 @@
                     infomationSystemName: '',
                     statuss: '',
                     network: '',
-                    safeguardDept: '',
                     pageSize: 10,
                     currentPage: 1
                 },
                 ruleInline: {
                     infomationSystemName: [
-                        { required: false, message: '必填项', trigger: 'blur' }
+                        {required: false, message: '必填项', trigger: 'blur'}
                     ],
                     statuss: [
-                        { required: false, message: '必填项', trigger: 'blur' }
+                        {required: false, message: '必填项', trigger: 'blur'}
                     ]
                 },
                 selectOne: [],
@@ -192,33 +191,32 @@
             }
         },
         methods: {
-            changePage(destination = this.formInline.currentPage){
+            changePage(destination = this.formInline.currentPage) {
                 // 翻页的时候是带着查询参数去翻页的
                 this.$httpt.get('bigScreenController.do?getInfomatinSystemPagination&' +
-                    'department=' + this.formInline.department+ '&' +
-                    'infomationSystemName=' + this.formInline.infomationSystemName+ '&' +
-                    'statuss=' + this.formInline.statuss+ '&' +
-                    'network=' + this.formInline.network+ '&' +
-                    'safeguardDept=' + this.formInline.safeguardDept+ '&' +
-                    'currentPage='+ destination +'&' +
+                    'department=' + this.formInline.department + '&' +
+                    'infomationSystemName=' + this.formInline.infomationSystemName + '&' +
+                    'status=' + this.formInline.statuss + '&' +
+                    'network=' + this.formInline.network + '&' +
+                    'currentPage=' + destination + '&' +
                     'pageSize=' + this.formInline.pageSize).then(({data}) => {
-                    if(data.success) {
+                    if (data.success) {
                         this.totalInfo = data.data.list;
                         this.totalCount = data.data.totalCount;
-                        let tempPie =  [];
+                        let tempPie = [];
                         let newarr1 = new Array(this.selectOne.length);
-                        for(let t = 0; t < newarr1.length; t++) {
+                        for (let t = 0; t < newarr1.length; t++) {
                             newarr1[t] = 0;
                         }
-                        for(let p = 0; p < this.selectOne.length; p++) {
-                            for(let j = 0; j < data.data.list.length; j++) {
-                                if(this.selectOne[p] === data.data.list[j].statuss) {
+                        for (let p = 0; p < this.selectOne.length; p++) {
+                            for (let j = 0; j < data.data.list.length; j++) {
+                                if (this.selectOne[p] === data.data.list[j].status) {
                                     newarr1[p]++;
                                 }
                             }
                         }
-                        for(let i = 0; i < newarr1.length; i ++){
-                            let tempPieObj = {value: 0, name:''};
+                        for (let i = 0; i < newarr1.length; i++) {
+                            let tempPieObj = {value: 0, name: ''};
                             tempPieObj.value = newarr1[i];
                             tempPieObj.name = this.selectOne[i];
                             tempPie.push(tempPieObj);
@@ -228,19 +226,19 @@
                         }, 300);
 
                         let newarr2 = new Array(this.selectTwo.length);
-                        for(let t = 0; t < newarr2.length; t++) {
+                        for (let t = 0; t < newarr2.length; t++) {
                             newarr2[t] = 0;
                         }
-                        for(let p = 0; p < this.selectTwo.length; p++) {
-                            for(let j = 0; j < data.data.list.length; j++) {
-                                if(this.selectTwo[p] === data.data.list[j].network) {
+                        for (let p = 0; p < this.selectTwo.length; p++) {
+                            for (let j = 0; j < data.data.list.length; j++) {
+                                if (this.selectTwo[p] === data.data.list[j].network) {
                                     newarr2[p]++;
                                 }
                             }
                         }
                         this.xAxisData = this.selectTwo;
                         this.data = newarr2;
-                    }else {
+                    } else {
                         console.error('分页获取表3 信息化系统调研表信息失败')
                     }
                 }).catch(err => {
@@ -264,26 +262,21 @@
         },
         created() {
             this.$httpt.get('bigScreenController.do?getInfomatinSystemPagination').then(({data}) => {
-                if(data.success) {
+                if (data.success) {
                     let tempOne = [];
                     let tempTwo = [];
-                    let tempThree = [];
                     data.data.list.forEach(item => {
-                        tempOne.push(item.statuss);
+                        tempOne.push(item.status);
                         tempTwo.push(item.network);
-                        tempThree.push(item.safeguardDept);
                     });
                     this.selectOne = [...new Set(tempOne)].filter(item => {
-                        return item !== '';
+                        return item !== '' && item !== null;
                     });
                     this.selectTwo = [...new Set(tempTwo)].filter(item => {
-                        return item !== '';
-                    });
-                    this.selectThree = [...new Set(tempThree)].filter(item => {
-                        return item !== '';
+                        return item !== '' && item !== null;
                     });
                     this.changePage();
-                }else {
+                } else {
                     console.error('分页获取表3 信息化系统调研表信息失败')
                 }
             }).catch(err => {
@@ -301,6 +294,7 @@
         display: flex;
         flex-flow: row nowrap;
     }
+
     .card {
         flex: 1;
         &:first-child {

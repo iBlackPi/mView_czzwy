@@ -10,6 +10,7 @@
                 :radius="['45%','65%']"
                 :coverOption="coverOption"
                 :rippleSize = 5
+                @click-series="goToManage"
         ></ve-pie>
     </module-layout>
 </template>
@@ -40,8 +41,11 @@
                                     formatter: `{c}`
                                 },
                                 emphasis: {
-                                    show: false,
-
+                                    show: true,
+                                    textStyle: {
+                                        fontSize: '20px',
+                                        fontWeight: 'bold'
+                                    }
                                 }
                             }
                         }
@@ -62,6 +66,9 @@
             ModuleLayout
         },
         methods: {
+            goToManage() {
+                this.$router.push({name: 'info-sys-maintain'})
+            },
             // 请求政务信息系统信息
             getInfo(){
                 this.$httpt.get('bigScreenController.do?getCzInfomatinSystem').then(({data}) => {
