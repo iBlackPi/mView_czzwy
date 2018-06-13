@@ -1,6 +1,6 @@
 <template>
     <Card class="card">
-        <p slot="title">机房信息概览</p>
+        <p slot="title">机房信息统计</p>
         <span href="#" slot="extra" class="total-num">
                         机房总数：{{totalCount}}
                     </span>

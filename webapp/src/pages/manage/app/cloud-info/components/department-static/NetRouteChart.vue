@@ -1,8 +1,8 @@
 <template>
     <Card class="card">
-        <p slot="title">网络线路统计</p>
+        <p slot="title">网络情况统计</p>
         <span href="#" slot="extra" class="total-num">
-                        网络线路总数：{{totalCount}}
+                        网络情况总数：{{totalCount}}
                     </span>
         <div class="chart-container">
             <input type="hidden" :value="totalInfo">

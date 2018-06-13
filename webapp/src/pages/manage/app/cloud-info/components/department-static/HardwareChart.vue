@@ -1,8 +1,8 @@
 <template>
     <Card class="card">
-        <p slot="title">网络情况统计</p>
+        <p slot="title">硬件信息统计</p>
         <span href="#" slot="extra" class="total-num">
-                        网络线路总数：{{totalCount}}
+                        硬件总数：{{totalCount}}
                     </span>
         <div class="chart-container">
             <input type="hidden" :value="totalInfo">
@@ -11,7 +11,7 @@
                     style="width: 100%; height: 100%; float: left;"
                     :center="['40%', '50%']"
                     backgroundColor="transparent"
-                    id="net-route"
+                    id="hardware"
                     :data="pieSysData"
                     :radius="['40%','60%']"
                     :coverOption="coverOption"
@@ -24,6 +24,12 @@
 <script>
     export default {
         name: "",
+        props: {
+            currentDepartment: {
+                type: String,
+                default: '财政局'
+            }
+        },
         data() {
             return {
                 pieSysData: [
@@ -65,14 +71,24 @@
                 let czCloudInfo = this.$store.state.czCloudInfo.czCloudInfo;
                 if (JSON.stringify(czCloudInfo) !== '{}') {
                     this.pieSysData = [];
-                    let internetNum = 0;
-                    let zhengwuNum = 0;
-                    let netNum = 0;
-                    Object.keys(czCloudInfo).forEach(key => {
-                        internetNum += czCloudInfo[key].internetNum;
-                        zhengwuNum += czCloudInfo[key].zhengwuNum;
-                        netNum += czCloudInfo[key].netNum;
-                    });
+                    let internetNum = czCloudInfo[this.currentDepartment].internetNum;
+                    let zhengwuNum = czCloudInfo[this.currentDepartment].zhengwuNum;
+                    let netNum = czCloudInfo[this.currentDepartment].netNum;
+                    this.totalCount = internetNum + zhengwuNum + netNum;
+                    this.pieSysData.push({name: '互联网', value: internetNum});
+                    this.pieSysData.push({name: '政务外网', value: zhengwuNum});
+                    this.pieSysData.push({name: '专网', value: netNum});
+                }
+            }
+        },
+        methods: {
+            update() {
+                let czCloudInfo = this.$store.state.czCloudInfo.czCloudInfo;
+                if (JSON.stringify(czCloudInfo) !== '{}') {
+                    this.pieSysData = [];
+                    let internetNum = czCloudInfo[this.currentDepartment].internetNum;
+                    let zhengwuNum = czCloudInfo[this.currentDepartment].zhengwuNum;
+                    let netNum = czCloudInfo[this.currentDepartment].netNum;
                     this.totalCount = internetNum + zhengwuNum + netNum;
                     this.pieSysData.push({name: '互联网', value: internetNum});
                     this.pieSysData.push({name: '政务外网', value: zhengwuNum});
@@ -84,6 +100,9 @@
             if (JSON.stringify(this.$store.state.czCloudInfo.czCloudInfo) === '{}') {
                 this.$store.dispatch('czCloudInfo/getCloudInfo', {vm: this});
             }
+            this.$bus.$on('update', () => {
+                this.update();
+            })
         }
     }
 </script>

@@ -1,6 +1,6 @@
 <template>
     <Card class="card">
-        <p slot="title">信息科统计</p>
+        <p slot="title">信息科及信息化人员统计</p>
         <span href="#" slot="extra" class="total-num">
                         信息科总数：{{totalCount}}
                     </span>

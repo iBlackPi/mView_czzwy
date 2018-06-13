@@ -1,8 +1,8 @@
 <template>
     <Card class="card">
-        <p slot="title">网络情况统计</p>
+        <p slot="title">硬件信息统计</p>
         <span href="#" slot="extra" class="total-num">
-                        网络线路总数：{{totalCount}}
+                        硬件总数：{{totalCount}}
                     </span>
         <div class="chart-container">
             <input type="hidden" :value="totalInfo">
@@ -11,7 +11,7 @@
                     style="width: 100%; height: 100%; float: left;"
                     :center="['40%', '50%']"
                     backgroundColor="transparent"
-                    id="net-route"
+                    id="hardware"
                     :data="pieSysData"
                     :radius="['40%','60%']"
                     :coverOption="coverOption"

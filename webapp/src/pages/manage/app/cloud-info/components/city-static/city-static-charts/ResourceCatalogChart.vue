@@ -1,8 +1,8 @@
 <template>
     <Card class="card">
-        <p slot="title">资源目录数量</p>
+        <p slot="title">信息资源统计</p>
         <span href="#" slot="extra" class="total-num">
-                        资源目录总数：{{totalCount}}
+                        信息资源统计：{{totalCount}}
                     </span>
         <div class="chart-container">
             <input type="hidden" :value="totalInfo">

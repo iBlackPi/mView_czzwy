@@ -1,12 +1,12 @@
 <template>
     <Card class="card">
-        <p slot="title">机房信息统计</p>
+        <p slot="title">软件信息统计</p>
         <span href="#" slot="extra" class="total-num">
-                        机房总数：{{totalCount}}
+                        软件总数：{{totalCount}}
                     </span>
         <div class="chart-container">
             <ve-rect-coordinate
-                    id="computer-room"
+                    id="software"
                     style="width: 100%; height:100%; margin-left: 2%;"
                     backgroundColor=""
                     :xAxisData="xAxisData"
@@ -27,7 +27,7 @@
         name: "",
         data() {
             return {
-                xAxisData: ['自建机房', '托管机房', '租用云服务'],
+                xAxisData: ['路由器', '交换机', '安全设备'],
                 data: [64, 60, 66],
                 totalCount: 0,
                 coverOption2: {
@@ -80,30 +80,30 @@
             }
         },
         methods: {
-            getComputerRoomInfo() {
-                this.$httpt.get(`machineRoomController.do?getCzMachineRooms&start=0&pageSize=10000&department=`).then(({data}) => {
+            getNetInfo() {
+                this.$httpt.get(`networkController.do?getCzNetwork&department=&pageSize=10000`).then(({data}) => {
                     if (data.success) {
                         this.data = [];
-                        let selfBuiltNum = 0;
-                        let hostingNum = 0;
-                        let cloudServiceNum = 0;
-                        data.data.list.forEach(computerRoom => {
-                            selfBuiltNum += computerRoom.selfBuiltMachineRoomNum;
-                            hostingNum += computerRoom.trusteeshipRoomNum;
-                            cloudServiceNum += computerRoom.cloudServiceNum;
+                        let routers = 0;
+                        let switchMachine = 0;
+                        let safetyEquipment = 0;
+                        data.data.list.forEach(netInfo => {
+                            routers += Number(netInfo.router);
+                            switchMachine += Number(netInfo.switchMachine);
+                            safetyEquipment += Number(netInfo.safetyEquipment);
                         });
-                        this.data = [selfBuiltNum, hostingNum, cloudServiceNum];
-                        this.totalCount =  selfBuiltNum + hostingNum + cloudServiceNum;
+                        this.data = [routers, switchMachine, safetyEquipment];
+                        this.totalCount = routers + switchMachine + safetyEquipment;
                     } else {
                         this.$Notice.error({
-                            title: '获取机房信息失败'
+                            title: '获取网络信息失败'
                         })
                     }
                 })
-            },
+            }
         },
         created() {
-            this.getComputerRoomInfo();
+            this.getNetInfo();
         }
     }
 </script>

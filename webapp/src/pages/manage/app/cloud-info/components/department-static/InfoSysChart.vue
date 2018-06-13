@@ -1,8 +1,8 @@
 <template>
     <Card class="card">
-        <p slot="title">业务系统概览</p>
+        <p slot="title">信息系统统计</p>
         <span href="#" slot="extra" class="total-num">
-                        业务系统总数：{{totalCount}}
+                        信息系统总数：{{totalCount}}
                     </span>
         <div class="chart-container">
             <input type="hidden" :value="totalInfo">

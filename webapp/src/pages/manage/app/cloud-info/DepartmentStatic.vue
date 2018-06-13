@@ -39,6 +39,10 @@
                     <net-route-chart :currentDepartment = "currentDepartment"></net-route-chart>
 
                     <net-device-chart :currentDepartment = "currentDepartment"></net-device-chart>
+
+                    <software-chart :currentDepartment = "currentDepartment"></software-chart>
+
+                    <hardware-chart :currentDepartment = "currentDepartment"></hardware-chart>
                 </div>
             </panel>
         </collapse>
@@ -53,6 +57,8 @@
     import ResourceCatalogChart from './components/department-static/ResourceCatalogChart';
     import NetRouteChart from './components/department-static/NetRouteChart';
     import NetDeviceChart from './components/department-static/NetDeviceChart';
+    import SoftwareChart from './components/department-static/SoftwareChart';
+    import HardwareChart from './components/department-static/HardwareChart';
 
     export default {
         name: "",
@@ -70,7 +76,9 @@
             ServerChart,
             ResourceCatalogChart,
             NetRouteChart,
-            NetDeviceChart
+            NetDeviceChart,
+            SoftwareChart,
+            HardwareChart
         },
         computed: {
             // 搜索框根据用户输入智能补全功能

@@ -1,6 +1,6 @@
 <template>
-    <Card class="card">
-        <p slot="title">网络设备信息概览</p>
+    <Card class="card" style="width: 50%;">
+        <p slot="title">网络设备信息统计</p>
         <span href="#" slot="extra" class="total-num">
                         网络设备总数：{{totalCount}}
                     </span>

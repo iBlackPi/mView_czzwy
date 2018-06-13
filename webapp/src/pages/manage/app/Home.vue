@@ -4,23 +4,23 @@
         <section class="fun-container">
             <div class="fun" ref="fun" path="info-maintain">
                 <i class="icon iconfont icon-caidan"></i>
-                <span>信息总览</span>
+                <span>全市总览</span>
             </div>
             <div class="fun" path="department-info">
                 <i class="icon iconfont icon-map"></i>
-                <span>部门信息</span>
+                <span>局委办总览</span>
             </div>
             <div class="fun" path="info-sys-maintain">
                 <i class="icon iconfont icon-cube"></i>
-                <span>信息化系统详情</span>
+                <span>信息化系统统计</span>
             </div>
             <div class="fun" path="resource-catalog-manage">
                 <i class="icon iconfont icon-huizong-"></i>
-                <span>资源目录汇总</span>
+                <span>信息资源统计</span>
             </div>
             <div class="fun" path="computer-room">
                 <i class="icon iconfont icon-home"></i>
-                <span>机房信息</span>
+                <span>机房信息统计</span>
             </div>
             <div class="fun" path="bigMain">
                 <i class="icon iconfont icon-navicon-dphf"></i>

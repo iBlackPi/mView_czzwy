@@ -1,6 +1,6 @@
 <template>
     <Card class="card">
-        <p slot="title">资源目录数量</p>
+        <p slot="title">信息资源统计</p>
         <span href="#" slot="extra" class="total-num">
                         <!--服务器总数：{{totalCount}}-->
                     </span>

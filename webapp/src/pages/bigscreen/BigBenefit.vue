@@ -72,7 +72,7 @@
         height: 100%;
         overflow: hidden;
         background: #0A0D17;
-        background: url(../../assets/imgs/bg2.jpg) repeat-x;
+        background: url(../../assets/imgs/bg2.png) repeat-x;
         background-size: cover;
         /*animation: move_bg 25s linear alternate infinite;*/
     }

@@ -18,6 +18,10 @@
                 <net-route-chart></net-route-chart>
 
                 <net-device-chart></net-device-chart>
+
+                <software-chart></software-chart>
+
+                <hardware-chart></hardware-chart>
             </div>
         </panel>
     </collapse>
@@ -31,6 +35,8 @@
     import ResourceCatalogChart from './city-static-charts/ResourceCatalogChart';
     import NetRouteChart from './city-static-charts/NetRouteChart';
     import NetDeviceChart from './city-static-charts/NetDeviceChart';
+    import SoftwareChart from './city-static-charts/SoftwareChart';
+    import HardwareChart from './city-static-charts/HardwareChart';
 
     export default {
         name: "",
@@ -123,7 +129,9 @@
             ServerChart,
             ResourceCatalogChart,
             NetRouteChart,
-            NetDeviceChart
+            NetDeviceChart,
+            SoftwareChart,
+            HardwareChart
         },
         computed: {
             totalInfo() {
