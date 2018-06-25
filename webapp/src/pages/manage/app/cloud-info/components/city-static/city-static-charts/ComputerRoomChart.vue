@@ -2,7 +2,7 @@
     <Card class="card" style="width: 40%;">
         <p slot="title">机房信息统计</p>
         <span href="#" slot="extra" class="total-num">
-                        拥有机房部门：{{totalCount}} 机房总数：{{totalCount}}
+                        拥有机房部门：{{hasComputerRoomCount}}&nbsp;&nbsp;&nbsp;机房总数：{{totalCount}}
                     </span>
         <div class="chart-container">
             <ve-rect-coordinate
@@ -48,6 +48,7 @@
                 xAxisData2: ['自建机房', '托管机房', '租用云服务'],
                 data2: [64, 60, 66],
                 totalCount: 0,
+                hasComputerRoomCount: 0,
                 coverOption2: {
                     grid: {
                         top: '20%',
@@ -116,6 +117,9 @@
                             let count = computerRoom.selfBuiltMachineRoomNum + computerRoom.trusteeshipRoomNum + computerRoom.cloudServiceNum;
                             let topItem = {name: computerRoom.department, count: count};
                             computerStaticArr.push(topItem)
+                            if(count !== 0) {
+                                this.hasComputerRoomCount ++;
+                            }
                         });
                         computerStaticArr.sort((a, b) => {return b.count - a.count;});
                         this.data = [selfBuiltNum, hostingNum, cloudServiceNum];

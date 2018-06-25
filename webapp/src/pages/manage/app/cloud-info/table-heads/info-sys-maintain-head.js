@@ -1,5 +1,11 @@
 export default [
     {
+        title: '部门',
+        key: 'department',
+        width: 150,
+        fixed: 'left'
+    },
+    {
         title: '信息系统名称',
         key: 'infomationSystemName',
         width: 150,

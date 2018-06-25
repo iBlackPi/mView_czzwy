@@ -76,20 +76,22 @@
 
         <Table border :columns="columns" :data="totalInfo"></Table>
         <!--分页-->
-        <Page :total="totalCount" show-total show-sizer @on-change="changePage" @on-page-size-change="changePageSize" style="margin: .5rem 0 .5rem 0;"></Page>
+        <Page :total="totalCount" show-total show-sizer @on-change="changePage" @on-page-size-change="changePageSize"
+              style="margin: .5rem 0 .5rem 0;"></Page>
     </div>
 </template>
 
 <script>
     import columns from './table-heads/move-info-head';
+
     export default {
         name: "",
-        data(){
+        data() {
             return {
                 isOpen: '1',
                 columns: columns,
 
-                colors: ['#01A2FC','#F9D135','#01B344','#01A2FC'],
+                colors: ['#01A2FC', '#F9D135', '#01B344', '#01A2FC'],
                 xAxisMoveData: ['2018', '2019', '2020'],
                 moveData: [40, 65, 70],
                 coverOption: {
@@ -154,7 +156,7 @@
                         }
                     },
                     xAxis: {
-                        type : 'category',
+                        type: 'category',
                         axisLabel: {
                             show: true,
                             interval: 0,
@@ -200,10 +202,10 @@
                 },
                 ruleInline: {
                     infoSysName: [
-                        { required: false, message: '必填项', trigger: 'blur' }
+                        {required: false, message: '必填项', trigger: 'blur'}
                     ],
                     sysDeployNet: [
-                        { required: false, message: '必填项', trigger: 'blur' }
+                        {required: false, message: '必填项', trigger: 'blur'}
                     ]
                 },
                 selectOne: [],
@@ -211,32 +213,32 @@
             }
         },
         methods: {
-            changePage(destination = this.formInline.currentPage){
+            changePage(destination = this.formInline.currentPage) {
                 // 翻页的时候是带着查询参数去翻页的
                 this.$httpt.get('removeController.do?getCzRemove&' +
-                    'department=' + this.formInline.department+ '&' +
-                    'infoSysName=' + this.formInline.infoSysName+ '&' +
-                    'network=' + this.formInline.network+ '&' +
-                    'removeTime=' + this.formInline.removeTime+ '&' +
-                    'currentPage='+ destination +'&' +
+                    'department=' + this.formInline.department + '&' +
+                    'infoSystemName=' + this.formInline.infoSysName + '&' +
+                    'network=' + this.formInline.network + '&' +
+                    'removeTime=' + this.formInline.removeTime + '&' +
+                    'currentPage=' + destination + '&' +
                     'pageSize=' + this.formInline.pageSize).then(({data}) => {
-                    if(data.success) {
+                    if (data.success) {
                         this.totalInfo = data.data.list;
                         this.totalCount = data.data.totalCount;
-                        let tempPie =  [];
+                        let tempPie = [];
                         let newarr1 = new Array(this.selectTwo.length);
-                        for(let t = 0; t < newarr1.length; t++) {
+                        for (let t = 0; t < newarr1.length; t++) {
                             newarr1[t] = 0;
                         }
-                        for(let p = 0; p < this.selectTwo.length; p++) {
-                            for(let j = 0; j < data.data.list.length; j++) {
-                                if(this.selectTwo[p] === data.data.list[j].network) {
+                        for (let p = 0; p < this.selectTwo.length; p++) {
+                            for (let j = 0; j < data.data.list.length; j++) {
+                                if (this.selectTwo[p] === data.data.list[j].network) {
                                     newarr1[p]++;
                                 }
                             }
                         }
-                        for(let i = 0; i < newarr1.length; i ++){
-                            let tempPieObj = {value: 0, name:''};
+                        for (let i = 0; i < newarr1.length; i++) {
+                            let tempPieObj = {value: 0, name: ''};
                             tempPieObj.value = newarr1[i];
                             tempPieObj.name = this.selectTwo[i];
                             tempPie.push(tempPieObj);
@@ -246,12 +248,12 @@
                         }, 300);
 
                         let newarr2 = new Array(this.selectOne.length);
-                        for(let t = 0; t < newarr2.length; t++) {
+                        for (let t = 0; t < newarr2.length; t++) {
                             newarr2[t] = 0;
                         }
-                        for(let p = 0; p < this.selectOne.length; p++) {
-                            for(let j = 0; j < data.data.list.length; j++) {
-                                if(this.selectOne[p] === data.data.list[j].sysDeployNet) {
+                        for (let p = 0; p < this.selectOne.length; p++) {
+                            for (let j = 0; j < data.data.list.length; j++) {
+                                if (this.selectOne[p] === data.data.list[j].sysDeployNet) {
                                     newarr2[p]++;
                                 }
                             }
@@ -259,7 +261,7 @@
                         this.xAxisData = this.selectOne;
                         this.data = newarr2;
 
-                    }else {
+                    } else {
                         console.error('分页获取系统迁移表信息失败')
                     }
                 }).catch(err => {
@@ -289,7 +291,7 @@
                 'removeTime=&' +
                 'currentPage=0&' +
                 'pageSize=100000').then(({data}) => {
-                if(data.success) {
+                if (data.success) {
                     let tempOne = [];
                     let tempTwo = [];
                     data.data.list.forEach(item => {
@@ -304,7 +306,7 @@
                     });
                     // 该方法初始化中有逻辑依赖这个回调中的值，所以该方法放在这里调用
                     this.changePage();
-                }else {
+                } else {
                     console.error('分页获取系统迁移表信息失败')
                 }
             }).catch(err => {
@@ -312,7 +314,10 @@
             })
         },
         mounted() {
-
+            if (this.$route.query.dName) {
+                this.formInline.department = this.$route.query.dName;
+                this.changePage();
+            }
         }
     }
 </script>
@@ -322,6 +327,7 @@
         display: flex;
         flex-flow: row nowrap;
     }
+
     .card {
         flex: 1;
         &:first-child {

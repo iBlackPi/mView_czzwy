@@ -184,7 +184,6 @@
                         this.totalInfo = data.data.list;
                         this.totalCount = data.data.totalCount;
                         // todo 统计搜索结果中网络分布和网络设备数量
-
                     }else {
                         console.error('分页获取网络情况表信息失败')
                     }
