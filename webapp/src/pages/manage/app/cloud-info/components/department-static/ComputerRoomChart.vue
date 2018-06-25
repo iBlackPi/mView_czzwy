@@ -11,7 +11,8 @@
                     backgroundColor=""
                     :xAxisData="xAxisData"
                     :showLegend=true
-                    :coverOption="coverOption2">
+                    :coverOption="coverOption2"
+                    @click-series="goToComputorRoom">
                 <ve-bar
                         :data="data"
                         name="数量（个）"
@@ -86,6 +87,9 @@
             }
         },
         methods: {
+            goToComputorRoom(params) {
+                this.$router.push({name: 'computer-room', query: {computerRoomType: params.name}});
+            },
             getComputerRoomInfo() {
                 this.$httpt.get(`machineRoomController.do?getCzMachineRooms&start=0&pageSize=10000&department=${this.currentDepartment}`).then(({data}) => {
                     if (data.success) {

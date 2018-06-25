@@ -16,6 +16,7 @@
                     :radius="['40%','60%']"
                     :coverOption="coverOption"
                     :rippleSize=5
+                    @click-series="goToNetDevice"
             ></ve-pie>
         </div>
     </Card>
@@ -78,6 +79,11 @@
                     this.pieSysData.push({name: '政务外网', value: zhengwuNum});
                     this.pieSysData.push({name: '专网', value: netNum});
                 }
+            }
+        },
+        methods: {
+            goToNetDevice(params) {
+                this.$router.push({name: 'net-info', query: {networkType: params.name}});
             }
         },
         created() {

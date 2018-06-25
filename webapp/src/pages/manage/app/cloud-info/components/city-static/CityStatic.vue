@@ -11,7 +11,7 @@
 
                 <computer-room-chart></computer-room-chart>
 
-                <server-chart></server-chart>
+                <!--<server-chart></server-chart>-->
 
                 <resource-catalog-chart></resource-catalog-chart>
 

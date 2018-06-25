@@ -16,6 +16,7 @@
                     :radius="['40%','60%']"
                     :coverOption="coverOption"
                     :rippleSize=5
+                    @click-series="goToInfoSys"
             ></ve-pie>
             <ve-rect-coordinate
                     id="connect-net"
@@ -23,7 +24,8 @@
                     backgroundColor=""
                     :xAxisData="xAxisData"
                     :showLegend=true
-                    :coverOption="coverOption2">
+                    :coverOption="coverOption2"
+                    @click-series="goToInfoSys">
                 <ve-bar
                         :data="data"
                         name="数量（个）"
@@ -141,6 +143,9 @@
             }
         },
         methods: {
+            goToInfoSys(params) {
+                this.$router.push({name: 'info-sys-maintain', query: {group: params.name}});
+            },
             update(department) {
                 let czCloudInfo = this.$store.state.czCloudInfo.czCloudInfo;
                 if (JSON.stringify(czCloudInfo) !== '{}') {

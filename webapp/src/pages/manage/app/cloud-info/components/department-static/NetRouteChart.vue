@@ -16,6 +16,7 @@
                     :radius="['40%','60%']"
                     :coverOption="coverOption"
                     :rippleSize=5
+                    @click-series="goToNetDevice"
             ></ve-pie>
         </div>
     </Card>
@@ -82,6 +83,9 @@
             }
         },
         methods: {
+            goToNetDevice(params) {
+                this.$router.push({name: 'net-info', query: {group: params.name}});
+            },
             update() {
                 let czCloudInfo = this.$store.state.czCloudInfo.czCloudInfo;
                 if (JSON.stringify(czCloudInfo) !== '{}') {

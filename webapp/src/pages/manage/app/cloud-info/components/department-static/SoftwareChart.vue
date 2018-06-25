@@ -11,7 +11,8 @@
                     backgroundColor=""
                     :xAxisData="xAxisData"
                     :showLegend=true
-                    :coverOption="coverOption2">
+                    :coverOption="coverOption2"
+                    @click-series="goToInfoSys">
                 <ve-bar
                         :data="data"
                         name="数量（个）"
@@ -86,6 +87,9 @@
             }
         },
         methods: {
+            goToInfoSys(params) {
+                this.$router.push({name: 'info-sys-maintain', query: {hardwareType: params.name}});
+            },
             getNetInfo(department) {
                 if(!department) {
                     department = this.currentDepartment;

@@ -7,7 +7,7 @@
         <div class="chart-container">
             <input type="hidden" :value="totalInfo">
             <Card style="width: 100%; height: 100%;">
-                <div style="text-align:center">
+                <div style="text-align:center" @click="goToResource">
                     <i class="icon iconfont icon-resource" style="font-size: 5rem; color: #01A2FC;"></i>
                     <h3>{{currentDepartment}}资源目录总数：{{totalCount}}</h3>
                 </div>
@@ -39,6 +39,9 @@
             }
         },
         methods: {
+            goToResource(params) {
+                this.$router.push({name: 'resource-catalog-manage', query: {group: params.name}});
+            },
             update() {
                 let czCloudInfo = this.$store.state.czCloudInfo.czCloudInfo;
                 if (JSON.stringify(czCloudInfo) !== '{}') {

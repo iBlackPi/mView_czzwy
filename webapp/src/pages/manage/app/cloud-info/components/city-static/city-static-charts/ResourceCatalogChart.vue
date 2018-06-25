@@ -7,9 +7,9 @@
         <div class="chart-container">
             <input type="hidden" :value="totalInfo">
             <Card style="width: 100%; height: 100%;">
-                <div style="text-align:center">
+                <div style="text-align:center" @click="goToResource">
                     <i class="icon iconfont icon-resource" style="font-size: 5rem; color: #01A2FC;"></i>
-                    <h3>全市资源目录总数：{{totalCount}}</h3>
+                    <h3>信息资源总数：{{totalCount}}</h3>
                 </div>
             </Card>
         </div>
@@ -34,6 +34,11 @@
                     });
                     this.totalCount = cataLogNum;
                 }
+            }
+        },
+        methods: {
+            goToResource(params) {
+                this.$router.push({name: 'resource-catalog-manage', query: {group: params.name}});
             }
         },
         created() {

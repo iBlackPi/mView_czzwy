@@ -11,7 +11,8 @@
                     backgroundColor=""
                     :xAxisData="xAxisData"
                     :showLegend=true
-                    :coverOption="coverOption2">
+                    :coverOption="coverOption2"
+                    @click-series="goToInfoSys">
                 <ve-bar
                         :data="data"
                         name="数量（个）"
@@ -27,8 +28,8 @@
         name: "",
         data() {
             return {
-                xAxisData: ['路由器', '交换机', '安全设备'],
-                data: [64, 60, 66],
+                xAxisData: ['操作系统', '数据库', '中间件', '应用系统'],
+                data: [64, 60, 66, 66],
                 totalCount: 0,
                 coverOption2: {
                     grid: {
@@ -80,30 +81,42 @@
             }
         },
         methods: {
-            getNetInfo() {
-                this.$httpt.get(`networkController.do?getCzNetwork&department=&pageSize=10000`).then(({data}) => {
+            goToInfoSys(params) {
+                this.$router.push({name: 'info-sys-maintain', query: {softwareType: params.name}});
+            },
+            getInfoSys() {
+                this.$httpt.get('bigScreenController.do?getInfomatinSystemPagination&pageSize=10000').then(({data}) => {
                     if (data.success) {
-                        this.data = [];
-                        let routers = 0;
-                        let switchMachine = 0;
-                        let safetyEquipment = 0;
-                        data.data.list.forEach(netInfo => {
-                            routers += Number(netInfo.router);
-                            switchMachine += Number(netInfo.switchMachine);
-                            safetyEquipment += Number(netInfo.safetyEquipment);
+                        let osType = '',
+                            databaseType = '',
+                            middlewareType = '',
+                            infoSys = '';
+                        data.data.list.forEach(item => {
+                            if(item.osType) {
+                                osType ++;
+                            }
+                            if(item.databaseType) {
+                                databaseType ++;
+                            }
+                            if(item.middlewareType) {
+                                middlewareType ++;
+                            }
+                            if(item.infomationSystemName) {
+                                infoSys ++;
+                            }
                         });
-                        this.data = [routers, switchMachine, safetyEquipment];
-                        this.totalCount = routers + switchMachine + safetyEquipment;
+                        this.data = [osType, databaseType, middlewareType, infoSys];
+                        this.totalCount = this.data.reduce((a, b) => {return a + b;})
                     } else {
-                        this.$Notice.error({
-                            title: '获取网络信息失败'
-                        })
+                        console.error('获取软件信息信息失败')
                     }
+                }).catch(err => {
+                    throw Error(err);
                 })
             }
         },
         created() {
-            this.getNetInfo();
+            this.getInfoSys();
         }
     }
 </script>

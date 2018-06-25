@@ -165,6 +165,8 @@
                         { required: false, message: '必填项', trigger: 'blur' }
                     ]
                 },
+                networkType: '',
+                deviceType: '',
                 selectOne: [],
                 selectTwo: []
             }
@@ -173,7 +175,9 @@
             changePage(destination = this.formInline.currentPage){
                 // 翻页的时候是带着查询参数去翻页的
                 this.$httpt.get('networkController.do?getCzNetwork&' +
-                    'department=' + this.formInline.department+ '&' +
+                    'department=' + this.formInline.department + '&' +
+                    'networkType=' + this.networkType+ '&' +
+                    'deviceType=' + this.deviceType+ '&' +
                     'currentPage='+ destination +'&' +
                     'pageSize=' + this.formInline.pageSize).then(({data}) => {
                     if(data.success) {
@@ -226,7 +230,6 @@
                             netNum += (Number(netInfo.hengxiangNetNum) + Number(netInfo.zongxiangNetNum));
                         });
                         this.data = [routers, switchMachine, safetyEquipment];
-                        this.totalCount = routers + switchMachine + safetyEquipment;
                         this.pieData.push({name: '互联网', value: internetNum});
                         this.pieData.push({name: '政务外网', value: zhengwuNum});
                         this.pieData.push({name: '专网', value: netNum});
@@ -246,6 +249,14 @@
         mounted() {
             this.changePage();
             this.getNetInfo();
+            if (this.$route.query.networkType) {
+                this.networkType = this.$route.query.networkType;
+                this.changePage();
+            }
+            if (this.$route.query.deviceType) {
+                this.deviceType = this.$route.query.deviceType;
+                this.changePage();
+            }
         }
     }
 </script>

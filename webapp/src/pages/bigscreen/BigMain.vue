@@ -80,8 +80,8 @@
         height: 100%;
         overflow: hidden;
         background: #0A0D17;
-        background: url(../../assets/imgs/bg2.png) repeat-x;
-        animation: move_bg 25s linear alternate infinite;
+        background: url(../../assets/imgs/home_bg.jpg) repeat-x;
+        /*animation: move_bg 25s linear alternate infinite;*/
         background-size: cover;
     }
     .bigmain-top {

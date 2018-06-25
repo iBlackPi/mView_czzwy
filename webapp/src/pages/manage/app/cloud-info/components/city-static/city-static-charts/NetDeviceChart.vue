@@ -11,7 +11,8 @@
                     backgroundColor=""
                     :xAxisData="xAxisData"
                     :showLegend=true
-                    :coverOption="coverOption2">
+                    :coverOption="coverOption2"
+                    @click-series="goToNetDevice">
                 <ve-bar
                         :data="data"
                         name="数量（个）"
@@ -80,6 +81,9 @@
             }
         },
         methods: {
+            goToNetDevice(params) {
+                this.$router.push({name: 'net-info', query: {deviceType: params.name}});
+            },
             getNetInfo() {
                 this.$httpt.get(`networkController.do?getCzNetwork&department=&pageSize=10000`).then(({data}) => {
                     if (data.success) {

@@ -1,19 +1,35 @@
 <template>
-    <Card class="card">
+    <Card class="card" style="width: 40%;">
         <p slot="title">机房信息统计</p>
         <span href="#" slot="extra" class="total-num">
-                        机房总数：{{totalCount}}
+                        拥有机房部门：{{totalCount}} 机房总数：{{totalCount}}
                     </span>
         <div class="chart-container">
             <ve-rect-coordinate
                     id="computer-room"
-                    style="width: 100%; height:100%; margin-left: 2%;"
+                    style="width: 49%; height:100%; float: left;"
                     backgroundColor=""
                     :xAxisData="xAxisData"
                     :showLegend=true
-                    :coverOption="coverOption2">
+                    :coverOption="coverOption2"
+                    @click-series="goToComputorRoom">
                 <ve-bar
                         :data="data"
+                        name="数量（个）"
+                        barWidth="20"
+                ></ve-bar>
+            </ve-rect-coordinate>
+            <!--top5-->
+            <ve-rect-coordinate
+                    id="computer-room2"
+                    style="width: 49%; height:100%; margin-left: 2%; float: left;"
+                    backgroundColor=""
+                    :xAxisData="xAxisData2"
+                    :showLegend=true
+                    :coverOption="coverOption2"
+                    @click-series="goToComputorRoom">
+                <ve-bar
+                        :data="data2"
                         name="数量（个）"
                         barWidth="20"
                 ></ve-bar>
@@ -29,6 +45,8 @@
             return {
                 xAxisData: ['自建机房', '托管机房', '租用云服务'],
                 data: [64, 60, 66],
+                xAxisData2: ['自建机房', '托管机房', '租用云服务'],
+                data2: [64, 60, 66],
                 totalCount: 0,
                 coverOption2: {
                     grid: {
@@ -80,6 +98,9 @@
             }
         },
         methods: {
+            goToComputorRoom(params) {
+                this.$router.push({name: 'computer-room', query: {computerRoomType: params.name}});
+            },
             getComputerRoomInfo() {
                 this.$httpt.get(`machineRoomController.do?getCzMachineRooms&start=0&pageSize=10000&department=`).then(({data}) => {
                     if (data.success) {
@@ -87,13 +108,20 @@
                         let selfBuiltNum = 0;
                         let hostingNum = 0;
                         let cloudServiceNum = 0;
+                        let computerStaticArr = [];
                         data.data.list.forEach(computerRoom => {
                             selfBuiltNum += computerRoom.selfBuiltMachineRoomNum;
                             hostingNum += computerRoom.trusteeshipRoomNum;
                             cloudServiceNum += computerRoom.cloudServiceNum;
+                            let count = computerRoom.selfBuiltMachineRoomNum + computerRoom.trusteeshipRoomNum + computerRoom.cloudServiceNum;
+                            let topItem = {name: computerRoom.department, count: count};
+                            computerStaticArr.push(topItem)
                         });
+                        computerStaticArr.sort((a, b) => {return b.count - a.count;});
                         this.data = [selfBuiltNum, hostingNum, cloudServiceNum];
-                        this.totalCount =  selfBuiltNum + hostingNum + cloudServiceNum;
+                        this.totalCount = selfBuiltNum + hostingNum + cloudServiceNum;
+                        this.data2 = [computerStaticArr[0].count, computerStaticArr[1].count, computerStaticArr[2].count];
+                        this.xAxisData2 = [computerStaticArr[0].name, computerStaticArr[1].name, computerStaticArr[2].name];
                     } else {
                         this.$Notice.error({
                             title: '获取机房信息失败'

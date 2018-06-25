@@ -22,6 +22,26 @@
                     <Option v-for="(item, key) in selectTwo" :key="key" :value="item">{{item}}</Option>
                 </Select>
             </FormItem>
+            <FormItem prop="osType">
+                <Select v-model="formInline.osType" placeholder="操作系统" clearable style="width: 200px;">
+                    <Option v-for="(item, key) in selectThree" :key="key" :value="item">{{item}}</Option>
+                </Select>
+            </FormItem>
+            <FormItem prop="databaseType">
+                <Select v-model="formInline.databaseType" placeholder="数据库" clearable style="width: 200px;">
+                    <Option v-for="(item, key) in selectFour" :key="key" :value="item">{{item}}</Option>
+                </Select>
+            </FormItem>
+            <FormItem prop="middlewareType">
+                <Select v-model="formInline.middlewareType" placeholder="中间件" clearable style="width: 200px;">
+                    <Option v-for="(item, key) in selectFive" :key="key" :value="item">{{item}}</Option>
+                </Select>
+            </FormItem>
+            <FormItem prop="serverType">
+                <Select v-model="formInline.serverType" placeholder="服务器" clearable style="width: 200px;">
+                    <Option v-for="(item, key) in selectSix" :key="key" :value="item">{{item}}</Option>
+                </Select>
+            </FormItem>
             <FormItem>
                 <Button type="primary" @click="handleSubmit('formInline')">搜索</Button>
             </FormItem>
@@ -175,7 +195,11 @@
                     statuss: '',
                     network: '',
                     pageSize: 10,
-                    currentPage: 1
+                    currentPage: 1,
+                    osType: '',
+                    databaseType: '',
+                    middlewareType: '',
+                    serverType: ''
                 },
                 ruleInline: {
                     infomationSystemName: [
@@ -187,7 +211,10 @@
                 },
                 selectOne: [],
                 selectTwo: [],
-                selectThree: []
+                selectThree: [],
+                selectFour: [],
+                selectFive: [],
+                selectSix: [],
             }
         },
         methods: {
@@ -198,6 +225,10 @@
                     'infomationSystemName=' + this.formInline.infomationSystemName + '&' +
                     'status=' + this.formInline.statuss + '&' +
                     'network=' + this.formInline.network + '&' +
+                    'osType=' + this.formInline.osType + '&' +
+                    'databaseType=' + this.formInline.databaseType + '&' +
+                    'middlewareType=' + this.formInline.middlewareType + '&' +
+                    'serverType=' + this.formInline.serverType + '&' +
                     'currentPage=' + destination + '&' +
                     'pageSize=' + this.formInline.pageSize).then(({data}) => {
                     if (data.success) {
@@ -261,18 +292,36 @@
             }
         },
         created() {
-            this.$httpt.get('bigScreenController.do?getInfomatinSystemPagination').then(({data}) => {
+            this.$httpt.get('bigScreenController.do?getInfomatinSystemPagination&pageSize=10000').then(({data}) => {
                 if (data.success) {
-                    let tempOne = [];
-                    let tempTwo = [];
+                    let tempOne = [],
+                        tempTwo = [],
+                        tempThree = [],
+                        tempFour = [],
+                        tempFive = [],
+                        tempSix = [];
                     data.data.list.forEach(item => {
                         tempOne.push(item.status);
                         tempTwo.push(item.network);
+                        tempThree.push(item.osType);
+                        tempFour.push(item.databaseType);
+                        tempFive.push(item.middlewareType);
+                        tempSix.push(item.serverType);
                     });
                     this.selectOne = [...new Set(tempOne)].filter(item => {
                         return item !== '' && item !== null;
                     });
-                    this.selectTwo = [...new Set(tempTwo)].filter(item => {
+                    this.selectTwo = ['互联网', '政务外网', '专网'];
+                    this.selectThree = [...new Set(tempThree)].filter(item => {
+                        return item !== '' && item !== null;
+                    });
+                    this.selectFour = [...new Set(tempFour)].filter(item => {
+                        return item !== '' && item !== null;
+                    });
+                    this.selectFive = [...new Set(tempFive)].filter(item => {
+                        return item !== '' && item !== null;
+                    });
+                    this.selectSix = [...new Set(tempSix)].filter(item => {
                         return item !== '' && item !== null;
                     });
                     this.changePage();
@@ -284,7 +333,10 @@
             })
         },
         mounted() {
-
+            if (this.$route.query.network) {
+                this.formInline.network = this.$route.query.network;
+                this.changePage();
+            }
         }
     }
 </script>

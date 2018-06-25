@@ -7,7 +7,7 @@
         <div class="chart-container">
             <input type="hidden" :value="totalInfo">
             <Card style="width: 100%; height: 100%;">
-                <div style="text-align:center">
+                <div style="text-align:center" @click="goToGroup">
                     <i class="icon iconfont icon-suyaniconchanpinleibufenzuodaohangbufen87" style="font-size: 5rem; color: #01B344;"></i>
                     <h3>是否有信息科：{{hasInfoDepartment === '是' ? '有' : '无'}}</h3>
                 </div>
@@ -39,6 +39,9 @@
             }
         },
         methods: {
+            goToGroup(params) {
+                this.$router.push({name: 'group', query: {group: params.name}});
+            },
             update() {
                 let czCloudInfo = this.$store.state.czCloudInfo.czCloudInfo;
                 if (JSON.stringify(czCloudInfo) !== '{}') {

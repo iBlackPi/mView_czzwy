@@ -11,7 +11,8 @@
                     backgroundColor=""
                     :xAxisData="xAxisData"
                     :showLegend=true
-                    :coverOption="coverOption2">
+                    :coverOption="coverOption2"
+                    @click-series="goToNetDevice">
                 <ve-bar
                         :data="data"
                         name="数量（个）"
@@ -86,6 +87,9 @@
             }
         },
         methods: {
+            goToNetDevice(params) {
+                this.$router.push({name: 'net-info', query: {group: params.name}});
+            },
             getNetInfo(department) {
                 if(!department) {
                     department = this.currentDepartment;

@@ -16,6 +16,7 @@
                     :radius="['40%','60%']"
                     :coverOption="coverOption"
                     :rippleSize=5
+                    @click-series="goToInfoSys"
             ></ve-pie>
         </div>
     </Card>
@@ -82,6 +83,9 @@
             }
         },
         methods: {
+            goToInfoSys(params) {
+                this.$router.push({name: 'info-sys-maintain', query: {hardwareType: params.name}});
+            },
             update() {
                 let czCloudInfo = this.$store.state.czCloudInfo.czCloudInfo;
                 if (JSON.stringify(czCloudInfo) !== '{}') {

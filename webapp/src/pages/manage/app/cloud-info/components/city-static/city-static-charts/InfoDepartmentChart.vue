@@ -1,6 +1,6 @@
 <template>
     <Card class="card">
-        <p slot="title">信息科及信息化人员统计</p>
+        <p slot="title">信息化机构统计</p>
         <span href="#" slot="extra" class="total-num">
                         信息科总数：{{totalCount}}
                     </span>
@@ -16,6 +16,7 @@
                     :radius="['40%','60%']"
                     :coverOption="coverOption"
                     :rippleSize=5
+                    @click-series="goToGroup"
             ></ve-pie>
         </div>
     </Card>
@@ -74,6 +75,11 @@
                     this.pieSysData.push({name: '有信息科', value: hasInfoDepartmentNum});
                     this.pieSysData.push({name: '无信息科', value: noInfoDepartmentNum});
                 }
+            }
+        },
+        methods: {
+            goToGroup(params) {
+                this.$router.push({name: 'group', query: {group: params.name}});
             }
         },
         created() {

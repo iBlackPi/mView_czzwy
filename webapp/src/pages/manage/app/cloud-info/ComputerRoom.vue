@@ -1,6 +1,6 @@
 <template>
     <div class="computer-room">
-        <Card style="height: 100%;">
+        <Card>
             <p slot="title" style="font-weight: normal;">机房信息维护</p>
             <AutoComplete
                     v-model="searchName"
@@ -15,7 +15,8 @@
             </AutoComplete>
             <Button type="primary" icon="ios-search" @click="search">搜索</Button>
             <Table border :columns="columns" :data="computerRooms" style="margin-top: 1rem;"></Table>
-            <Page :total="totalCount" show-total show-sizer @on-change="changePage" @on-page-size-change="changePageSize" style="margin: .5rem 0 .5rem 0;"></Page>
+            <Page :total="totalCount" show-total show-sizer @on-change="changePage"
+                  @on-page-size-change="changePageSize" style="margin: .5rem 0 .5rem 0;"></Page>
         </Card>
         <computer-room-modal></computer-room-modal>
     </div>
@@ -23,9 +24,10 @@
 
 <script>
     import ComputerRoomModal from './components/ComputerRoomModal';
+
     export default {
         name: "",
-        data () {
+        data() {
             return {
                 columns: [
                     {
@@ -82,25 +84,26 @@
                 start: 1,
                 totalCount: 0,
                 searchName: '',
-                department: ''
+                department: '',
+                type: ''
             }
         },
         computed: {
             // 搜索框根据用户输入智能补全功能
-            autoCompleteData(){
+            autoCompleteData() {
                 let czCloudInfo = this.$store.state.czCloudInfo.czCloudInfo;
                 // vue实例化的时候该值为默认的空数组，所以排除初始化的情况
-                if(czCloudInfo instanceof Array){
+                if (czCloudInfo instanceof Array) {
 
-                }else{
+                } else {
                     return Object.keys(czCloudInfo);
                 }
             }
         },
         watch: {
             // 当搜索框为空时，默认搜索全部
-            searchName(newValue, oldValue){
-                if(newValue === ''){
+            searchName(newValue, oldValue) {
+                if (newValue === '') {
                     this.department = '';
                     this.getComputerRoomInfo();
                 }
@@ -110,27 +113,27 @@
             ComputerRoomModal
         },
         methods: {
-            search(){
+            search() {
                 this.start = 1;
                 this.department = this.searchName;
                 this.getComputerRoomInfo();
             },
-            changePage(destination){
+            changePage(destination) {
                 this.start = destination;
                 this.getComputerRoomInfo();
             },
-            changePageSize(pageSize){
+            changePageSize(pageSize) {
                 this.pageSize = pageSize;
                 this.start = 1;
                 //翻页的时候是带着查询参数去翻页的
                 this.getComputerRoomInfo();
             },
-            getComputerRoomInfo(){
-                this.$httpt.get(`machineRoomController.do?getCzMachineRooms&start=${this.start}&pageSize=${this.pageSize}&department=${this.department}`).then(({data}) => {
-                    if(data.success){
+            getComputerRoomInfo() {
+                this.$httpt.get(`machineRoomController.do?getCzMachineRooms&start=${this.start}&pageSize=${this.pageSize}&department=${this.department}&type=${this.type}`).then(({data}) => {
+                    if (data.success) {
                         this.computerRooms = data.data.list;
                         this.totalCount = data.data.totalCount;
-                    }else{
+                    } else {
                         this.$Notice.error({
                             title: '获取机房信息失败'
                         })
@@ -139,17 +142,21 @@
             },
             // 搜索框根据用户输入智能补全功能：匹配用户输入
             // option为autoCompleteData数组中的项，该方法会遍历所有项
-            filterMethod(value, option){
-                if(value !== ''){
+            filterMethod(value, option) {
+                if (value !== '') {
                     return option.indexOf(value) !== -1;
                 }
             },
-            onSelect(department){
+            onSelect(department) {
                 this.department = department;
                 this.getComputerRoomInfo();
             },
         },
-        mounted(){
+        mounted() {
+            if (this.$route.query.computerRoomType) {
+                this.type = this.$route.query.computerRoomType
+                this.getComputerRoomInfo();
+            }
             this.$nextTick(() => {
                 this.getComputerRoomInfo();
             });
@@ -161,13 +168,13 @@
         //todo 尽快的获取数据
         //todo 如果用户直接进入后台页面，那总信息就无法获取到
         //todo 所以这里尽快的去获取下总览信息，供对话框中的搜索框自动提示功能使用
-        created(){
+        created() {
             this.$store.dispatch('czCloudInfo/getCloudInfo', {vm: this});
         },
         //todo 尽快的获取数据
         //todo 如果用户直接进入后台页面，那总信息就无法获取到
         //todo 所以这里尽快的去获取下总览信息，供对话框中的搜索框自动提示功能使用
-        created(){
+        created() {
             this.$store.dispatch('czCloudInfo/getCloudInfo', {vm: this});
         }
     }
@@ -177,6 +184,7 @@
     .computer-room {
         height: 100%;
     }
+
     .button-container {
         position: absolute;
         right: 17px;

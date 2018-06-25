@@ -16,6 +16,7 @@
                     :radius="['40%','60%']"
                     :coverOption="coverOption"
                     :rippleSize=5
+                    @click-series="goToMoveSys"
             ></ve-pie>
             <ve-rect-coordinate
                     id="connect-net"
@@ -23,7 +24,8 @@
                     backgroundColor=""
                     :xAxisData="xAxisData"
                     :showLegend=true
-                    :coverOption="coverOption2">
+                    :coverOption="coverOption2"
+                    @click-series="goToInfoSys">
                 <ve-bar
                         :data="data"
                         name="数量（个）"
@@ -70,8 +72,8 @@
                         }
                     ]
                 },
-                xAxisData: ['互联网', '政务外网', '专网'],
-                data: [64, 60, 66],
+                xAxisData: ['互联网', '政务外网', '专网', '公务内网'],
+                data: [64, 60, 66, 66],
                 coverOption2: {
                     grid: {
                         top: '20%',
@@ -139,6 +141,12 @@
             }
         },
         methods: {
+            goToMoveSys(params) {
+                this.$router.push({name: 'move-info'});
+            },
+            goToInfoSys(params) {
+                this.$router.push({name: 'info-sys-maintain', query: {network: params.name}});
+            },
             // 请求政务信息系统信息
             getInfo() {
                 this.$httpt.get('bigScreenController.do?getCzInfomatinSystem').then(({data}) => {
@@ -148,6 +156,7 @@
                         this.data.push(temp.internetInfoNum);
                         this.data.push(temp.govExtrantInfoNum);
                         this.data.push(temp.specialNetInfoNum);
+                        this.data.push(0);
                     } else {
                         throw new Error('获取政务统计信息失败！');
                     }
