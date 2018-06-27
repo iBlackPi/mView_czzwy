@@ -19,7 +19,7 @@
                 <!--action="http://111.62.40.193:9603/czportal/upLoadExcelController.do?upLoadExcel"-->
                 <!--action="http://localhost:8088/czportal/upLoadExcelController.do?upLoadExcel"-->
                 <Upload multiple
-                        action="http://localhost:8088/czportal/upLoadExcelController.do?upLoadExcel"
+                        action="http://111.62.40.193:9603/czportal/upLoadExcelController.do?upLoadExcel"
                         name="excelFileUpload"
                         :show-upload-list="false"
                         :on-success="uploadSuccess"
@@ -143,10 +143,10 @@
             // 验证excel文件命名
             beforeUpload(file) {
                 const fileName = file.name;
-                if ((fileName.indexOf('-') === -1 || fileName.indexOf('-') > fileName.indexOf('《')) && fileName.indexOf('摸底调研信息汇总') === -1) {
+                if ((fileName.indexOf('_') === -1 || fileName.indexOf('_') > fileName.indexOf('《')) && fileName.indexOf('摸底调研信息汇总') === -1) {
                     this.$Notice.error({
                         title: 'excel命名错误！',
-                        desc: '请按照“单位名-《表名》”格式命名excel，注意中间以中划线隔开'
+                        desc: '请按照“单位名_《表名》”格式命名excel，注意中间以中划线隔开'
                     });
                     return false;
                 }

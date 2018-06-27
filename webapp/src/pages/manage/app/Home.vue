@@ -22,9 +22,9 @@
                 <i class="icon iconfont icon-home"></i>
                 <span>机房信息统计</span>
             </div>
-            <div class="fun" path="bigMain">
+            <div class="fun" path="group">
                 <i class="icon iconfont icon-navicon-dphf"></i>
-                <span>大屏</span>
+                <span>信息化机构统计</span>
             </div>
         </section>
     </div>

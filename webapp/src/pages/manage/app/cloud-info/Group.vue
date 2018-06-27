@@ -1,7 +1,7 @@
 <template>
     <div class="computer-room">
         <Card>
-            <p slot="title" style="font-weight: normal;">组织机构信息</p>
+            <p slot="title" style="font-weight: normal;">信息化机构</p>
             <AutoComplete
                     v-model="searchName"
                     :data="autoCompleteData"
