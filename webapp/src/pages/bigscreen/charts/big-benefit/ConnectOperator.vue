@@ -3,25 +3,25 @@
         <ul class="icon_lists clear" @click="goToManage">
             <li>
                 <i class="icon iconfont icon-yidonglogo"></i>
-                <div class="name">150个</div>
+                <div class="name">181个</div>
                 <div class="fontclass">中国移动</div>
             </li>
 
             <li>
                 <i class="icon iconfont icon-dianxin"></i>
-                <div class="name">34个</div>
+                <div class="name">44个</div>
                 <div class="fontclass">中国电信</div>
             </li>
 
             <li>
                 <i class="icon iconfont icon-liantong"></i>
-                <div class="name">137个</div>
+                <div class="name">145个</div>
                 <div class="fontclass">中国联通</div>
             </li>
 
             <li>
                 <i class="icon iconfont icon-dianshitai2"></i>
-                <div class="name">36个</div>
+                <div class="name">35个</div>
                 <div class="fontclass">广电</div>
             </li>
         </ul>

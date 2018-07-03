@@ -28,6 +28,17 @@
             </FormItem>
         </Form>
 
+        <Alert show-icon closable style="margin-top: -1rem;">
+            现状说明
+            <template slot="desc">
+                评估分析共215套系统上云，迁移规划
+                第一批迁移104套
+                第二批迁移33套
+                第三批迁移50套
+                第四批 迁移28套
+            </template>
+        </Alert>
+
         <!--图表展示重要信息-->
         <!--<collapse v-model="isOpen" accordion>
             <panel name="1">
@@ -89,7 +100,7 @@
         data() {
             return {
                 isOpen: '1',
-                columns: columns,
+                columns: columns(this),
 
                 colors: ['#01A2FC', '#F9D135', '#01B344', '#01A2FC'],
                 xAxisMoveData: ['2018', '2019', '2020'],
@@ -296,13 +307,15 @@
                     let tempTwo = [];
                     data.data.list.forEach(item => {
                         tempOne.push(item.network);
-                        tempTwo.push(item.removeTime);
+                        if (item.removeTime.indexOf('20') !== -1) {
+                            tempTwo.push(item.removeTime);
+                        }
                     });
                     this.selectOne = [...new Set(tempOne)].filter(item => {
-                        return item !== '' && item !== null && item !== 'null';
+                        return item !== '' && item !== null && item !== 'null' && item !== 'N/A' && item !== '无';
                     });
                     this.selectTwo = [...new Set(tempTwo)].filter(item => {
-                        return item !== '' && item !== null && item !== 'null';
+                        return item !== '' && item !== null && item !== 'null' && item !== 'N/A' && item !== '无';
                     });
                     // 该方法初始化中有逻辑依赖这个回调中的值，所以该方法放在这里调用
                     this.changePage();

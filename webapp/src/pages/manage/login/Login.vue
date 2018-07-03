@@ -1,6 +1,12 @@
 <!--//todo 登录放到app中-->
 <template>
     <div class="login" @keydown.enter="handleSubmit">
+        <section class="logo-container">
+            <img src="../../../assets/imgs/cangzhou.png" alt="">
+        </section>
+        <span class="logo-title">
+            中国 • 沧州
+        </span>
         <div class="login-container" @click="changeShowLoginInfo">
             <div class="login-header">
                 <div class="login-header-logo"></div>
@@ -26,8 +32,8 @@
                     </FormItem>
                 </Form>
             </div>
-
         </div>
+        <span class="download"><span style="color: #fff; letter-spacing: .1rem;">为了更好的体验，请您使用chrome浏览器浏览本系统，</span> <a class="detail-install-normal" href="https://sm.myapp.com/original/Browser/67.0.3396.62_chrome_installer.exe" target="_blank" data-hottag="download.detail.normal.2661" data-id="2661">点击下载Chrome浏览器</a></span>
     </div>
 </template>
 
@@ -116,4 +122,35 @@
 
 <style lang="less">
     @import 'login.less';
+    .download {
+        position: absolute;
+        top: 97%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: .75rem;
+    }
+    .detail-install-normal {
+        /*font-size: .9rem;*/
+    }
+    .logo-container {
+        position: absolute;
+        top: 5%;
+        left: 2.5%;
+        transform: translate(-50%, -50%);
+        width: 3rem;
+        height: 3rem;
+    }
+    .logo-container img {
+        width: 100%;
+        height: 100%;
+    }
+    .logo-title {
+        position: absolute;
+        top: 5%;
+        left: 7.5%;
+        transform: translate(-50%, -50%);
+        color: #fff;
+        font-size: 1rem;
+        font-family: fationblack;
+    }
 </style>

@@ -15,10 +15,10 @@
                         <div class="mask"></div>
                         <span>②</span>
                     </section>
-                    <section class="bigscreen-shortcut" @click="GoToBigscreen('three')">
-                        <div class="mask"></div>
-                        <span>③</span>
-                    </section>
+                    <!--<section class="bigscreen-shortcut" @click="GoToBigscreen('three')">-->
+                        <!--<div class="mask"></div>-->
+                        <!--<span>③</span>-->
+                    <!--</section>-->
                 </div>
             </Tooltip>
         </div>

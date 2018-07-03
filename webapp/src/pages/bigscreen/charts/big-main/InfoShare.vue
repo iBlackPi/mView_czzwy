@@ -27,8 +27,8 @@
         name: "computor-room",
         data() {
             return {
-                yAxisData: ['住建局', '发改委', '审计局', '民政局', '公安局'],
-                data: [6, 6, 7, 10, 32],
+                yAxisData: ['农工委', '工商联', '总工会', '民政局', '公安局'],
+                data: [8, 8, 19, 24, 53],
                 coverOption: {
                     grid: {
                         top: '25%',
@@ -58,7 +58,7 @@
                                 fontSize: 13 * gain,
                             }
                         },
-                        data: ['互联网', '政务外网', '业务专线', '政务内网', '公务内网']
+                        data: ['农工委', '工商联', '总工会', '民政局', '公安局']
                     }, {
                         type: 'category',
                         axisLine: {
@@ -99,7 +99,7 @@
                                 show: true,
                                 formatter: function (params) {
                                     let stuNum = 0;
-                                    [6, 6, 7, 10, 32].forEach(function (value, index, array) {
+                                    [8, 8, 19, 24, 53].forEach(function (value, index, array) {
                                         if (params.dataIndex == index) {
                                             stuNum = value;
                                         }
@@ -118,7 +118,7 @@
                             }
                         },
                         barWidth: '25%',
-                        data: [40, 40, 40, 40, 40]
+                        data: [60, 60, 60, 60, 60]
                     },
                         {
                             type: 'bar',
@@ -141,7 +141,7 @@
                                 }
                             },
                             barWidth: '25%',
-                            data: [6, 6, 7, 10, 32]
+                            data: [8, 8, 19, 24, 53]
                         }
                     ]
                 }

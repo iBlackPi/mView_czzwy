@@ -2,7 +2,7 @@
     <Card class="card" style="width: 40%;">
         <p slot="title">机房信息统计</p>
         <span href="#" slot="extra" class="total-num">
-                        拥有机房部门：{{hasComputerRoomCount}}&nbsp;&nbsp;&nbsp;机房总数：{{totalCount}}
+                        拥有自建机房部门：45<!--{{hasComputerRoomCount}}-->&nbsp;&nbsp;&nbsp;机房总数：116<!--{{totalCount}}-->
                     </span>
         <div class="chart-container">
             <ve-rect-coordinate
@@ -44,9 +44,9 @@
         data() {
             return {
                 xAxisData: ['自建机房', '托管机房', '租用云服务'],
-                data: [64, 60, 66],
-                xAxisData2: ['自建机房', '托管机房', '租用云服务'],
-                data2: [64, 60, 66],
+                data: [72, 14, 30],
+                xAxisData2: ['交通局', '住建局', '公安局', '供电公司'],
+                data2: [8, 6, 5, 4],
                 totalCount: 0,
                 hasComputerRoomCount: 0,
                 coverOption2: {
@@ -135,7 +135,7 @@
             },
         },
         created() {
-            this.getComputerRoomInfo();
+            // this.getComputerRoomInfo();
         }
     }
 </script>

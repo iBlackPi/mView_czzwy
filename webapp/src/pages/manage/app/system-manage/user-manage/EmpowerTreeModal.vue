@@ -12,7 +12,7 @@
 <script>
     export default {
         name: "empower-tree-modal",
-        data(){
+        data() {
             return {
                 modal: false,
                 empowerTreeData: [],
@@ -22,26 +22,31 @@
             }
         },
         computed: {
-            empowerTree(){
+            empowerTree() {
                 this.isShowLoading = false;
+                // 初始化向后台授权的数据
+                if(this.newEmpowerData.length === 0) {
+                    this.newEmpowerData = this.$store.state.empowerTree.initEmpowerData;
+                }
                 //todo 一定要记得加上models名称 tree组件接收的是数组
                 return this.$store.state.empowerTree.empowerTree;
             }
         },
         methods: {
             ok() {
-                //向后台提交数据时必须时个json对象
+                console.log(this.newEmpowerData);
+                //向后台提交数据时必须是个json对象
                 this.$http.post('/empowerController.do?m=empowerResource', {
                     newEmpowerData: this.newEmpowerData,
                     userId: this.userId
                 }).then((res) => {
-                    if(res.data.success){
+                    if (res.data.success) {
                         this.$Notice.success({
                             title: '授权成功！'
                         });
                         //todo 应该再成功授权后再将弹出框隐藏
                         this.modal = false;
-                    }else{
+                    } else {
                         this.$Notice.error({
                             title: '授权失败！'
                         })
@@ -51,11 +56,11 @@
             cancel() {
                 this.modal = false;
             },
-            checkChange(selectedResource){
+            checkChange(selectedResource) {
                 this.newEmpowerData = selectedResource;
             }
         },
-        mounted(){
+        mounted() {
             this.$bus.$on('showEmpowerTreeModal', (userId) => {
                 this.modal = true;
                 this.userId = userId;

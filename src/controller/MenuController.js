@@ -5,12 +5,12 @@ const router = express.Router();
 router.use('/menuController.do', (req, res, next) => {
     const m = req.query;
     //认证用户是否合法
-    if(m.m === 'findMenu'){
-        menuService.findMenu({}, (menus) => {
-            if(menus){
+    if (m.m === 'findMenu') {
+        menuService.findMenu(req, (menus) => {
+            if (menus) {
                 req.ajaxJson.data = menus;
                 res.send(req.ajaxJson);
-            }else{
+            } else {
                 req.ajaxJson.message = '无法获取数据';
                 req.ajaxJson.success = false;
                 res.send(req.ajaxJson);

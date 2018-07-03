@@ -25,12 +25,12 @@
                     [
                         {value: 99, name: '互联网'},
                         {value: 11, name: '政务外网'},
-                        {value: 169, name: '专网'},
-                        {value: 213, name: '统建'}
+                        {value: 175, name: '专网'},
+                        {value: 212, name: '统建'}
                     ],
                 coverOption: {
                     legend: {
-                        top: 60,
+                        top: 40,
                         right: 0
                     },
                     series: [

@@ -31,7 +31,7 @@
             return {
                 colors: ['#01A2FC', '#F9D135', '#01B344', '#01A2FC'],
                 xAxisData: ['小机', 'X86服务器', '虚机', '网络设备'],
-                data: [12, 495, 118, 679],
+                data: [14, 495, 118, 716],
                 coverOption: {
                     grid: {
                         top: '30%',
@@ -99,7 +99,7 @@
                                 show:true,
                                 formatter: function(params) {
                                     var stuNum = 0;
-                                    [12, 495, 118, 679].forEach(function(value, index, array) {
+                                    [14, 495, 118, 716].forEach(function(value, index, array) {
                                         if (params.dataIndex == index) {
                                             stuNum = value;
                                         }
@@ -156,8 +156,12 @@
             ModuleLayout
         },
         methods: {
-            goToManage() {
-                this.$router.push({name: 'info-maintain'});
+            goToManage(params) {
+                if(params.name === '网络设备') {
+                    this.$router.push({name: 'net-info'});
+                }else {
+                    this.$router.push({name: 'info-sys-maintain'});
+                }
             },
             getInfo() {
                 this.$httpt.get('bigScreenController.do?getBasicDevice').then(({data}) => {

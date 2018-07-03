@@ -2,7 +2,7 @@
     <Card class="card" style="width: 50%;">
         <p slot="title">网络设备信息统计</p>
         <span href="#" slot="extra" class="total-num">
-                        网络设备总数：{{totalCount}}
+                        网络设备总数：716<!--{{totalCount}}-->
                     </span>
         <div class="chart-container">
             <ve-rect-coordinate
@@ -28,8 +28,8 @@
         name: "",
         data() {
             return {
-                xAxisData: ['路由器', '交换机', '安全设备'],
-                data: [64, 60, 66],
+                xAxisData: ['路由器', '交换机', '安全设备', '其他'],
+                data: [117, 443, 119, 37],
                 totalCount: 0,
                 coverOption2: {
                     grid: {
@@ -107,7 +107,7 @@
             }
         },
         created() {
-            this.getNetInfo();
+            // this.getNetInfo();
         }
     }
 </script>

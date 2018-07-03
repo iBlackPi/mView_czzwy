@@ -27,7 +27,7 @@
         data(){
             return {
                 xAxisData: ['互联网', '政务外网', '业务专线', '政务内网', '公务内网'],
-                data: [55, 60, 62, 10, 50],
+                data: [89, 55, 59, 54, 50],
                 coverOption: {
                     grid: {
                         top: '30%',
@@ -95,7 +95,7 @@
                                 show:true,
                                 formatter: function(params) {
                                     var stuNum = 0;
-                                    [55, 60, 62, 10, 50].forEach(function(value, index, array) {
+                                    [89, 55, 59, 54, 50].forEach(function(value, index, array) {
                                         if (params.dataIndex == index) {
                                             stuNum = value;
                                         }
@@ -114,7 +114,7 @@
                             }
                         },
                         barWidth: '25%',
-                        data: [80, 80, 80, 80, 80]
+                        data: [90, 90, 90, 90, 90]
                     },
                         {
                             type: 'bar',

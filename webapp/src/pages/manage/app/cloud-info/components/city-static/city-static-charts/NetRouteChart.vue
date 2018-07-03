@@ -2,7 +2,7 @@
     <Card class="card">
         <p slot="title">网络情况统计</p>
         <span href="#" slot="extra" class="total-num">
-                        网络线路总数：{{totalCount}}
+                        网络线路总数：307<!--{{totalCount}}-->
                     </span>
         <div class="chart-container">
             <input type="hidden" :value="totalInfo">
@@ -28,14 +28,16 @@
         data() {
             return {
                 pieSysData: [
-                    {value: 71, name: '互联网'},
-                    {value: 19, name: '政务外网'},
-                    {value: 19, name: '专网'}
+                    {value: 89, name: '互联网'},
+                    {value: 55, name: '政务外网'},
+                    {value: 59, name: '业务专网'},
+                    {value: 54, name: '政务内网'},
+                    {value: 50, name: '公务内网'},
                 ],
                 totalCount: 0,
                 coverOption: {
                     legend: {
-                        top: 60,
+                        top: 10,
                         right: 0,
                         textStyle: {
                             color: '#000'
@@ -63,22 +65,22 @@
         },
         computed: {
             totalInfo() {
-                let czCloudInfo = this.$store.state.czCloudInfo.czCloudInfo;
-                if (JSON.stringify(czCloudInfo) !== '{}') {
-                    this.pieSysData = [];
-                    let internetNum = 0;
-                    let zhengwuNum = 0;
-                    let netNum = 0;
-                    Object.keys(czCloudInfo).forEach(key => {
-                        internetNum += czCloudInfo[key].internetNum;
-                        zhengwuNum += czCloudInfo[key].zhengwuNum;
-                        netNum += czCloudInfo[key].netNum;
-                    });
-                    this.totalCount = internetNum + zhengwuNum + netNum;
-                    this.pieSysData.push({name: '互联网', value: internetNum});
-                    this.pieSysData.push({name: '政务外网', value: zhengwuNum});
-                    this.pieSysData.push({name: '专网', value: netNum});
-                }
+                // let czCloudInfo = this.$store.state.czCloudInfo.czCloudInfo;
+                // if (JSON.stringify(czCloudInfo) !== '{}') {
+                //     this.pieSysData = [];
+                //     let internetNum = 0;
+                //     let zhengwuExtranetNum = 0;
+                //     let netNum = 0;
+                //     Object.keys(czCloudInfo).forEach(key => {
+                //         internetNum += czCloudInfo[key].internetNum;
+                //         zhengwuExtranetNum += czCloudInfo[key].zhengwuExtranetNum;
+                //         netNum += czCloudInfo[key].netNum;
+                //     });
+                //     this.totalCount = internetNum + zhengwuExtranetNum + netNum;
+                //     this.pieSysData.push({name: '互联网', value: internetNum});
+                //     this.pieSysData.push({name: '政务外网', value: zhengwuExtranetNum});
+                //     this.pieSysData.push({name: '专网', value: netNum});
+                // }
             }
         },
         methods: {

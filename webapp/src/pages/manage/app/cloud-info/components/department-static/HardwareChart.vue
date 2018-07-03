@@ -2,7 +2,7 @@
     <Card class="card">
         <p slot="title">硬件信息统计</p>
         <span href="#" slot="extra" class="total-num">
-                        硬件总数：{{totalCount}}
+                        <!--硬件总数：{{totalCount}}-->
                     </span>
         <div class="chart-container">
             <input type="hidden" :value="totalInfo">

@@ -6,9 +6,9 @@ const validateDao = {};
 //提供授权的资源树数据
 validateDao.find = (fn) => {
     UserAndResource.findAll().then((res) => {
-        if(res){
+        if (res) {
             fn(res);
-        }else{
+        } else {
             fn(false);
         }
     })
@@ -22,7 +22,9 @@ validateDao.update = (updateContent = {}, where = {}, fn) => {
         .then(ok => {
             fn(ok);
         })
-        .catch(e => {throw new Error(e)});
+        .catch(e => {
+            throw new Error(e)
+        });
 };
 
 //增加内容
@@ -32,7 +34,9 @@ validateDao.create = (addContent = {}, fn) => {
         .then(ok => {
             fn(ok);
         })
-        .catch(e => {throw new Error(e)});
+        .catch(e => {
+            throw new Error(e)
+        });
 };
 
 //批量增加内容
@@ -42,7 +46,9 @@ validateDao.bulkCreate = (addContent = [], fn) => {
         .then(ok => {
             fn(ok);
         })
-        .catch(e => {throw new Error(e)});
+        .catch(e => {
+            throw new Error(e)
+        });
 };
 
 //批量删除
@@ -52,16 +58,18 @@ validateDao.delete = (where = {}, fn) => {
         'where': where
     }).then(ok => {
         fn(ok);
-    }).catch(e => {throw new Error(e)});
+    }).catch(e => {
+        throw new Error(e)
+    });
 };
 
 //回调返回查到的数组，如果没有值，则空数组
 validateDao.findPart = (where, fn) => {
     UserAndResource.findAll({where: where}).then((res) => {
-        if(res){
+        if (res) {
 
             fn(res);
-        }else{
+        } else {
             fn(false);
         }
     })

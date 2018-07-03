@@ -10,17 +10,17 @@
                 @click-series="goToManage">
             <ve-bar
                     :data="dataCPU"
-                    name="CPU"
+                    name="CPU(核)"
                     barWidth="20"
             ></ve-bar>
             <ve-bar
                     :data="dataMemory"
-                    name="内存"
+                    name="内存(G)"
                     barWidth="20"
             ></ve-bar>
             <ve-bar
                     :data="dataRestore"
-                    name="存储"
+                    name="存储(T)"
                     barWidth="20"
             ></ve-bar>
         </ve-rect-coordinate>
@@ -46,6 +46,9 @@
                         top: '30%',
                         bottom: '25%',
                         left: '15%'
+                    },
+                    tooltip: {
+                        show: false
                     },
                     legend: {
                         top: 10,

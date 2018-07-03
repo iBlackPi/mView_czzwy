@@ -10,7 +10,7 @@ const validateService = {};
 validateService.getUserResource = (req, fn) => {
   validateDao.findPart({userid: req.session.user.id}, (res) => {
       if(res.length > 0){
-          //如果key对应的value时数组，那么搜索条件就是where id in [……]
+          //如果key对应的value是数组，那么搜索条件就是where id in [……]
           let where = {id: []};
           res.forEach(item => {
              where.id.push(item.resourceid);

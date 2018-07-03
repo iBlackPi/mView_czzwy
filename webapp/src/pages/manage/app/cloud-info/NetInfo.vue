@@ -13,6 +13,30 @@
             </FormItem>
         </Form>
 
+        <Alert show-icon closable style="margin-top: -1rem;">
+            现状说明
+            <template slot="desc">
+                目前沧州市政府大部分局委办均存在政务外网、互联网、业务专网、政务内网和公务内网；
+                55家单位接入政务外网；
+                54家单位共租用89个独立的运营商出口接入到互联网；
+                37家单位共建设59张业务专网，其中横向专网19个，纵向专网40个；
+                54家单位接入政务内网（办公信息网）；
+                50家单位接入公务内网。
+                租用运营商线路405条：互联网89条，政务外网46条，业务专线175条，政务内网45条，公务内网50条；
+                移动线路181条，联通线路145条，电信线路44条，广电线路35条；
+                收集到716台网络设备清单，其中路由器117台，交换机443台，安全设备119台，其他设备37台。
+            </template>
+        </Alert>
+
+        <Alert type="warning" show-icon closable>
+            存在的问题
+            <template slot="desc">
+                各市直部门独自租用运营商专线，成本较高，资源利用率低；
+                局委办内部多张网络独立共存，线路资源利用率低；
+                局委办互联网出口安全防御手段不足，有些局委办甚至处于裸奔状态；
+            </template>
+        </Alert>
+
         <!--图表展示重要信息-->
         <collapse v-model="isOpen" accordion>
             <panel name="1">
@@ -30,7 +54,8 @@
                                     :data="pieData"
                                     :radius="['55%','75%']"
                                     :coverOption="coverOption"
-                                    :rippleSize = 5
+                                    :rippleSize=5
+                                    @click-series="searchNet"
                             ></ve-pie>
                         </div>
                     </Card>
@@ -43,7 +68,8 @@
                                     backgroundColor=""
                                     :xAxisData="xAxisData"
                                     :showLegend=true
-                                    :coverOption="coverOption2">
+                                    :coverOption="coverOption2"
+                                    @click-series="searchDevice">
                                 <ve-bar
                                         :data="data"
                                         name="数量（个）"
@@ -57,27 +83,48 @@
         </collapse>
 
         <Table border :columns="columns" :data="totalInfo" style="margin-top: 1rem;"></Table>
-        <!--分页-->
-        <Page :total="totalCount" show-total show-sizer @on-change="changePage" @on-page-size-change="changePageSize" style="margin: .5rem 0 .5rem 0;"></Page>
+        <!--分页 show-total -->
+        <Page :total="totalCount" show-sizer @on-change="changePage" @on-page-size-change="changePageSize"
+              style="margin: .5rem 0 .5rem 0;"></Page>
+        <hengxiang-net-tip :allInfo="allInfo"></hengxiang-net-tip>
+        <inter-net-tip :allInfo="allInfo"></inter-net-tip>
+        <policy-outside-net-tip :allInfo="allInfo"></policy-outside-net-tip>
+        <public-inside-net-tip :allInfo="allInfo"></public-inside-net-tip>
+        <zongxiang-net-tip :allInfo="allInfo"></zongxiang-net-tip>
     </div>
 </template>
 
 <script>
     import columns from './table-heads/net-info-head';
+    import HengxiangNetTip from './tips/HengxiangNetTip';
+    import InterNetTip from './tips/InterNetTip';
+    import PolicyOutsideNetTip from './tips/PolicyOutsideNetTip';
+    import PublicInsideNetTip from './tips/PublicInsideNetTip';
+    import ZongxiangNetTip from './tips/ZongxiangNetTip';
+
     export default {
         name: "",
-        data(){
+        components: {
+            HengxiangNetTip,
+            InterNetTip,
+            PolicyOutsideNetTip,
+            PublicInsideNetTip,
+            ZongxiangNetTip
+        },
+        data() {
             return {
                 isOpen: '1',
-                columns: columns,
+                columns: columns(this),
                 pieData: [
-                    {value: 71, name:'互联网'},
-                    {value: 19, name:'政务外网'},
-                    {value: 90, name:'业务专网'}
+                    {value: 89, name: '互联网'},
+                    {value: 55, name: '政务外网'},
+                    {value: 59, name: '业务专网'},
+                    {value: 54, name: '政务内网'},
+                    {value: 50, name: '公务内网'},
                 ],
                 coverOption: {
                     legend: {
-                        top: 60,
+                        top: 0,
                         right: 0,
                         textStyle: {
                             color: '#000'
@@ -102,7 +149,7 @@
                     ]
                 },
                 xAxisData: ['路由器', '交换机', '安全设备'],
-                data: [64, 60, 66],
+                data: [117, 443, 119],
                 coverOption2: {
                     grid: {
                         top: '12%',
@@ -116,7 +163,7 @@
                         }
                     },
                     xAxis: {
-                        type : 'category',
+                        type: 'category',
                         axisLabel: {
                             show: true,
                             interval: 0,
@@ -152,6 +199,8 @@
                 },
                 totalCount: 0,
                 totalInfo: [],
+                // 不分页的所有数据
+                allInfo: [],
                 formInline: {
                     department: '',
                     pageSize: 10,
@@ -159,10 +208,10 @@
                 },
                 ruleInline: {
                     infoSysName: [
-                        { required: false, message: '必填项', trigger: 'blur' }
+                        {required: false, message: '必填项', trigger: 'blur'}
                     ],
                     sysDeployNet: [
-                        { required: false, message: '必填项', trigger: 'blur' }
+                        {required: false, message: '必填项', trigger: 'blur'}
                     ]
                 },
                 networkType: '',
@@ -172,19 +221,19 @@
             }
         },
         methods: {
-            changePage(destination = this.formInline.currentPage){
+            changePage(destination = this.formInline.currentPage) {
                 // 翻页的时候是带着查询参数去翻页的
                 this.$httpt.get('networkController.do?getCzNetwork&' +
                     'department=' + this.formInline.department + '&' +
-                    'networkType=' + this.networkType+ '&' +
-                    'deviceType=' + this.deviceType+ '&' +
-                    'currentPage='+ destination +'&' +
+                    'networkType=' + this.networkType + '&' +
+                    'deviceType=' + this.deviceType + '&' +
+                    'currentPage=' + destination + '&' +
                     'pageSize=' + this.formInline.pageSize).then(({data}) => {
-                    if(data.success) {
+                    if (data.success) {
                         this.totalInfo = data.data.list;
                         this.totalCount = data.data.totalCount;
                         // todo 统计搜索结果中网络分布和网络设备数量
-                    }else {
+                    } else {
                         console.error('分页获取网络情况表信息失败')
                     }
                 }).catch(err => {
@@ -200,38 +249,49 @@
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         this.changePage();
-                        this.getNetInfo(this.formInline.department);
+                        // this.getNetInfo(this.formInline.department);
                     } else {
                         this.$Message.error('Fail!');
                     }
                 })
             },
+            searchNet(params) {
+                this.networkType = params.name;
+                this.changePage();
+            },
+            searchDevice(params) {
+                this.deviceType = params.name;
+                this.changePage();
+            },
             getNetInfo(department) {
-                if(!department) {
+                if (!department) {
                     department = '';
                 }
                 this.$httpt.get(`networkController.do?getCzNetwork&department=${department}&pageSize=10000`).then(({data}) => {
                     if (data.success) {
-                        this.data = [];
-                        this.pieData = [];
-                        let routers = 0;
-                        let switchMachine = 0;
-                        let safetyEquipment = 0;
-                        let internetNum = 0;
-                        let zhengwuNum = 0;
-                        let netNum = 0;
-                        data.data.list.forEach(netInfo => {
-                            routers += Number(netInfo.router);
-                            switchMachine += Number(netInfo.switchMachine);
-                            safetyEquipment += Number(netInfo.safetyEquipment);
-                            internetNum += Number(netInfo.internetNum);
-                            zhengwuNum += Number(netInfo.zhengwuExtranetNum);
-                            netNum += (Number(netInfo.hengxiangNetNum) + Number(netInfo.zongxiangNetNum));
-                        });
-                        this.data = [routers, switchMachine, safetyEquipment];
-                        this.pieData.push({name: '互联网', value: internetNum});
-                        this.pieData.push({name: '政务外网', value: zhengwuNum});
-                        this.pieData.push({name: '专网', value: netNum});
+                        if (department === '') {
+                            this.allInfo = data.data.list;
+                        }
+                        // this.data = [];
+                        // this.pieData = [];
+                        // let routers = 0;
+                        // let switchMachine = 0;
+                        // let safetyEquipment = 0;
+                        // let internetNum = 0;
+                        // let zhengwuNum = 0;
+                        // let netNum = 0;
+                        // data.data.list.forEach(netInfo => {
+                        //     routers += Number(netInfo.router);
+                        //     switchMachine += Number(netInfo.switchMachine);
+                        //     safetyEquipment += Number(netInfo.safetyEquipment);
+                        //     internetNum += Number(netInfo.internetNum);
+                        //     zhengwuNum += Number(netInfo.zhengwuExtranetNum);
+                        //     netNum += (Number(netInfo.hengxiangNetNum) + Number(netInfo.zongxiangNetNum));
+                        // });
+                        // this.data = [routers, switchMachine, safetyEquipment];
+                        // this.pieData.push({name: '互联网', value: internetNum});
+                        // this.pieData.push({name: '政务外网', value: zhengwuNum});
+                        // this.pieData.push({name: '专网', value: netNum});
                     } else {
                         this.$Notice.error({
                             title: '获取网络设备信息失败'
@@ -265,6 +325,7 @@
         display: flex;
         flex-flow: row nowrap;
     }
+
     .card {
         flex: 1;
         &:first-child {

@@ -6,9 +6,9 @@
                 <i class="icon iconfont icon-caidan"></i>
                 <span>全市总览</span>
             </div>
-            <div class="fun" path="department-info">
-                <i class="icon iconfont icon-map"></i>
-                <span>局委办总览</span>
+            <div class="fun" path="net-info">
+                <Icon type="ios-world-outline"></Icon>
+                <span>网络情况统计</span>
             </div>
             <div class="fun" path="info-sys-maintain">
                 <i class="icon iconfont icon-cube"></i>

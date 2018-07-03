@@ -140,87 +140,87 @@
                             }
                         }
                     },
-                    tooltip: {
-                        backgroundColor: 'rgba(0,0,0,.5)',
-                        formatter(params) {
-                            let money = '0',
-                                temp1 = '0',
-                                netDeviceNum = '0',
-                                bussinessNum = '0',
-                                removeNum = '0',
-                                machineroomNum = '0',
-                                serverNum = '0',
-                                hasInternet = '0',
-                                hasgovExtrant = '0',
-                                hasspecialNet = '0',
-                                internetNum = '0',
-                                zhengwuNum = '0',
-                                netNum = '0',
-                                cataLogNum = '0';
-                            //todo 命名空间就代表store中的state，所以可以直接点属性获取数据
-                            let departmentName = params.name || params.data.fromName;
-                            let temp = _this.$store.state.czCloudInfo.czCloudInfo[departmentName];
-                            if (temp) {
-                                money = temp.money;
-                                netDeviceNum = temp.netDeviceNum;
-                                bussinessNum = temp.bussinessNum;
-                                removeNum = temp.removeNum;
-                                machineroomNum = temp.machineroomNum;
-                                serverNum = temp.serverNum;
-                                temp.hasInternet ? hasInternet = '是' : hasInternet = '否';
-                                temp.hasgovExtrant ? hasgovExtrant = '是' : hasgovExtrant = '否';
-                                temp.hasspecialNet ? hasspecialNet = '是' : hasspecialNet = '否';
-                                temp.temp1 === null || temp.temp1 === 'null' || temp.temp1 === '否' ? temp1 = '否' : temp1 = '是';
-                                cataLogNum = temp.cataLogNum;
-                                internetNum = temp.internetNum;
-                                zhengwuNum = temp.zhengwuNum;
-                                netNum = temp.netNum;
-                            }
-                            return `<section class="map-modal" style="position: relative;width: 21.2rem;">
-                                        <section style="text-align: center;margin: .1rem .25rem .1rem .1rem;padding: .2rem 0 .2rem 0; background-color: rgba(24, 38, 101, .3)">${departmentName}</section>
-                                        <section class="map-modal-item">
-                                            <span class="map-modal-item-data">${temp1}</span>
-                                            <p class="map-modal-item-title">是否有信息科</p>
-                                        </section>
-                                        <section class="map-modal-item">
-                                            <span class="map-modal-item-data">${bussinessNum}</span>
-                                            <p class="map-modal-item-title">业务系统数量</p>
-                                        </section>
-                                        <section class="map-modal-item">
-                                            <span class="map-modal-item-data">${removeNum}</span>
-                                            <p class="map-modal-item-title">可云化系统数</p>
-                                        </section>
-                                        <section class="map-modal-item">
-                                            <span class="map-modal-item-data">${machineroomNum}</span>
-                                            <p class="map-modal-item-title">机房个数</p>
-                                        </section>
-                                        <section class="map-modal-item">
-                                            <span class="map-modal-item-data">${serverNum}</span>
-                                            <p class="map-modal-item-title">服务器台数</p>
-                                        </section>
-                                        <section class="map-modal-item">
-                                            <span class="map-modal-item-data">${internetNum}</span>
-                                            <p class="map-modal-item-title">互联网线路数</p>
-                                        </section>
-                                        <section class="map-modal-item">
-                                            <span class="map-modal-item-data">${zhengwuNum}</span>
-                                            <p class="map-modal-item-title">政务外网线路数</p>
-                                        </section>
-                                        <section class="map-modal-item">
-                                            <span class="map-modal-item-data">${netNum}</span>
-                                            <p class="map-modal-item-title">专网线路数</p>
-                                        </section>
-                                        <section class="map-modal-item">
-                                            <span class="map-modal-item-data">${cataLogNum}</span>
-                                            <p class="map-modal-item-title">资源目录数量</p>
-                                        </section>
-                                        <section class="map-modal-item">
-                                            <span class="map-modal-item-data">${netDeviceNum}</span>
-                                            <p class="map-modal-item-title">网络设备数量</p>
-                                        </section>
-                                    </section>`;
-                        }
-                    },
+                    // tooltip: {
+                    //     backgroundColor: 'rgba(0,0,0,.5)',
+                    //     formatter(params) {
+                    //         let money = '0',
+                    //             temp1 = '0',
+                    //             netDeviceNum = '0',
+                    //             bussinessNum = '0',
+                    //             removeNum = '0',
+                    //             machineroomNum = '0',
+                    //             serverNum = '0',
+                    //             hasInternet = '0',
+                    //             hasgovExtrant = '0',
+                    //             hasspecialNet = '0',
+                    //             internetNum = '0',
+                    //             zhengwuExtranetNum = '0',
+                    //             netNum = '0',
+                    //             cataLogNum = '0';
+                    //         //todo 命名空间就代表store中的state，所以可以直接点属性获取数据
+                    //         let departmentName = params.name || params.data.fromName;
+                    //         let temp = _this.$store.state.czCloudInfo.czCloudInfo[departmentName];
+                    //         if (temp) {
+                    //             money = temp.money;
+                    //             netDeviceNum = temp.netDeviceNum;
+                    //             bussinessNum = temp.bussinessNum;
+                    //             removeNum = temp.removeNum;
+                    //             machineroomNum = temp.machineroomNum;
+                    //             serverNum = temp.serverNum;
+                    //             temp.hasInternet ? hasInternet = '是' : hasInternet = '否';
+                    //             temp.hasgovExtrant ? hasgovExtrant = '是' : hasgovExtrant = '否';
+                    //             temp.hasspecialNet ? hasspecialNet = '是' : hasspecialNet = '否';
+                    //             temp.temp1 === null || temp.temp1 === 'null' || temp.temp1 === '否' ? temp1 = '否' : temp1 = '是';
+                    //             cataLogNum = temp.cataLogNum;
+                    //             internetNum = temp.internetNum;
+                    //             zhengwuExtranetNum = temp.zhengwuExtranetNum;
+                    //             netNum = temp.netNum;
+                    //         }
+                    //         return `<section class="map-modal" style="position: relative;width: 21.2rem;">
+                    //                     <section style="text-align: center;margin: .1rem .25rem .1rem .1rem;padding: .2rem 0 .2rem 0; background-color: rgba(24, 38, 101, .3)">${departmentName}</section>
+                    //                     <section class="map-modal-item">
+                    //                         <span class="map-modal-item-data">${temp1}</span>
+                    //                         <p class="map-modal-item-title">是否有信息科</p>
+                    //                     </section>
+                    //                     <section class="map-modal-item">
+                    //                         <span class="map-modal-item-data">${bussinessNum}</span>
+                    //                         <p class="map-modal-item-title">业务系统数量</p>
+                    //                     </section>
+                    //                     <section class="map-modal-item">
+                    //                         <span class="map-modal-item-data">${removeNum}</span>
+                    //                         <p class="map-modal-item-title">可云化系统数</p>
+                    //                     </section>
+                    //                     <section class="map-modal-item">
+                    //                         <span class="map-modal-item-data">${machineroomNum}</span>
+                    //                         <p class="map-modal-item-title">机房个数</p>
+                    //                     </section>
+                    //                     <section class="map-modal-item">
+                    //                         <span class="map-modal-item-data">${serverNum}</span>
+                    //                         <p class="map-modal-item-title">服务器台数</p>
+                    //                     </section>
+                    //                     <section class="map-modal-item">
+                    //                         <span class="map-modal-item-data">${internetNum}</span>
+                    //                         <p class="map-modal-item-title">互联网线路数</p>
+                    //                     </section>
+                    //                     <section class="map-modal-item">
+                    //                         <span class="map-modal-item-data">${zhengwuExtranetNum}</span>
+                    //                         <p class="map-modal-item-title">政务外网线路数</p>
+                    //                     </section>
+                    //                     <section class="map-modal-item">
+                    //                         <span class="map-modal-item-data">${netNum}</span>
+                    //                         <p class="map-modal-item-title">专网线路数</p>
+                    //                     </section>
+                    //                     <section class="map-modal-item">
+                    //                         <span class="map-modal-item-data">${cataLogNum}</span>
+                    //                         <p class="map-modal-item-title">资源目录数量</p>
+                    //                     </section>
+                    //                     <section class="map-modal-item">
+                    //                         <span class="map-modal-item-data">${netDeviceNum}</span>
+                    //                         <p class="map-modal-item-title">网络设备数量</p>
+                    //                     </section>
+                    //                 </section>`;
+                    //     }
+                    // },
                     series: [
                         {
                             name: '沧州信息化资源分布',
@@ -314,7 +314,7 @@
                     if (allDepartments.includes(params.name) || allDepartments.includes(params.data.fromName)) {
                         let departmentName = params.name || params.data.fromName;
                         _this.$router.push({
-                            name: 'department-info', query: {
+                            name: 'department-static', query: {
                                 department: departmentName //保证每次点击路由的query项都是不一样的，确保会重新刷新view
                             }
                         });

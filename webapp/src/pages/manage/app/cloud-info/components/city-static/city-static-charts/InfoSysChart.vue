@@ -2,25 +2,25 @@
     <Card class="card">
         <p slot="title">信息系统统计</p>
         <span href="#" slot="extra" class="total-num">
-                        业务系统总数：{{totalCount}}
+                        业务系统总数：497<!--{{totalCount}}-->
                     </span>
         <div class="chart-container">
             <input type="hidden" :value="totalInfo">
-            <ve-pie
-                    :rippleAnimation="true"
-                    style="width: 49%; height: 100%; float: left;"
-                    :center="['40%', '50%']"
-                    backgroundColor="transparent"
-                    id="info-system5"
-                    :data="pieSysData"
-                    :radius="['40%','60%']"
-                    :coverOption="coverOption"
-                    :rippleSize=5
-                    @click-series="goToMoveSys"
-            ></ve-pie>
+            <!--<ve-pie-->
+                    <!--:rippleAnimation="true"-->
+                    <!--style="width: 49%; height: 100%; float: left;"-->
+                    <!--:center="['40%', '50%']"-->
+                    <!--backgroundColor="transparent"-->
+                    <!--id="info-system5"-->
+                    <!--:data="pieSysData"-->
+                    <!--:radius="['40%','60%']"-->
+                    <!--:coverOption="coverOption"-->
+                    <!--:rippleSize=5-->
+                    <!--@click-series="goToMoveSys"-->
+            <!--&gt;</ve-pie>-->
             <ve-rect-coordinate
                     id="connect-net"
-                    style="width: 49%; height:100%; float: left; margin-left: 2%;"
+                    style="width: 100%; height:100%; margin-left: 2%;"
                     backgroundColor=""
                     :xAxisData="xAxisData"
                     :showLegend=true
@@ -72,8 +72,8 @@
                         }
                     ]
                 },
-                xAxisData: ['互联网', '政务外网', '专网', '公务内网'],
-                data: [64, 60, 66, 66],
+                xAxisData: ['互联网', '政务外网', '业务专网', '统建'],
+                data: [99, 11, 175, 212],
                 coverOption2: {
                     grid: {
                         top: '20%',
@@ -164,10 +164,10 @@
             }
         },
         created() {
-            if (JSON.stringify(this.$store.state.czCloudInfo.czCloudInfo) === '{}') {
-                this.$store.dispatch('czCloudInfo/getCloudInfo', {vm: this});
-            }
-            this.getInfo();
+            // if (JSON.stringify(this.$store.state.czCloudInfo.czCloudInfo) === '{}') {
+            //     this.$store.dispatch('czCloudInfo/getCloudInfo', {vm: this});
+            // }
+            // this.getInfo();
         }
     }
 </script>

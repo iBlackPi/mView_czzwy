@@ -28,6 +28,35 @@
             </FormItem>
         </Form>
 
+        <Alert show-icon closable style="margin-top: -1rem;">
+            现状说明
+            <template slot="desc">
+                此次调研共上报1023个资源目录，共6514个信息项，其中有条件共享的为2894个，无条件共享的1914个，不予共享的为1706个，可对公众开放的信息项为2024个。可用于共享和可对公众开放的信息项将是今后建设资源目录和共享交换平台时重点关注项；
+                <br>
+                可对公众开放的信息项占全部信息项约31%，且大部分为部门的官网公开信息资源；
+                可用于部门间共享的信息占全部信息项的约74%，但有一部分需要上级部门或者领导审批
+            </template>
+        </Alert>
+
+        <Alert type="warning" show-icon closable>
+            存在的问题
+            <template slot="desc">
+                1、资源共享需求量最多的5个单位：
+                公安局：53个需求，需要的信息范围较广，包括政府部门信息，运营商信息。
+                民政局：24个需求，主要为户籍、车辆信息，社保、养老等信息。
+                总工会：19个需求，主要为车辆、死亡信息，房屋产权等8个单位的信息。
+                工商联：8个需求，主要为有关非公经济政策和措施。
+                农工委：8个需求，主要为农业农村等相关信息。
+                <br>
+                2、资源共享被需求最多的5个单位：
+                市场监管局：有19个需求需要从市场监管局获取企业登记、法人等信息。
+                教育局：有14个需求需要从教育局获取学生、就学等信息。
+                公安局：有13个需求需要从公安局获取户籍、人口等信息。
+                人社局：有9个需求需要从人社局获取养老、医疗等社保信息。
+                国土局：有9个需求需要从国土局获取地理、地图等信息。
+            </template>
+        </Alert>
+
         <!--图表展示重要信息-->
         <collapse v-model="isOpen" accordion>
             <panel name="1">
@@ -45,7 +74,8 @@
                                     :data="pieData"
                                     :radius="['55%','75%']"
                                     :coverOption="coverOption"
-                                    :rippleSize = 5
+                                    :rippleSize=5
+                                    @click-series="selectIsOpen"
                             ></ve-pie>
                         </div>
                     </Card>
@@ -58,7 +88,8 @@
                                     backgroundColor=""
                                     :xAxisData="xAxisData"
                                     :showLegend=true
-                                    :coverOption="coverOption2">
+                                    :coverOption="coverOption2"
+                                    @click-series="selectOpenType">
                                 <ve-bar
                                         :data="data"
                                         name="数量（个）"
@@ -72,24 +103,25 @@
         </collapse>
 
         <Table border :columns="columns" :data="totalInfo" style="margin-top: 1rem;"></Table>
-        <!--分页-->
-        <Page :total="totalCount" show-total show-sizer @on-change="changePage" @on-page-size-change="changePageSize" style="margin: .5rem 0 .5rem 0;"></Page>
+        <!--分页 show-total-->
+        <Page :total="totalCount" show-sizer @on-change="changePage" @on-page-size-change="changePageSize"
+              style="margin: .5rem 0 .5rem 0;"></Page>
     </div>
 </template>
 
 <script>
     import columns from './table-heads/resource-catalog-manage-head';
+
     export default {
         name: "",
-        data(){
+        data() {
             return {
                 isOpen: '1',
                 columns: columns,
                 pieData:
                     [
-                        {value: 71, name:'互联网'},
-                        {value: 19, name:'政务外网'},
-                        {value: 90, name:'业务专网'}
+                        {value: 2024, name: '开放'},
+                        {value: 4490, name: '不开放'}
                     ],
                 coverOption: {
                     legend: {
@@ -117,8 +149,8 @@
                         }
                     ]
                 },
-                xAxisData: ['互联网', '政务外网', '业务专线', '政务内网'],
-                data: [64, 60, 66, 10],
+                xAxisData: ['有条件共享', '无条件共享', '不予共享'],
+                data: [2894, 1914, 1706],
                 coverOption2: {
                     grid: {
                         top: '12%',
@@ -132,7 +164,7 @@
                         }
                     },
                     xAxis: {
-                        type : 'category',
+                        type: 'category',
                         axisLabel: {
                             show: true,
                             interval: 0,
@@ -178,10 +210,10 @@
                 },
                 ruleInline: {
                     infoSysName: [
-                        { required: false, message: '必填项', trigger: 'blur' }
+                        {required: false, message: '必填项', trigger: 'blur'}
                     ],
                     sysDeployNet: [
-                        { required: false, message: '必填项', trigger: 'blur' }
+                        {required: false, message: '必填项', trigger: 'blur'}
                     ]
                 },
                 selectOne: [],
@@ -189,55 +221,64 @@
             }
         },
         methods: {
-            changePage(destination = this.formInline.currentPage){
+            selectIsOpen(params) {
+                let temp = params.name === '开放' ? '是' : '否';
+                this.formInline.isOpen = temp;
+                this.changePage();
+            },
+            selectOpenType(params) {
+                this.formInline.shareType = params.name;
+                this.changePage();
+            },
+            changePage(destination = this.formInline.currentPage) {
                 // 翻页的时候是带着查询参数去翻页的
                 this.$httpt.get('bigScreenController.do?getResourceCatalogPagination&' +
-                    'department=' + this.formInline.department+ '&' +
-                    'infoSysName=' + this.formInline.infoSysName+ '&' +
-                    'shareType=' + this.formInline.shareType+ '&' +
-                    'isOpen=' + this.formInline.isOpen+ '&' +
-                    'currentPage='+ destination +'&' +
+                    'department=' + this.formInline.department + '&' +
+                    'infoSysName=' + this.formInline.infoSysName + '&' +
+                    'shareType=' + this.formInline.shareType + '&' +
+                    'isOpen=' + this.formInline.isOpen + '&' +
+                    'currentPage=' + destination + '&' +
                     'pageSize=' + this.formInline.pageSize).then(({data}) => {
-                    if(data.success) {
+                    if (data.success) {
                         this.totalInfo = data.data.list;
                         this.totalCount = data.data.totalCount;
-                        let tempPie =  [];
-                        let newarr1 = new Array(this.selectTwo.length);
-                        for(let t = 0; t < newarr1.length; t++) {
-                            newarr1[t] = 0;
-                        }
-                        for(let p = 0; p < this.selectTwo.length; p++) {
-                            for(let j = 0; j < data.data.list.length; j++) {
-                                if(this.selectTwo[p] === data.data.list[j].isOpen) {
-                                    newarr1[p]++;
-                                }
-                            }
-                        }
-                        for(let i = 0; i < newarr1.length; i ++){
-                            let tempPieObj = {value: 0, name:''};
-                            tempPieObj.value = newarr1[i];
-                            tempPieObj.name = this.selectTwo[i];
-                            tempPie.push(tempPieObj);
-                        }
-                        setTimeout(() => {
-                            this.pieData = tempPie;
-                        }, 300);
+                        // let tempPie =  [];
+                        // let newarr1 = new Array(this.selectTwo.length);
+                        // for(let t = 0; t < newarr1.length; t++) {
+                        //     newarr1[t] = 0;
+                        // }
+                        // for(let p = 0; p < this.selectTwo.length; p++) {
+                        //     for(let j = 0; j < data.data.list.length; j++) {
+                        //         if(this.selectTwo[p] === data.data.list[j].isOpen) {
+                        //             newarr1[p]++;
+                        //         }
+                        //     }
+                        // }
+                        // for(let i = 0; i < newarr1.length; i ++){
+                        //     let tempPieObj = {value: 0, name:''};
+                        //     tempPieObj.value = newarr1[i];
+                        //     tempPieObj.name = this.selectTwo[i];
+                        //     tempPie.push(tempPieObj);
+                        // }
+                        // setTimeout(() => {
+                        //     this.pieData = tempPie;
+                        // }, 300);
+                        //
+                        // let newarr2 = new Array(this.selectOne.length);
+                        // for(let t = 0; t < newarr2.length; t++) {
+                        //     newarr2[t] = 0;
+                        // }
+                        // for(let p = 0; p < this.selectOne.length; p++) {
+                        //     for(let j = 0; j < data.data.list.length; j++) {
+                        //         if(this.selectOne[p] === data.data.list[j].shareType) {
+                        //             newarr2[p]++;
+                        //         }
+                        //     }
+                        // }
+                        // this.xAxisData = this.selectOne;
+                        // this.data = newarr2;
 
-                        let newarr2 = new Array(this.selectOne.length);
-                        for(let t = 0; t < newarr2.length; t++) {
-                            newarr2[t] = 0;
-                        }
-                        for(let p = 0; p < this.selectOne.length; p++) {
-                            for(let j = 0; j < data.data.list.length; j++) {
-                                if(this.selectOne[p] === data.data.list[j].shareType) {
-                                    newarr2[p]++;
-                                }
-                            }
-                        }
-                        this.xAxisData = this.selectOne;
-                        this.data = newarr2;
-
-                    }else {
+                    } else {
                         console.error('分页获取表11 信息化系统调研表信息失败')
                     }
                 }).catch(err => {
@@ -267,26 +308,26 @@
                 'isOpen=&' +
                 'currentPage=0&' +
                 'pageSize=100000').then(({data}) => {
-                if(data.success) {
+                if (data.success) {
                     let tempOne = [];
                     let tempTwo = [];
                     data.data.list.forEach(item => {
-                        if(item.shareType !== null && item.shareType !== 'null') {
+                        if (item.shareType !== null && item.shareType !== 'null') {
                             tempOne.push(item.shareType);
                         }
-                        if(item.isOpen !== null && item.isOpen !== 'null') {
+                        if (item.isOpen !== null && item.isOpen !== 'null') {
                             tempTwo.push(item.isOpen);
                         }
                     });
                     this.selectOne = [...new Set(tempOne)].filter(item => {
-                        return item !== '' && item !== null && item !== 'null';
+                        return item !== '' && item !== null && item !== 'null' && item !== '条件共享' && item !== 'N/A' && item !== '无';
                     });
                     this.selectTwo = [...new Set(tempTwo)].filter(item => {
-                        return item !== '' && item !== null && item !== 'null';
+                        return item !== '' && item !== null && item !== 'null' && item !== 'N/A' && item !== '无';
                     });
                     // 该方法初始化中有逻辑依赖这个回调中的值，所以该方法放在这里调用
                     this.changePage();
-                }else {
+                } else {
                     console.error('分页资源目录表信息失败')
                 }
             }).catch(err => {
@@ -304,6 +345,7 @@
         display: flex;
         flex-flow: row nowrap;
     }
+
     .card {
         flex: 1;
         &:first-child {

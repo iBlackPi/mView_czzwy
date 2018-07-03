@@ -36,15 +36,18 @@
         name: "computor-room",
         data(){
             return {
-                xAxisData: ['第一批', '第二批', '第三批'],
+                xAxisData: ['第一批', '第二批', '第三批', '第四批'],
                 // 50 3 1  11 0 0 34 30 49
-                dataInternet: [50, 3, 1],
-                dataPolicy: [11, 0, 0],
-                dataSpecial: [34, 30, 49],
+                dataInternet: [62, 6, 2, 13],
+                dataPolicy: [14, 0, 0, 0],
+                dataSpecial: [31, 30, 49, 27],
                 coverOption: {
                     grid: {
                         top: '30%',
                         bottom: '25%'
+                    },
+                    tooltip: {
+                        show: false
                     },
                     legend: {
                         top: 10,
@@ -67,7 +70,7 @@
                                 fontSize: 13 * gain,
                             }
                         },
-                        data: ['第一批', '第二批', '第三批']
+                        data: ['第一批', '第二批', '第三批', '第四批']
                     }, {
                         type: 'category',
                         axisLine: {
@@ -85,7 +88,7 @@
                         splitLine: {
                             show: false
                         },
-                        data: ['第一批', '第二批', '第三批']
+                        data: ['第一批', '第二批', '第三批', '第四批']
                     }],
                     series: [{
                         type: 'bar',
@@ -104,7 +107,7 @@
                                 show:true,
                                 formatter: function(params) {
                                     var stuNum = 0;
-                                    [50, 3, 1].forEach(function(value, index, array) {
+                                    [62, 6, 2, 13].forEach(function(value, index, array) {
                                         if (params.dataIndex == index) {
                                             stuNum = value;
                                         }
@@ -119,7 +122,7 @@
                             }
                         },
                         barWidth: '15%',
-                        data: [80, 80, 80]
+                        data: [80, 80, 80, 80]
                     },{
                         type: 'bar',
                         xAxisIndex: 1,
@@ -137,7 +140,7 @@
                                 show:true,
                                 formatter: function(params) {
                                     var stuNum = 0;
-                                    [11, 0, 0].forEach(function(value, index, array) {
+                                    [14, 0, 0, 0].forEach(function(value, index, array) {
                                         if (params.dataIndex == index) {
                                             stuNum = value;
                                         }
@@ -152,7 +155,7 @@
                             }
                         },
                         barWidth: '15%',
-                        data: [80, 80, 80]
+                        data: [80, 80, 80, 80]
                     },{
                         type: 'bar',
                         xAxisIndex: 1,
@@ -170,7 +173,7 @@
                                 show:true,
                                 formatter: function(params) {
                                     var stuNum = 0;
-                                    [34, 30, 49].forEach(function(value, index, array) {
+                                    [31, 30, 49, 27].forEach(function(value, index, array) {
                                         if (params.dataIndex == index) {
                                             stuNum = value;
                                         }

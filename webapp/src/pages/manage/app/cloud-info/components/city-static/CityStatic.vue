@@ -166,13 +166,13 @@
 
     .card {
         flex-grow: 1;
-        width: 32%;
+        width: 30%;
         margin: .5rem;
         .chart-container {
             height: 12rem;
         }
         &:nth-child(1) {
-            width: 65.2%;
+            width: 40%;
         }
         & .total-num {
             color: #000;

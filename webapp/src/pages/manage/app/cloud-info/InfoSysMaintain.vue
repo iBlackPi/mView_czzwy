@@ -47,6 +47,32 @@
             </FormItem>
         </Form>
 
+        <Alert show-icon closable>
+            现状说明
+            <template slot="desc">
+                83家局委办，共收集497套应用系统，其中上级统建212套
+                自建和统建本地部署的285套系统：
+                互联网99套；
+                政务外网11套
+                各类业务专网和局域网175套；
+                6家单位已建数据共享平台（发改委信用共享交换平台，审批局临时共享交换平台，国土局、人社局、公积金、公安局为内部数据对接交换的资源库）；
+                微信公众号44个；APP20个；
+                7套视频监控系统；14套视频会议系统；
+                26套办公OA系统；
+            </template>
+        </Alert>
+
+        <Alert type="warning" show-icon closable>
+            存在的问题
+            <template slot="desc">
+                大部分应用系统均是以科室为单位建设，条块分割，数据资源分散；
+                信息化建设缺乏统筹规划，部分系统存在功能重复；
+                未来越来越多的应用系统将向省级统建一级部署；
+                约50%的系统采取了数据备份，但是大部分采用自动化脚本而非专业的备份软件，数据安全存在严重的隐患；
+                同时大部分系统缺乏有效的安全防御手段
+            </template>
+        </Alert>
+
         <!--图表展示重要信息-->
         <collapse v-model="isOpen" accordion>
             <panel name="1">
@@ -65,6 +91,7 @@
                                     :radius="['55%','75%']"
                                     :coverOption="coverOption"
                                     :rippleSize=5
+                                    @click-series="selectStatus"
                             ></ve-pie>
                         </div>
                     </Card>
@@ -77,7 +104,8 @@
                                     backgroundColor=""
                                     :xAxisData="xAxisData"
                                     :showLegend=true
-                                    :coverOption="coverOption2">
+                                    :coverOption="coverOption2"
+                                    @click-series="selectNetwork">
                                 <ve-bar
                                         :data="data"
                                         name="数量（个）"
@@ -86,13 +114,47 @@
                             </ve-rect-coordinate>
                         </div>
                     </Card>
+                    <Card class="card">
+                        <p slot="title">操作系统占比</p>
+                        <div style="height: 10rem;">
+                            <ve-pie
+                                    :rippleAnimation="true"
+                                    style="width: 100%; height: 100%;"
+                                    :center="['40%', '50%']"
+                                    backgroundColor="transparent"
+                                    id="os"
+                                    :data="pieData2"
+                                    :radius="['55%','75%']"
+                                    :coverOption="coverOption"
+                                    :rippleSize=5
+                                    @click-series="selectOS"
+                            ></ve-pie>
+                        </div>
+                    </Card>
+                    <Card class="card">
+                        <p slot="title">各数据库占比</p>
+                        <div style="height: 10rem;">
+                            <ve-pie
+                                    :rippleAnimation="true"
+                                    style="width: 100%; height: 100%;"
+                                    :center="['40%', '50%']"
+                                    backgroundColor="transparent"
+                                    id="db"
+                                    :data="pieData3"
+                                    :radius="['55%','75%']"
+                                    :coverOption="coverOption"
+                                    :rippleSize=5
+                                    @click-series="selectDB"
+                            ></ve-pie>
+                        </div>
+                    </Card>
                 </div>
             </panel>
         </collapse>
 
         <Table border :columns="columns" :data="totalInfo" style="margin-top: 1rem;"></Table>
-        <!--分页-->
-        <Page :total="totalCount" show-total show-sizer @on-change="changePage" @on-page-size-change="changePageSize"
+        <!--分页 show-total-->
+        <Page :total="totalCount" show-sizer @on-change="changePage" @on-page-size-change="changePageSize"
               style="margin: .5rem 0 .5rem 0;"></Page>
     </div>
 </template>
@@ -108,13 +170,26 @@
                 columns: columns,
                 pieData:
                     [
-                        {value: 71, name: '互联网'},
-                        {value: 19, name: '政务外网'},
-                        {value: 90, name: '业务专网'}
+                        {value: 71, name: '建设中'},
+                        {value: 19, name: '运行中'},
+                        {value: 90, name: '停用'}
+                    ],
+                pieData2:
+                    [
+                        {value: 374, name: 'windows'},
+                        {value: 144, name: 'linux'},
+                        {value: 14, name: 'AIX(Unix)'}
+                    ],
+                pieData3:
+                    [
+                        {value: 76, name: 'Oracle'},
+                        {value: 96, name: 'SQLServer'},
+                        {value: 16, name: 'Mysql'},
+                        {value: 29, name: '其他'}
                     ],
                 coverOption: {
                     legend: {
-                        top: 60,
+                        top: 20,
                         right: 0,
                         textStyle: {
                             color: '#000'
@@ -138,8 +213,8 @@
                         }
                     ]
                 },
-                xAxisData: ['互联网', '政务外网', '业务专线', '政务内网'],
-                data: [64, 60, 66, 10],
+                xAxisData: ['互联网', '政务外网', '业务专网', '统建'],
+                data: [99, 11, 175, 212],
                 coverOption2: {
                     grid: {
                         top: '12%',
@@ -218,21 +293,78 @@
             }
         },
         methods: {
+            selectStatus(params) {
+                this.formInline.statuss = params.name;
+                this.changePage();
+            },
+            selectNetwork(params) {
+                if(params.name !== '统建') {
+                    this.formInline.network = params.name;
+                }else {
+                    this.formInline.network = '互联网';
+                }
+                this.changePage();
+            },
+            selectOS(params) {
+                this.formInline.osType = params.name;
+                this.changePage();
+            },
+            selectDB(params) {
+                this.formInline.databaseType = params.name;
+                this.changePage();
+            },
             changePage(destination = this.formInline.currentPage) {
+                // console.log(this.formInline.osType, this.formInline.osType.replace(/\s+/g,"+"));
                 // 翻页的时候是带着查询参数去翻页的
                 this.$httpt.get('bigScreenController.do?getInfomatinSystemPagination&' +
                     'department=' + this.formInline.department + '&' +
                     'infomationSystemName=' + this.formInline.infomationSystemName + '&' +
                     'status=' + this.formInline.statuss + '&' +
                     'network=' + this.formInline.network + '&' +
-                    'osType=' + this.formInline.osType + '&' +
-                    'databaseType=' + this.formInline.databaseType + '&' +
-                    'middlewareType=' + this.formInline.middlewareType + '&' +
-                    'serverType=' + this.formInline.serverType + '&' +
+                    'osType=' + this.formInline.osType.replace(/\s+/g,"+") + '&' +
+                    'databaseType=' + this.formInline.databaseType.replace(/\s+/g,"+") + '&' +
+                    'middlewareType=' + this.formInline.middlewareType.replace(/\s+/g,"+") + '&' +
+                    'serverType=' + this.formInline.serverType.replace(/\s+/g,"+") + '&' +
                     'currentPage=' + destination + '&' +
                     'pageSize=' + this.formInline.pageSize).then(({data}) => {
                     if (data.success) {
                         this.totalInfo = data.data.list;
+                        this.totalCount = data.data.totalCount;
+                    } else {
+                        console.error('分页获取表3 信息化系统调研表信息失败')
+                    }
+                }).catch(err => {
+                    throw Error(err);
+                })
+            },
+            changePageSize(pageSize) {
+                this.where.countPerPage = pageSize;
+                //翻页的时候是带着查询参数去翻页的
+                this.changePage();
+            },
+            handleSubmit(name) {
+                this.$refs[name].validate((valid) => {
+                    if (valid) {
+                        this.changePage();
+                    } else {
+                        this.$Message.error('Fail!');
+                    }
+                })
+            },
+            dataForSearch(destination = this.formInline.currentPage) {
+                // 翻页的时候是带着查询参数去翻页的
+                this.$httpt.get('bigScreenController.do?getInfomatinSystemPagination&' +
+                    'department=' + this.formInline.department + '&' +
+                    'infomationSystemName=' + this.formInline.infomationSystemName + '&' +
+                    'status=' + this.formInline.statuss + '&' +
+                    'network=' + this.formInline.network + '&' +
+                    'osType=' + this.formInline.osType.replace(/\s+/g,"+") + '&' +
+                    'databaseType=' + this.formInline.databaseType.replace(/\s+/g,"+") + '&' +
+                    'middlewareType=' + this.formInline.middlewareType.replace(/\s+/g,"+") + '&' +
+                    'serverType=' + this.formInline.serverType.replace(/\s+/g,"+") + '&' +
+                    'currentPage=' + destination + '&' +
+                    'pageSize=' + 10000).then(({data}) => {
+                    if (data.success) {
                         this.totalCount = data.data.totalCount;
                         let tempPie = [];
                         let newarr1 = new Array(this.selectOne.length);
@@ -267,41 +399,27 @@
                                 }
                             }
                         }
-                        this.xAxisData = this.selectTwo;
-                        this.data = newarr2;
+                        // this.xAxisData = this.selectTwo;
+                        // this.data = newarr2;
                     } else {
                         console.error('分页获取表3 信息化系统调研表信息失败')
                     }
                 }).catch(err => {
                     throw Error(err);
                 })
-            },
-            changePageSize(pageSize) {
-                this.where.countPerPage = pageSize;
-                //翻页的时候是带着查询参数去翻页的
-                this.changePage();
-            },
-            handleSubmit(name) {
-                this.$refs[name].validate((valid) => {
-                    if (valid) {
-                        this.changePage();
-                    } else {
-                        this.$Message.error('Fail!');
-                    }
-                })
             }
         },
         created() {
             this.$httpt.get('bigScreenController.do?getInfomatinSystemPagination&pageSize=10000').then(({data}) => {
                 if (data.success) {
-                    let tempOne = [],
+                    let tempOne = ['建设中', '运行中', '停用', '可用'],
                         tempTwo = [],
                         tempThree = [],
                         tempFour = [],
                         tempFive = [],
                         tempSix = [];
                     data.data.list.forEach(item => {
-                        tempOne.push(item.status);
+                        // tempOne.push(item.status);
                         tempTwo.push(item.network);
                         tempThree.push(item.osType);
                         tempFour.push(item.databaseType);
@@ -311,20 +429,21 @@
                     this.selectOne = [...new Set(tempOne)].filter(item => {
                         return item !== '' && item !== null;
                     });
-                    this.selectTwo = ['互联网', '政务外网', '专网'];
+                    this.selectTwo = ['互联网', '政务外网', '业务专网'];
                     this.selectThree = [...new Set(tempThree)].filter(item => {
-                        return item !== '' && item !== null;
+                        return item !== '' && item !== null && item !== 'N/A' && item !== '无';
                     });
                     this.selectFour = [...new Set(tempFour)].filter(item => {
-                        return item !== '' && item !== null;
+                        return item !== '' && item !== null && item !== 'N/A' && item !== '无';
                     });
                     this.selectFive = [...new Set(tempFive)].filter(item => {
-                        return item !== '' && item !== null;
+                        return item !== '' && item !== null && item !== 'N/A' && item !== '无';
                     });
                     this.selectSix = [...new Set(tempSix)].filter(item => {
-                        return item !== '' && item !== null;
+                        return item !== '' && item !== null && item !== 'N/A' && item !== '无';
                     });
                     this.changePage();
+                    this.dataForSearch();
                 } else {
                     console.error('分页获取表3 信息化系统调研表信息失败')
                 }
@@ -337,6 +456,10 @@
                 this.formInline.network = this.$route.query.network;
                 this.changePage();
             }
+            if (this.$route.query.infoSystemName) {
+                this.formInline.infomationSystemName = this.$route.query.infoSystemName;
+                this.changePage();
+            }
         }
     }
 </script>
@@ -344,15 +467,23 @@
 <style scoped type="text/less" lang="less">
     .info-sys-important {
         display: flex;
-        flex-flow: row nowrap;
+        flex-flow: row wrap;
     }
 
     .card {
-        flex: 1;
+        flex: 1 0 45%;
+        width: 45%;
+        margin-bottom: 1rem;
         &:first-child {
             margin-right: .5rem;
         }
         &:nth-child(2) {
+            margin-left: .5rem;
+        }
+        &:nth-child(3) {
+            margin-right: .5rem;
+        }
+        &:nth-child(4) {
             margin-left: .5rem;
         }
     }

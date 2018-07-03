@@ -122,7 +122,7 @@
                                         }
                                     }
                                 }, '编辑'),
-                                /*h('Button', {
+                                h('Button', {
                                     props: {
                                         type: 'success',
                                         size: 'small'
@@ -135,7 +135,7 @@
                                             this.show(params.index)
                                         }
                                     }
-                                }, '授权'),*/
+                                }, '授权'),
                                 h('Button', {
                                     props: {
                                         type: 'error',

@@ -2,7 +2,7 @@
     <Card class="card">
         <p slot="title">软件信息统计</p>
         <span href="#" slot="extra" class="total-num">
-                        软件总数：{{totalCount}}
+                        <!--软件总数：{{totalCount}}-->
                     </span>
         <div class="chart-container">
             <ve-rect-coordinate

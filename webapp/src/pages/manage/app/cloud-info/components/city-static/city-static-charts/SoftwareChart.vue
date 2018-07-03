@@ -29,7 +29,7 @@
         data() {
             return {
                 xAxisData: ['操作系统', '数据库', '中间件', '应用系统'],
-                data: [64, 60, 66, 66],
+                data: [553, 204, 63, 497],
                 totalCount: 0,
                 coverOption2: {
                     grid: {
@@ -105,7 +105,7 @@
                                 infoSys ++;
                             }
                         });
-                        this.data = [osType, databaseType, middlewareType, infoSys];
+                        // this.data = [osType, databaseType, middlewareType, infoSys];
                         this.totalCount = this.data.reduce((a, b) => {return a + b;})
                     } else {
                         console.error('获取软件信息信息失败')

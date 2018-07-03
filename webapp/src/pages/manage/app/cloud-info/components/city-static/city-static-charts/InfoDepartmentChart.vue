@@ -2,7 +2,7 @@
     <Card class="card">
         <p slot="title">信息化机构统计</p>
         <span href="#" slot="extra" class="total-num">
-                        信息科总数：{{totalCount}}
+                        信息科总数：29<!--{{totalCount}}-->
                     </span>
         <div class="chart-container">
             <input type="hidden" :value="totalInfo">
@@ -28,8 +28,8 @@
         data() {
             return {
                 pieSysData: [
-                    {value: 71, name: '有信息科'},
-                    {value: 19, name: '无信息科'}
+                    {value: 29, name: '有信息科'},
+                    {value: 54, name: '无信息科'}
                 ],
                 totalCount: 0,
                 coverOption: {
@@ -62,19 +62,19 @@
         },
         computed: {
             totalInfo() {
-                let czCloudInfo = this.$store.state.czCloudInfo.czCloudInfo;
-                if (JSON.stringify(czCloudInfo) !== '{}') {
-                    this.pieSysData = [];
-                    let hasInfoDepartmentNum = 0;
-                    let noInfoDepartmentNum = 0;
-                    Object.keys(czCloudInfo).forEach(key => {
-                        hasInfoDepartmentNum += (czCloudInfo[key].temp1 ? 1 : 0);
-                        noInfoDepartmentNum += (czCloudInfo[key].temp1 ? 0 : 1);
-                    });
-                    this.totalCount = hasInfoDepartmentNum + noInfoDepartmentNum;
-                    this.pieSysData.push({name: '有信息科', value: hasInfoDepartmentNum});
-                    this.pieSysData.push({name: '无信息科', value: noInfoDepartmentNum});
-                }
+                // let czCloudInfo = this.$store.state.czCloudInfo.czCloudInfo;
+                // if (JSON.stringify(czCloudInfo) !== '{}') {
+                //     this.pieSysData = [];
+                //     let hasInfoDepartmentNum = 0;
+                //     let noInfoDepartmentNum = 0;
+                //     Object.keys(czCloudInfo).forEach(key => {
+                //         hasInfoDepartmentNum += (czCloudInfo[key].temp1 ? 1 : 0);
+                //         noInfoDepartmentNum += (czCloudInfo[key].temp1 ? 0 : 1);
+                //     });
+                //     this.totalCount = hasInfoDepartmentNum + noInfoDepartmentNum;
+                //     this.pieSysData.push({name: '有信息科', value: hasInfoDepartmentNum});
+                //     this.pieSysData.push({name: '无信息科', value: noInfoDepartmentNum});
+                // }
             }
         },
         methods: {

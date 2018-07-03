@@ -5,7 +5,7 @@
             <span>{{department}}机房统计</span>
         </p>
         <div>
-            <section  style="height: 10rem;" v-if="isShowPie">
+            <section  style="height: 12rem;" v-if="isShowPie">
                 <ve-pie
                         :rippleAnimation="true"
                         style="width: 100%; height: 100%;"

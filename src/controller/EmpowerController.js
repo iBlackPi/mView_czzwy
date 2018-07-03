@@ -8,23 +8,23 @@ router.use('/empowerController.do', (req, resp, next) => {
     //获取post提交的参数
     const data = req.body;
     //给指定的用户授权指定的资源
-    if(m.m === 'empowerResource'){
+    if (m.m === 'empowerResource') {
         empowerService.empower({data: data, req: req}, (res) => {
-            if(res){
+            if (res) {
                 resp.send(req.ajaxJson);
-            }else{
+            } else {
                 req.ajaxJson.message = '无法对用户授权';
                 req.ajaxJson.success = false;
                 resp.send(req.ajaxJson);
             }
         });
         //获取用户的授权资源信息
-    }else if(m.m === 'getUserEmpowerIds'){
+    } else if (m.m === 'getUserEmpowerIds') {
         empowerService.findEmpowerResourceIds(m.userId, (res) => {
-            if(res){
+            if (res) {
                 req.ajaxJson.data = res;
                 resp.send(req.ajaxJson);
-            }else{
+            } else {
                 req.ajaxJson.message = '无法该用户的授权资源id';
                 req.ajaxJson.success = false;
                 resp.send(req.ajaxJson);

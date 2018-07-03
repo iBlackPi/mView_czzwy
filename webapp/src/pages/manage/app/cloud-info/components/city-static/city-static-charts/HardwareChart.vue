@@ -2,7 +2,7 @@
     <Card class="card">
         <p slot="title">硬件信息统计</p>
         <span href="#" slot="extra" class="total-num">
-                        硬件总数：{{totalCount}}
+                        硬件总数：1343<!--{{totalCount}}-->
                     </span>
         <div class="chart-container">
             <ve-rect-coordinate
@@ -29,7 +29,7 @@
         data() {
             return {
                 xAxisData: ['小机', '虚机', 'X86服务器', '网络设备'],
-                data: [12, 118, 495, 679],
+                data: [14, 118, 495, 716],
                 totalCount: 0,
                 coverOption2: {
                     grid: {

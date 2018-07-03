@@ -22,7 +22,7 @@
         data(){
             return {
                 pieData: [
-                    {value: 71, name:'自建机房'},
+                    {value: 72, name:'自建机房'},
                     {value: 14, name:'托管机房'},
                     {value: 30, name:'租用云服务'}
                 ],

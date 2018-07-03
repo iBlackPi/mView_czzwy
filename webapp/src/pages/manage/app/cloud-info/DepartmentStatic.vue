@@ -40,9 +40,9 @@
 
                     <net-device-chart :currentDepartment = "currentDepartment"></net-device-chart>
 
-                    <software-chart :currentDepartment = "currentDepartment"></software-chart>
+                    <!--<software-chart :currentDepartment = "currentDepartment"></software-chart>-->
 
-                    <hardware-chart :currentDepartment = "currentDepartment"></hardware-chart>
+                    <!--<hardware-chart :currentDepartment = "currentDepartment"></hardware-chart>-->
                 </div>
             </panel>
         </collapse>
@@ -127,6 +127,7 @@
                 this.$store.dispatch('czCloudInfo/getIsConnectNet', {vm: this, department: '财政局'});
             });*/
             if (this.$route.query.department) {
+                this.searchName = this.$route.query.department;
                 this.onSelect(this.$route.query.department);
             }
         },

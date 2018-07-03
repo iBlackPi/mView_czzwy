@@ -34,20 +34,20 @@
                     </Tooltip>
                 </Upload>
             </FormItem>
-            <FormItem style="">
+            <!--<FormItem style="">
                 <Tooltip placement="top" content="支持批量导入excel" transfer :delay="500">
                     <Button style="background-color: #2D8CF0; color: #fff;" type="ghost" icon="ios-download-outline"
                             @click="exportData">
                         导出EXCEL
                     </Button>
                 </Tooltip>
-            </FormItem>
+            </FormItem>-->
         </Form>
         <city-static></city-static>
         <!--展示信息化资源统计总览-->
         <Table border :columns="columns" :data="totalInfo" ref="info_maintain_table"></Table>
-        <!--分页-->
-        <Page :total="totalCount" show-total show-sizer @on-change="changePage" @on-page-size-change="changePageSize"
+        <!--分页 show-total-->
+        <Page :total="totalCount" show-sizer @on-change="changePage" @on-page-size-change="changePageSize"
               style="margin: .5rem 0 .5rem 0;"></Page>
         <!--对话框：显示部门具体信息-->
         <department-info-modal></department-info-modal>

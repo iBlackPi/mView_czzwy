@@ -2,7 +2,7 @@
     <Card class="card" style="width: 50%;">
         <p slot="title">网络设备信息统计</p>
         <span href="#" slot="extra" class="total-num">
-                        网络设备总数：{{totalCount}}
+                        <!--网络设备总数：{{totalCount}}-->
                     </span>
         <div class="chart-container">
             <ve-rect-coordinate

@@ -47,8 +47,8 @@ const vue = new Vue();
 // 创建实例时设置配置的默认值
 // 可以根据实际需求创建多个实例
 const instance = axios.create({
-    // baseURL: 'http://localhost:3000',
-    baseURL: 'http://111.62.40.193:9601',
+    baseURL: 'http://localhost:3000',
+    // baseURL: 'http://111.62.40.193:9601',
     withCredentials: true
 });
 const instanceTomcat = axios.create({

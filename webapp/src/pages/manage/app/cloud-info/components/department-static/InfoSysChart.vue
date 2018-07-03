@@ -2,11 +2,11 @@
     <Card class="card">
         <p slot="title">信息系统统计</p>
         <span href="#" slot="extra" class="total-num">
-                        信息系统总数：{{totalCount}}
+                        <!--信息系统总数：{{totalCount}}-->
                     </span>
         <div class="chart-container">
             <input type="hidden" :value="totalInfo">
-            <ve-pie
+            <!--<ve-pie
                     :rippleAnimation="true"
                     style="width: 49%; height: 100%; float: left;"
                     :center="['40%', '50%']"
@@ -17,10 +17,10 @@
                     :coverOption="coverOption"
                     :rippleSize=5
                     @click-series="goToInfoSys"
-            ></ve-pie>
+            ></ve-pie>-->
             <ve-rect-coordinate
                     id="connect-net"
-                    style="width: 49%; height:100%; float: left; margin-left: 2%;"
+                    style="width: 100%; height:100%;"
                     backgroundColor=""
                     :xAxisData="xAxisData"
                     :showLegend=true
@@ -78,7 +78,7 @@
                         }
                     ]
                 },
-                xAxisData: ['互联网', '政务外网', '专网'],
+                xAxisData: ['互联网', '政务外网', '业务专网'],
                 data: [64, 60, 66],
                 coverOption2: {
                     grid: {

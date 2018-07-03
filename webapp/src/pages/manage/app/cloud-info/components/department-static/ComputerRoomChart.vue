@@ -2,7 +2,7 @@
     <Card class="card">
         <p slot="title">机房信息统计</p>
         <span href="#" slot="extra" class="total-num">
-                        机房总数：{{totalCount}}
+                        <!--机房总数：{{totalCount}}-->
                     </span>
         <div class="chart-container">
             <ve-rect-coordinate

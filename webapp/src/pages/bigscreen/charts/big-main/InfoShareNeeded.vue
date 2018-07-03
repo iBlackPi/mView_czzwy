@@ -25,8 +25,8 @@
         name: "computor-room",
         data(){
             return {
-                yAxisData: ['国土局', '统计局', '人社局', '教育局', '工商局'],
-                data: [7, 8, 8, 11, 13],
+                yAxisData: ['国土局', '人社局', '公安局', '教育局', '市场监管局'],
+                data: [9, 9, 13, 14, 19],
                 coverOption: {
                     grid: {
                         top: '25%',
@@ -56,7 +56,7 @@
                                 fontSize: 13 * gain,
                             }
                         },
-                        data: ['国土局', '统计局', '人社局', '教育局', '工商局']
+                        data: ['国土局', '人社局', '公安局', '教育局', '市场监管局']
                     }, {
                         type: 'category',
                         axisLine: {
@@ -97,7 +97,7 @@
                                 show: true,
                                 formatter: function (params) {
                                     let stuNum = 0;
-                                    [7, 8, 8, 11, 13].forEach(function (value, index, array) {
+                                    [9, 9, 13, 14, 19].forEach(function (value, index, array) {
                                         if (params.dataIndex == index) {
                                             stuNum = value;
                                         }

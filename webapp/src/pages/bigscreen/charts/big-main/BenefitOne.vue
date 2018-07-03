@@ -3,19 +3,19 @@
         <ul class="icon_lists clear" @click="goInfoMaintain">
             <li>
                 <i class="icon iconfont icon-resource"></i>
-                <div class="name">1008个</div>
+                <div class="name">1023个</div>
                 <div class="fontclass">信息资源目录</div>
             </li>
 
             <li>
                 <i class="icon iconfont icon-info"></i>
-                <div class="name">6356个</div>
+                <div class="name">6514个</div>
                 <div class="fontclass">信息项总量</div>
             </li>
 
             <li>
                 <i class="icon iconfont icon-gongxiang"></i>
-                <div class="name">4567个</div>
+                <div class="name">4808个</div>
                 <div class="fontclass">可共享信息项</div>
             </li>
 
@@ -83,7 +83,7 @@
         },
         methods: {
             goInfoMaintain() {
-                this.$router.push({name: 'info-maintain'});
+                this.$router.push({name: 'resource-catalog-manage'});
             }
         }
     }

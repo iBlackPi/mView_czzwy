@@ -2,7 +2,7 @@
     <Card class="card">
         <p slot="title">服务器统计</p>
         <span href="#" slot="extra" class="total-num">
-                        服务器总数：{{totalCount}}
+                        <!--服务器总数：{{totalCount}}-->
                     </span>
         <div class="chart-container">
             <input type="hidden" :value="totalInfo">

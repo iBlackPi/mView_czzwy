@@ -14,21 +14,41 @@
                     style="width: 300px;">
             </AutoComplete>
             <Button type="primary" icon="ios-search" @click="search">搜索</Button>
+
+            <Alert show-icon style="margin-top: 1rem;" closable>
+                现状说明
+                <template slot="desc">
+                    45个局委办自建了72个机房（总面积约3800平米），其中交通局8个；其次是住建局有6个；公安5个，供电公司4个；另有14个托管机房，30家单位租用了云服务；
+                </template>
+            </Alert>
+
+            <Alert type="warning" show-icon closable>
+                存在问题
+                <template slot="desc">
+                    基础设施缺乏统筹规划，部分单位存在为1个应用建设1个机房的情况，投资分散，建设不规范，存在极大的安全生产隐患；
+                    90%以上机房建设不规范，设计与运营管理比较落后，系统性、可用性、可扩展性不足，且与IT设备机架化的趋势脱节，存在较大的安全隐患，严重影响了功能的发挥；
+                </template>
+            </Alert>
+
             <Table border :columns="columns" :data="computerRooms" style="margin-top: 1rem;"></Table>
-            <Page :total="totalCount" show-total show-sizer @on-change="changePage"
+            <!-- show-total-->
+            <Page :total="totalCount" show-sizer @on-change="changePage"
                   @on-page-size-change="changePageSize" style="margin: .5rem 0 .5rem 0;"></Page>
         </Card>
         <computer-room-modal></computer-room-modal>
+        <computer-room-other-tip :computerRooms="computerRooms"></computer-room-other-tip>
     </div>
 </template>
 
 <script>
     import ComputerRoomModal from './components/ComputerRoomModal';
-
+    import ComputerRoomOtherTip from './tips/ComputerRoomOtherTip';
     export default {
         name: "",
         data() {
             return {
+                allInfo: [],
+                allComputerRoomInfo: [],
                 columns: [
                     {
                         title: 'ID',
@@ -36,7 +56,39 @@
                     },
                     {
                         title: '部门名称',
-                        key: 'department'
+                        key: 'department',
+                        width: '200',
+                        render: (h, params) => {
+                            return h('div', {
+                                style: {
+                                    cursor: 'pointer'
+                                },
+                                props: {
+                                    title: 'hello'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.$bus.$emit('ComputerRoomOtherTip', params.row.department);
+                                    }
+                                }
+                            }, [
+                                h('Icon', {
+                                    props: {
+                                        type: 'ios-home-outline'
+                                    },
+                                    style: {
+                                        marginRight: '1rem',
+                                        color: '#2D8CF0',
+                                        fontSize: '1rem'
+                                    }
+                                }),
+                                h('strong', {
+                                    style: {
+                                        color: '#2D8CF0'
+                                    }
+                                }, params.row.department)
+                            ]);
+                        }
                     },
                     {
                         title: '自建机房',
@@ -53,6 +105,18 @@
                     {
                         title: '是否有信息科',
                         key: 'temp1'
+                    },
+                    {
+                        title: '机房面积（平米）',
+                        key: 'temp3'
+                    },
+                    {
+                        title: '托管机房说明',
+                        key: 'temp4'
+                    },
+                    {
+                        title: '租云服务',
+                        key: 'temp5'
                     },
                     {
                         title: '操作',
@@ -110,7 +174,8 @@
             }
         },
         components: {
-            ComputerRoomModal
+            ComputerRoomModal,
+            ComputerRoomOtherTip
         },
         methods: {
             search() {
@@ -154,11 +219,27 @@
         },
         mounted() {
             if (this.$route.query.computerRoomType) {
-                this.type = this.$route.query.computerRoomType
+                this.type = this.$route.query.computerRoomType;
                 this.getComputerRoomInfo();
             }
             this.$nextTick(() => {
                 this.getComputerRoomInfo();
+                this.$httpt.get(`machineRoomController.do?getCzMachineRooms&start=&pageSize=10000&department=&type=`).then(({data}) => {
+                    if (data.success) {
+                        this.allInfo = data.data.list;
+                        //筛选出是否有信息科的数据
+                        if (this.$route.query.hasInfoDepartment) {
+                            this.computerRooms = this.allInfo.filter(item => {
+                                return item.temp1 === this.$route.query.hasInfoDepartment;
+                            });
+                            this.totalCount = this.computerRooms.length;
+                        }
+                    } else {
+                        this.$Notice.error({
+                            title: '获取机房信息失败'
+                        })
+                    }
+                })
             });
             //监听对话框的更新通知，修改成功通知父组件表格及时更新
             this.$bus.$on('updateComputerRoomInfo', () => {
@@ -170,12 +251,7 @@
         //todo 所以这里尽快的去获取下总览信息，供对话框中的搜索框自动提示功能使用
         created() {
             this.$store.dispatch('czCloudInfo/getCloudInfo', {vm: this});
-        },
-        //todo 尽快的获取数据
-        //todo 如果用户直接进入后台页面，那总信息就无法获取到
-        //todo 所以这里尽快的去获取下总览信息，供对话框中的搜索框自动提示功能使用
-        created() {
-            this.$store.dispatch('czCloudInfo/getCloudInfo', {vm: this});
+
         }
     }
 </script>
